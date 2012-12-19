@@ -1,4 +1,4 @@
-maintainer       "YOUR_COMPANY_NAME"
+maintainer       "Simple"
 maintainer_email "mwhooker@simple.com"
 license          "All rights reserved"
 description      "Installs/Configures zookeeper"
