@@ -6,12 +6,12 @@
 #
 # All rights reserved - Do Not Redistribute
 #
+# remove zk service
+# moive default into zookeeper recipe
+# have default do base install
 
 
-remote_file "/tmp/exhibitor-#{node[:exhibitor][:version]}.tar.gz" do
-  source "https://github.com/Netflix/exhibitor/archive/exhibitor-#{node[:exhibitor][:version]}.tar.gz"
-  mode "0644"
-end
+include_recipe "zookeeper::zookeeper"
 
 ["/opt/exhibitor",
   node[:exhibitor][:snapshot_dir],
@@ -19,39 +19,55 @@ end
   node[:exhibitor][:log_index_dir]
 ].each do |dir|
     directory dir do
-      owner "root"
+      owner node[:zookeeper][:user]
       group "root"
-      mode 0755
+      mode "0755"
     end
 end
 
+remote_file "#{Chef::Config[:file_cache_path]}/exhibitor-#{node[:exhibitor][:version]}.tar.gz" do
+  owner node[:zookeeper][:user]
+  source node[:exhibitor][:mirror]
+  mode "0644"
+end
+
 bash "untar exhibitor" do
-  user "root"
-  cwd "/tmp"
+  user node[:zookeeper][:user]
+  cwd "#{Chef::Config[:file_cache_path]}"
   code %(tar zxf exhibitor-#{node[:exhibitor][:version]}.tar.gz)
-  not_if { File.exists? "/tmp/exhibitor-exhibitor-#{node[:exhibitor][:version]}" }
+  not_if { File.exists? "#{Chef::Config[:file_cache_path]}/exhibitor-exhibitor-#{node[:exhibitor][:version]}" }
 end
 
 bash "build exhibitor" do
-  user "root"
-  cwd "/tmp/exhibitor-exhibitor-#{node[:exhibitor][:version]}/exhibitor-standalone/src/main/resources/buildscripts/standalone/gradle"
-  code %(/tmp/exhibitor-exhibitor-#{node[:exhibitor][:version]}/gradlew jar)
-  not_if {File.exists? "/tmp/exhibitor-exhibitor-#{node[:exhibitor][:version]}/exhibitor-standalone/src/main/resources/buildscripts/standalone/gradle/build/" }
+  user node[:zookeeper][:user]
+  cwd "#{Chef::Config[:file_cache_path]}/exhibitor-exhibitor-#{node[:exhibitor][:version]}/exhibitor-standalone/src/main/resources/buildscripts/standalone/gradle"
+  code %(#{Chef::Config[:file_cache_path]}/exhibitor-exhibitor-#{node[:exhibitor][:version]}/gradlew jar)
+  not_if {File.exists? "#{Chef::Config[:file_cache_path]}/exhibitor-exhibitor-#{node[:exhibitor][:version]}/exhibitor-standalone/src/main/resources/buildscripts/standalone/gradle/build/" }
 end
 
 bash "move exhibitor jar" do
   user "root"
-  code %(cp /tmp/exhibitor-exhibitor-#{node[:exhibitor][:version]}/exhibitor-standalone/src/main/resources/buildscripts/standalone/gradle/build/libs/gradle-1.4.2.jar /opt/exhibitor/exhibitor-#{node[:exhibitor][:version]}.jar)
+  code %(cp #{Chef::Config[:file_cache_path]}/exhibitor-exhibitor-#{node[:exhibitor][:version]}/exhibitor-standalone/src/main/resources/buildscripts/standalone/gradle/build/libs/gradle-1.4.2.jar /opt/exhibitor/exhibitor-#{node[:exhibitor][:version]}.jar)
   not_if {File.exists? "/opt/exhibitor/exhibitor-#{node[:exhibitor][:version]}.jar"}
 end
 
 service "exhibitor" do
+  provider Chef::Provider::Service::Upstart
+  supports :status => true, :restart => true
+  action [ :enable, :start ]
 end
-# java -jar build/libs/gb-1.4.2.jar --configtype file --fsconfigdir ~/exhibitor_config
-# java -jar /opt/exhibitor/exhibitor-1.4.3.jar -cs3 --s3config mwhooker-exhibitor-dev:exhibitor-config --s3backup true --s3credentials ./s3credentials
-#
+
+template "exhibitor.upstart.conf" do
+  path "/etc/init/exhibitor.conf"
+  source "exhibitor.upstart.conf.erb"
+  owner "root"
+  group "root"
+  mode "0644"
+  notifies :restart, resources(:service => "exhibitor")
+end
+
 # TODO
-# s3credentials template
+# s3credentials template (use iam role provider)
 # Store initial config in chef?
 #   how to bootstrap new cluster
 #   according to dox, just enter it through an exhibitor before going live.
