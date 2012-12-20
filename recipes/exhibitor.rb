@@ -20,41 +20,41 @@ include_recipe "zookeeper::zookeeper"
 ].each do |dir|
     directory dir do
       owner node[:zookeeper][:user]
-      group "root"
       mode "0755"
     end
 end
 
 remote_file "#{Chef::Config[:file_cache_path]}/exhibitor-#{node[:exhibitor][:version]}.tar.gz" do
-  owner node[:zookeeper][:user]
+  owner "root"
   source node[:exhibitor][:mirror]
   mode "0644"
+  not_if { File.exists? "#{Chef::Config[:file_cache_path]}/exhibitor-#{node[:exhibitor][:version]}.tar.gz" }
 end
 
 bash "untar exhibitor" do
-  user node[:zookeeper][:user]
+  user "root"
   cwd "#{Chef::Config[:file_cache_path]}"
   code %(tar zxf exhibitor-#{node[:exhibitor][:version]}.tar.gz)
   not_if { File.exists? "#{Chef::Config[:file_cache_path]}/exhibitor-exhibitor-#{node[:exhibitor][:version]}" }
 end
 
 bash "build exhibitor" do
-  user node[:zookeeper][:user]
+  user "root"
   cwd "#{Chef::Config[:file_cache_path]}/exhibitor-exhibitor-#{node[:exhibitor][:version]}/exhibitor-standalone/src/main/resources/buildscripts/standalone/gradle"
   code %(#{Chef::Config[:file_cache_path]}/exhibitor-exhibitor-#{node[:exhibitor][:version]}/gradlew jar)
   not_if {File.exists? "#{Chef::Config[:file_cache_path]}/exhibitor-exhibitor-#{node[:exhibitor][:version]}/exhibitor-standalone/src/main/resources/buildscripts/standalone/gradle/build/" }
 end
 
 bash "move exhibitor jar" do
-  user "root"
+  user node[:zookeeper][:user]
   code %(cp #{Chef::Config[:file_cache_path]}/exhibitor-exhibitor-#{node[:exhibitor][:version]}/exhibitor-standalone/src/main/resources/buildscripts/standalone/gradle/build/libs/gradle-1.4.2.jar /opt/exhibitor/exhibitor-#{node[:exhibitor][:version]}.jar)
   not_if {File.exists? "/opt/exhibitor/exhibitor-#{node[:exhibitor][:version]}.jar"}
 end
 
 service "exhibitor" do
   provider Chef::Provider::Service::Upstart
-  supports :status => true, :restart => true
-  action [ :enable, :start ]
+  supports :start => true, :status => true, :restart => true
+  # action [ :start ]
 end
 
 template "exhibitor.upstart.conf" do
