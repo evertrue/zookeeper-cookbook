@@ -76,3 +76,4 @@ end
 # Create Transaction directory (DONE)
 # needs to run with permissions to edit the zookeeper conf file
 #   (do we place this somewhere else? how do configure?)
+# set up logging?

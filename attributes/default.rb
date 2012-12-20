@@ -15,7 +15,7 @@ default[:exhibitor][:log_index_dir] = "/tmp/zookeeper_log_indexes"
 # Period (ms) to check for shared config updates.
 default[:exhibitor][:configcheckms] = 30000
 # Extra text to display in UI header
-default[:exhibitor][:headingtext] = "\"Simple Exhibitionist\""
+default[:exhibitor][:headingtext] = "Simple"
 # Styling used for the JQuery-based UI. Currently available options: red, black, custom
 default[:exhibitor][:jquerystyle] = "black"
 # Max lines of logging to keep in memory for display.
@@ -30,6 +30,12 @@ default[:exhibitor][:port] = "8080"
 default[:exhibitor][:servo] = "true"
 # Connection timeout (ms) for ZK connections.
 default[:exhibitor][:timeout] = "30000"
+
+# Optional credentials to use for s3backup or s3config.
+# Argument is the path to an AWS credential properties file with two properties:
+# com.netflix.exhibitor.s3.access-key-id and
+# com.netflix.exhibitor.s3.access-secret-key
+default[:exhibitor][:s3credentials] = "/tmp/s3credentials"
 
 default[:exhibitor][:s3config] = "exhibitor:exhibitor-config"
 default[:exhibitor][:s3backup] = "true"
