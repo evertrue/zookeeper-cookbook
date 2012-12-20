@@ -68,12 +68,7 @@ end
 
 # TODO
 # s3credentials template (use iam role provider)
-# Store initial config in chef?
-#   how to bootstrap new cluster
-#   according to dox, just enter it through an exhibitor before going live.
-# JMX? (servo) -- monitoring
-# Create snapshot directory (DONE)
-# Create Transaction directory (DONE)
-# needs to run with permissions to edit the zookeeper conf file
-#   (do we place this somewhere else? how do configure?)
+# JM? (servo) -- monitoring
 # set up logging?
+# Test on prod
+# Rename cookbook to zookeeper
