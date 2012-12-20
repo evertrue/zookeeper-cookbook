@@ -5,12 +5,12 @@ default[:zookeeper][:user] = "exhibitor"
 default[:exhibitor][:version] = "1.4.3"
 default[:exhibitor][:mirror] = "https://github.com/Netflix/exhibitor/archive/exhibitor-#{default[:exhibitor][:version]}.tar.gz"
 
-# default[:exhibitor][:snapshot_dir] = "/mnt/zookeeper_snapshots"
-# default[:exhibitor][:transaction_dir] = "/mnt/zookeeper_transactions"
-# default[:exhibitor][:log_index_dir] = "/mnt/zookeeper_log_indexes"
-default[:exhibitor][:snapshot_dir] = "/tmp/zookeeper_snapshots"
-default[:exhibitor][:transaction_dir] = "/tmp/zookeeper_transactions"
-default[:exhibitor][:log_index_dir] = "/tmp/zookeeper_log_indexes"
+default[:exhibitor][:snapshot_dir] = "/mnt/zookeeper_snapshots"
+default[:exhibitor][:transaction_dir] = "/mnt/zookeeper_transactions"
+default[:exhibitor][:log_index_dir] = "/mnt/zookeeper_log_indexes"
+# default[:exhibitor][:snapshot_dir] = "/tmp/zookeeper_snapshots"
+# default[:exhibitor][:transaction_dir] = "/tmp/zookeeper_transactions"
+# default[:exhibitor][:log_index_dir] = "/tmp/zookeeper_log_indexes"
 
 # Period (ms) to check for shared config updates.
 default[:exhibitor][:configcheckms] = 30000
@@ -35,7 +35,7 @@ default[:exhibitor][:timeout] = "30000"
 # Argument is the path to an AWS credential properties file with two properties:
 # com.netflix.exhibitor.s3.access-key-id and
 # com.netflix.exhibitor.s3.access-secret-key
-default[:exhibitor][:s3credentials] = "/tmp/s3credentials"
+# default[:exhibitor][:s3credentials] = "/tmp/s3credentials"
 
 default[:exhibitor][:s3config] = "exhibitor:exhibitor-config"
 default[:exhibitor][:s3backup] = "true"
