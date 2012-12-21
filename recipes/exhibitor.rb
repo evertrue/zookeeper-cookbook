@@ -71,4 +71,4 @@ end
 # JM? (servo) -- monitoring
 # set up logging?
 # Test on prod
-# Rename cookbook to zookeeper
+# Rename cookbook to zookeeper (DONE)
