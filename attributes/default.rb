@@ -28,5 +28,7 @@ default[:exhibitor][:servo] = "true"
 # Connection timeout (ms) for ZK connections.
 default[:exhibitor][:timeout] = "30000"
 
-default[:exhibitor][:s3config] = "exhibitor:exhibitor-config"
+
+default[:exhibitor][:environment] = "stage"
+default[:exhibitor][:s3config] = ""
 default[:exhibitor][:s3backup] = "true"
