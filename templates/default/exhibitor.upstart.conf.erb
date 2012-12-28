@@ -1,28 +1,28 @@
 #!upstart
 description "Exhibitor Server"
 
-env USER=<%= node[:zookeeper][:user] %>
+env USER=<%= @user %>
 
 start on startup
 stop on shutdown
 
 respawn
 
-<% if node[:exhibitor][:s3credentials] %>
-    env S3CREDENTIALS="--s3credentials <%= node[:exhibitor][:s3credentials] %>"
+<% if @config[:s3credentials] %>
+    env S3CREDENTIALS="--s3credentials <%= @config[:s3credentials] %>"
 <% else %>
     env S3CREDENTIALS=""
 <% end %>
 
 exec sudo -u $USER sh -c "java -jar \
-    /opt/exhibitor/exhibitor-<%= node[:exhibitor][:version] %>.jar \
-    -cs3 $S3CREDENTIALS --s3config <%= node[:exhibitor][:s3config] %> \
-    --s3backup <%= node[:exhibitor][:s3backup] %> \
-    --configcheckms <%= node[:exhibitor][:configcheckms] %> \
-    --headingtext <%= node[:exhibitor][:headingtext] %> \
-    --jquerystyle <%= node[:exhibitor][:jquerystyle] %> \
-    --loglines <%= node[:exhibitor][:loglines] %> \
-    --nodemodification <%= node[:exhibitor][:nodemodification] %> \
-    --port <%= node[:exhibitor][:port] %> \
-    --servo <%= node[:exhibitor][:servo] %> \
-    --timeout <%= node[:exhibitor][:timeout] %>"
+    /opt/exhibitor/exhibitor-<%= @version %>.jar \
+    -cs3 $S3CREDENTIALS --s3config <%= @opts[:s3config] %> \
+    --s3backup <%= @opts[:s3backup] %> \
+    --configcheckms <%= @opts[:configcheckms] %> \
+    --headingtext <%= @opts[:headingtext] %> \
+    --jquerystyle <%= @opts[:jquerystyle] %> \
+    --loglines <%= @opts[:loglines] %> \
+    --nodemodification <%= @opts[:nodemodification] %> \
+    --port <%= @opts[:port] %> \
+    --servo <%= @opts[:servo] %> \
+    --timeout <%= @opts[:timeout] %>"

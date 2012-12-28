@@ -6,9 +6,6 @@
 #
 # All rights reserved - Do Not Redistribute
 #
-# remove zk service
-# moive default into zookeeper recipe
-# have default do base install
 
 
 include_recipe "zookeeper::zookeeper"
@@ -64,11 +61,14 @@ template "exhibitor.upstart.conf" do
   group "root"
   mode "0644"
   notifies :restart, resources(:service => "exhibitor")
+  variables(
+      :user => node[:zookeeper][:user],
+      :version => node[:exhibitor][:version],
+      :opts => node[:exhibitor][:opts]
+  )
 end
 
 # TODO
-# s3credentials template (use iam role provider)
-# JM? (servo) -- monitoring
+# JMX? (servo) -- monitoring
 # set up logging?
 # Test on prod
-# Rename cookbook to zookeeper (DONE)
