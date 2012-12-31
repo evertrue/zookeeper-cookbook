@@ -2,8 +2,8 @@ default[:zookeeper][:version] = "3.4.5"
 default[:zookeeper][:mirror] = "http://mirrors.ibiblio.org/apache/zookeeper/zookeeper-#{default[:zookeeper][:version]}/zookeeper-#{default[:zookeeper][:version]}.tar.gz"
 default[:zookeeper][:user] = "exhibitor"
 
-default[:exhibitor][:version] = "1.4.3"
-default[:exhibitor][:mirror] = "https://github.com/Netflix/exhibitor/archive/exhibitor-#{default[:exhibitor][:version]}.tar.gz"
+default[:exhibitor][:version] = "exhibitor-1.4.3"
+default[:exhibitor][:mirror] = "https://github.com/Netflix/exhibitor/archive/#{default[:exhibitor][:version]}.tar.gz"
 
 default[:exhibitor][:snapshot_dir] = "/mnt/zookeeper_snapshots"
 default[:exhibitor][:transaction_dir] = "/mnt/zookeeper_transactions"
