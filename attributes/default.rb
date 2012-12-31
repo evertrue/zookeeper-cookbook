@@ -1,16 +1,18 @@
-default[:zookeeper][:version] = "3.4.5"
-default[:zookeeper][:mirror] = "http://mirrors.ibiblio.org/apache/zookeeper/zookeeper-#{default[:zookeeper][:version]}/zookeeper-#{default[:zookeeper][:version]}.tar.gz"
-default[:zookeeper][:user] = "exhibitor"
+default[:gradle][:version] = "1.3"
+default[:gradle][:mirror] = "http://services.gradle.org/distributions/gradle-#{default[:gradle][:version]}-bin.zip"
 
-default[:exhibitor][:version] = "exhibitor-1.4.3"
-default[:exhibitor][:mirror] = "https://github.com/Netflix/exhibitor/archive/#{default[:exhibitor][:version]}.tar.gz"
+
+default[:exhibitor][:version] = "1.4.3"
+default[:exhibitor][:user] = "zookeeper"
 
 default[:exhibitor][:snapshot_dir] = "/mnt/zookeeper_snapshots"
 default[:exhibitor][:transaction_dir] = "/mnt/zookeeper_transactions"
 default[:exhibitor][:log_index_dir] = "/mnt/zookeeper_log_indexes"
 
+# If true, enables AWS S3 backup of ZooKeeper log files (s3credentials may be provided as well).
+default[:exhibitor][:opts][:s3backup] = "true"
 # Period (ms) to check for shared config updates.
-default[:exhibitor][:opts][:optscheckms] = 30000
+default[:exhibitor][:opts][:configcheckms] = 30000
 # Extra text to display in UI header
 default[:exhibitor][:opts][:headingtext] = "Simple"
 # Styling used for the JQuery-based UI. Currently available options: red, black, custom
@@ -31,4 +33,3 @@ default[:exhibitor][:opts][:timeout] = "30000"
 
 default[:exhibitor][:environment] = "stage"
 default[:exhibitor][:s3config] = "com.simple.#{default[:exhibitor][:environment]}.exhibitor:#{default[:exhibitor][:environment]}-config"
-default[:exhibitor][:s3backup] = "true"
