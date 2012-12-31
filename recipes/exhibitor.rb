@@ -15,6 +15,8 @@ user node[:exhibitor][:user] do
   gid "nogroup"
 end
 
+include_recipe "zookeeper::zookeeper"
+
 ["/opt/exhibitor",
   node[:exhibitor][:snapshot_dir],
   node[:exhibitor][:transaction_dir],

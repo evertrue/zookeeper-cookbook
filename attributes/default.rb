@@ -1,6 +1,8 @@
+default[:zookeeper][:version] = "3.4.5"
+default[:zookeeper][:mirror] = "http://mirrors.ibiblio.org/apache/zookeeper/zookeeper-#{default[:zookeeper][:version]}/zookeeper-#{default[:zookeeper][:version]}.tar.gz"
+
 default[:gradle][:version] = "1.3"
 default[:gradle][:mirror] = "http://services.gradle.org/distributions/gradle-#{default[:gradle][:version]}-bin.zip"
-
 
 default[:exhibitor][:version] = "1.4.3"
 default[:exhibitor][:user] = "zookeeper"
