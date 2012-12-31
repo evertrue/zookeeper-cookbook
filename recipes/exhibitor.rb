@@ -21,31 +21,34 @@ include_recipe "zookeeper::zookeeper"
     end
 end
 
-remote_file "#{Chef::Config[:file_cache_path]}/exhibitor-#{node[:exhibitor][:version]}.tar.gz" do
+local_file = "exhibitor-#{node[:exhibitor][:version]}.tar.gz"
+
+remote_file "#{Chef::Config[:file_cache_path]}/#{local_file}" do
   owner "root"
   source node[:exhibitor][:mirror]
   mode "0644"
-  not_if { File.exists? "#{Chef::Config[:file_cache_path]}/exhibitor-#{node[:exhibitor][:version]}.tar.gz" }
+  not_if { File.exists? "#{Chef::Config[:file_cache_path]}/#{local_file}" }
 end
 
 bash "untar exhibitor" do
   user "root"
   cwd "#{Chef::Config[:file_cache_path]}"
-  code %(tar zxf exhibitor-#{node[:exhibitor][:version]}.tar.gz)
-  not_if { File.exists? "#{Chef::Config[:file_cache_path]}/exhibitor-exhibitor-#{node[:exhibitor][:version]}" }
+  code %(tar zxf #{local_file})
+  not_if { File.exists? "#{Chef::Config[:file_cache_path]}/exhibitor-#{node[:exhibitor][:version]}" }
 end
 
 bash "build exhibitor" do
   user "root"
-  cwd "#{Chef::Config[:file_cache_path]}/exhibitor-exhibitor-#{node[:exhibitor][:version]}/exhibitor-standalone/src/main/resources/buildscripts/standalone/gradle"
-  code %(#{Chef::Config[:file_cache_path]}/exhibitor-exhibitor-#{node[:exhibitor][:version]}/gradlew jar)
-  not_if {File.exists? "#{Chef::Config[:file_cache_path]}/exhibitor-exhibitor-#{node[:exhibitor][:version]}/exhibitor-standalone/src/main/resources/buildscripts/standalone/gradle/build/" }
+  cwd "#{Chef::Config[:file_cache_path]}/exhibitor-#{node[:exhibitor][:version]}/exhibitor-standalone/src/main/resources/buildscripts/standalone/gradle"
+  code %(#{Chef::Config[:file_cache_path]}/exhibitor-#{node[:exhibitor][:version]}/gradlew jar)
+  not_if {File.exists? "#{Chef::Config[:file_cache_path]}/exhibitor-#{node[:exhibitor][:version]}/exhibitor-standalone/src/main/resources/buildscripts/standalone/gradle/build/" }
 end
 
 bash "move exhibitor jar" do
   user node[:zookeeper][:user]
-  code %(cp #{Chef::Config[:file_cache_path]}/exhibitor-exhibitor-#{node[:exhibitor][:version]}/exhibitor-standalone/src/main/resources/buildscripts/standalone/gradle/build/libs/gradle-1.4.2.jar /opt/exhibitor/exhibitor-#{node[:exhibitor][:version]}.jar)
-  not_if {File.exists? "/opt/exhibitor/exhibitor-#{node[:exhibitor][:version]}.jar"}
+  # TODO: change gradle path hardcode
+  code %(cp #{Chef::Config[:file_cache_path]}/exhibitor-#{node[:exhibitor][:version]}/exhibitor-standalone/src/main/resources/buildscripts/standalone/gradle/build/libs/*.jar /opt/exhibitor/#{node[:exhibitor][:version]}.jar)
+  not_if {File.exists? "/opt/exhibitor/#{node[:exhibitor][:version]}.jar"}
 end
 
 service "exhibitor" do
