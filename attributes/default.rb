@@ -35,7 +35,7 @@ default[:exhibitor][:opts][:servo] = "true"
 default[:exhibitor][:opts][:timeout] = "30000"
 
 default[:exhibitor][:opts][:defaultconfig] = "#{Chef::Config[:file_cache_path]}/exhibitor-defaultconfig"
-default[:exhibitor][:opts][:s3config] = "s3://com.simple.#{default[:exhibitor][:environment]}.exhibitor/#{default[:exhibitor][:environment]}-config"
+default[:exhibitor][:opts][:s3config] = "com.simple.#{default[:exhibitor][:environment]}.exhibitor:#{default[:exhibitor][:environment]}-config"
 
 default[:exhibitor][:defaultconfig][:cleanup_period_ms] = '30000'
 default[:exhibitor][:defaultconfig][:zookeeper_install_directory] = '/opt/zookeeper/*'
