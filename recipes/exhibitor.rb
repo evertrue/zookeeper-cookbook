@@ -11,7 +11,7 @@
 include_recipe "zookeeper::gradle"
 
 user node[:exhibitor][:user] do
-  uid 61001
+  uid 61004
   gid "nogroup"
 end
 
@@ -58,7 +58,20 @@ template "exhibitor.upstart.conf" do
   variables(
       :user => node[:exhibitor][:user],
       :version => node[:exhibitor][:version],
-      :opts => node[:exhibitor][:opts]
+      :opts => node[:exhibitor][:opts],
+  )
+end
+
+template "defaultconfig.erb" do
+  path node[:exhibitor][:opts][:defaultconfig]
+  source "defaultconfig.erb"
+  owner node[:exhibitor][:user]
+  mode "0644"
+  variables(
+      :snapshot_dir => node[:exhibitor][:snapshot_dir],
+      :transaction_dir => node[:exhibitor][:transaction_dir],
+      :log_index_dir => node[:exhibitor][:log_index_dir],
+      :defaultconfig => node[:exhibitor][:defaultconfig]
   )
 end
 
