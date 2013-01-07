@@ -8,21 +8,21 @@ stop on shutdown
 
 respawn
 
-<% if @opts[:s3credentials] %>
-    env S3CREDENTIALS="--s3credentials <%= @opts[:s3credentials] %>"
-<% else %>
-    env S3CREDENTIALS=""
-<% end %>
-
 exec sudo -u $USER sh -c "java -jar \
     /opt/exhibitor/<%= @version %>.jar \
-    -cs3 $S3CREDENTIALS --s3config <%= @opts[:s3config] %> \
+    -cs3 --s3config <%= @opts[:s3config] %> \
     --s3backup <%= @opts[:s3backup] %> \
     --configcheckms <%= @opts[:configcheckms] %> \
     --headingtext <%= @opts[:headingtext] %> \
+    --hostname <%= @opts[:hostname] %> \
     --jquerystyle <%= @opts[:jquerystyle] %> \
     --loglines <%= @opts[:loglines] %> \
     --nodemodification <%= @opts[:nodemodification] %> \
     --port <%= @opts[:port] %> \
     --servo <%= @opts[:servo] %> \
-    --timeout <%= @opts[:timeout] %>"
+    --timeout <%= @opts[:timeout] %>
+    --defaultconfig <%= @opts[:defaultconfig] %> \
+  <% if @opts[:s3credentials] %>
+    --s3credentials <%= @opts[:s3credentials] %> \
+  <% end %>
+"

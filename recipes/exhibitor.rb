@@ -8,6 +8,13 @@
 #
 
 
+include_recipe "zookeeper::gradle"
+
+user node[:exhibitor][:user] do
+  uid 61004
+  gid "nogroup"
+end
+
 include_recipe "zookeeper::zookeeper"
 
 ["/opt/exhibitor",
@@ -16,38 +23,22 @@ include_recipe "zookeeper::zookeeper"
   node[:exhibitor][:log_index_dir]
 ].each do |dir|
     directory dir do
-      owner node[:zookeeper][:user]
+      owner node[:exhibitor][:user]
       mode "0755"
     end
 end
 
-local_file = "exhibitor-#{node[:exhibitor][:version]}.tar.gz"
-
-remote_file "#{Chef::Config[:file_cache_path]}/#{local_file}" do
-  owner "root"
-  source node[:exhibitor][:mirror]
-  mode "0644"
-  not_if { File.exists? "#{Chef::Config[:file_cache_path]}/#{local_file}" }
-end
-
-bash "untar exhibitor" do
-  user "root"
-  cwd "#{Chef::Config[:file_cache_path]}"
-  code %(tar zxf #{local_file})
-  not_if { File.exists? "#{Chef::Config[:file_cache_path]}/exhibitor-#{node[:exhibitor][:version]}" }
-end
+jar_file = "#{Chef::Config[:file_cache_path]}/exhibitor/build/libs/exhibitor-#{node[:exhibitor][:version]}.jar"
 
 bash "build exhibitor" do
-  user "root"
-  cwd "#{Chef::Config[:file_cache_path]}/exhibitor-#{node[:exhibitor][:version]}/exhibitor-standalone/src/main/resources/buildscripts/standalone/gradle"
-  code %(#{Chef::Config[:file_cache_path]}/exhibitor-#{node[:exhibitor][:version]}/gradlew jar)
-  not_if {File.exists? "#{Chef::Config[:file_cache_path]}/exhibitor-#{node[:exhibitor][:version]}/exhibitor-standalone/src/main/resources/buildscripts/standalone/gradle/build/" }
+  cwd "#{Chef::Config[:file_cache_path]}/exhibitor"
+  code %(gradle jar)
+  not_if {File.exists? jar_file}
 end
 
 bash "move exhibitor jar" do
-  user node[:zookeeper][:user]
-  # TODO: change gradle path hardcode
-  code %(cp #{Chef::Config[:file_cache_path]}/exhibitor-#{node[:exhibitor][:version]}/exhibitor-standalone/src/main/resources/buildscripts/standalone/gradle/build/libs/*.jar /opt/exhibitor/#{node[:exhibitor][:version]}.jar)
+  user node[:exhibitor][:user]
+  code %(cp #{jar_file} /opt/exhibitor/#{node[:exhibitor][:version]}.jar)
   not_if {File.exists? "/opt/exhibitor/#{node[:exhibitor][:version]}.jar"}
 end
 
@@ -65,9 +56,22 @@ template "exhibitor.upstart.conf" do
   mode "0644"
   notifies :restart, resources(:service => "exhibitor")
   variables(
-      :user => node[:zookeeper][:user],
+      :user => node[:exhibitor][:user],
       :version => node[:exhibitor][:version],
-      :opts => node[:exhibitor][:opts]
+      :opts => node[:exhibitor][:opts],
+  )
+end
+
+template "defaultconfig.erb" do
+  path node[:exhibitor][:opts][:defaultconfig]
+  source "defaultconfig.erb"
+  owner node[:exhibitor][:user]
+  mode "0644"
+  variables(
+      :snapshot_dir => node[:exhibitor][:snapshot_dir],
+      :transaction_dir => node[:exhibitor][:transaction_dir],
+      :log_index_dir => node[:exhibitor][:log_index_dir],
+      :defaultconfig => node[:exhibitor][:defaultconfig]
   )
 end
 

@@ -9,11 +9,6 @@
 
 include_recipe "java"
 
-user node[:zookeeper][:user] do
-  uid 61001
-  gid "nogroup"
-end
-
 remote_file "#{Chef::Config[:file_cache_path]}/zookeeper-#{node[:zookeeper][:version]}.tar.gz" do
   owner "root"
   source node[:zookeeper][:mirror]
@@ -22,7 +17,7 @@ remote_file "#{Chef::Config[:file_cache_path]}/zookeeper-#{node[:zookeeper][:ver
 end
 
 directory "/opt/zookeeper" do
-  owner node[:zookeeper][:user]
+  owner node[:exhibitor][:user]
   mode "0755"
 end
 
@@ -34,7 +29,7 @@ bash "untar zookeeper" do
 end
 
 bash "copy zk root" do
-  user node[:zookeeper][:user]
+  user node[:exhibitor][:user]
   cwd "#{Chef::Config[:file_cache_path]}"
   code %(cp -r #{Chef::Config[:file_cache_path]}/zookeeper-#{node[:zookeeper][:version]} /opt/zookeeper/)
   not_if { File.exists? "/opt/zookeeper/zookeeper-#{node[:zookeeper][:version]}/lib" }
