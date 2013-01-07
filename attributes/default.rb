@@ -34,7 +34,7 @@ default[:exhibitor][:opts][:servo] = "true"
 # Connection timeout (ms) for ZK connections.
 default[:exhibitor][:opts][:timeout] = "30000"
 
-default[:exhibitor][:opts][:hostname] =  default[:ip_address]
+default[:exhibitor][:opts][:hostname] =  node[:ipaddress]
 default[:exhibitor][:opts][:defaultconfig] = "#{Chef::Config[:file_cache_path]}/exhibitor-defaultconfig"
 default[:exhibitor][:opts][:s3config] = ""
 
