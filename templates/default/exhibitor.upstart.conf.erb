@@ -22,7 +22,10 @@ exec sudo -u $USER sh -c "java -jar \
     --servo <%= @opts[:servo] %> \
     --timeout <%= @opts[:timeout] %>
     --defaultconfig <%= @opts[:defaultconfig] %> \
-  <% if @opts[:s3credentials] %>
+<% if @opts[:s3region] %>
+    --s3region <%= @opts[:s3region] %> \
+<% end %>
+<% if @opts[:s3credentials] %>
     --s3credentials <%= @opts[:s3credentials] %> \
-  <% end %>
+<% end %>
 "
