@@ -4,7 +4,7 @@ default[:zookeeper][:mirror] = "http://mirrors.ibiblio.org/apache/zookeeper/zook
 default[:gradle][:version] = "1.3"
 default[:gradle][:mirror] = "http://services.gradle.org/distributions/gradle-#{default[:gradle][:version]}-bin.zip"
 
-default[:exhibitor][:version] = "1.4.4"
+default[:exhibitor][:version] = "1.4.5"
 default[:exhibitor][:user] = "zookeeper"
 
 default[:exhibitor][:snapshot_dir] = "/mnt/zookeeper_snapshots"
@@ -34,6 +34,7 @@ default[:exhibitor][:opts][:servo] = "true"
 # Connection timeout (ms) for ZK connections.
 default[:exhibitor][:opts][:timeout] = "30000"
 
+default[:exhibitor][:opts][:s3region] = 'us-west-1'
 default[:exhibitor][:opts][:hostname] =  node[:ipaddress]
 default[:exhibitor][:opts][:defaultconfig] = "#{Chef::Config[:file_cache_path]}/exhibitor-defaultconfig"
 default[:exhibitor][:opts][:s3config] = "com.simple.#{default[:exhibitor][:environment]}.exhibitor:#{default[:exhibitor][:environment]}-config"
