@@ -1,4 +1,5 @@
-maintainer       "Simple"
+name             "zookeeper"
+maintainer       "Simple Finance Technology Corp."
 maintainer_email "mwhooker@simple.com"
 license          "All rights reserved"
 description      "Installs/Configures zookeeper"
