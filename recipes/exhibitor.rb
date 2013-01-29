@@ -58,7 +58,7 @@ template "exhibitor.upstart.conf" do
   variables(
       :user => node[:exhibitor][:user],
       :version => node[:exhibitor][:version],
-      :opts => node[:exhibitor][:opts],
+      :opts => node[:exhibitor][:opts]
   )
 end
 
