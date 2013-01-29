@@ -54,7 +54,8 @@ template "exhibitor.upstart.conf" do
   owner "root"
   group "root"
   mode "0644"
-  notifies :restart, "service[exhibitor]"
+  notifies :stop, "service[exhibitor]" # :restart doesn't reload upstart conf
+  notifies :start, "service[exhibitor]"
   variables(
       :user => node[:exhibitor][:user],
       :version => node[:exhibitor][:version],
