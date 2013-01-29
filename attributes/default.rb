@@ -11,8 +11,6 @@ default[:exhibitor][:snapshot_dir] = "/tmp/zookeeper_snapshots"
 default[:exhibitor][:transaction_dir] = "/tmp/zookeeper_transactions"
 default[:exhibitor][:log_index_dir] = "/tmp/zookeeper_log_indexes"
 
-default[:exhibitor][:environment] = "stage"
-
 # If true, enables AWS S3 backup of ZooKeeper log files (s3credentials may be provided as well).
 # default[:exhibitor][:opts][:s3backup] = "false"
 # Max lines of logging to keep in memory for display.
