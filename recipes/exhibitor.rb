@@ -54,11 +54,12 @@ template "exhibitor.upstart.conf" do
   owner "root"
   group "root"
   mode "0644"
-  notifies :restart, resources(:service => "exhibitor")
+  notifies :stop, "service[exhibitor]" # :restart doesn't reload upstart conf
+  notifies :start, "service[exhibitor]"
   variables(
       :user => node[:exhibitor][:user],
       :version => node[:exhibitor][:version],
-      :opts => node[:exhibitor][:opts],
+      :opts => node[:exhibitor][:opts]
   )
 end
 
@@ -78,4 +79,3 @@ end
 # TODO
 # JMX? (servo) -- monitoring
 # set up logging?
-# Test on prod
