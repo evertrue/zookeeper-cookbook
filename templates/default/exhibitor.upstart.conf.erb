@@ -11,22 +11,3 @@ respawn
 exec sudo -u $USER sh -c "java -jar \
     /opt/exhibitor/<%= @version %>.jar \
     <%= @opts.map { |k, v| "--#{k.to_s} #{v}" }.join(" ") %>"
-#     -cs3 --s3config <%= @opts[:s3config] %> \
-#     --s3backup <%= @opts[:s3backup] %> \
-#     --configcheckms <%= @opts[:configcheckms] %> \
-#     --headingtext <%= @opts[:headingtext] %> \
-#     --hostname <%= @opts[:hostname] %> \
-#     --jquerystyle <%= @opts[:jquerystyle] %> \
-#     --loglines <%= @opts[:loglines] %> \
-#     --nodemodification <%= @opts[:nodemodification] %> \
-#     --port <%= @opts[:port] %> \
-#     --servo <%= @opts[:servo] %> \
-#     --timeout <%= @opts[:timeout] %>
-#     --defaultconfig <%= @opts[:defaultconfig] %> \
-# <% if @opts[:s3region] %>
-#     --s3region <%= @opts[:s3region] %> \
-# <% end %>
-# <% if @opts[:s3credentials] %>
-#     --s3credentials <%= @opts[:s3credentials] %> \
-# <% end %>
-# "
