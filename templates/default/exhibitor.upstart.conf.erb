@@ -10,7 +10,7 @@ respawn
 
 exec sudo -u $USER sh -c "java -jar \
     /opt/exhibitor/<%= @version %>.jar \
-    @opts.map { |k, v| "--#{k.to_s} #{v}" }.join(" ")"
+    <%= @opts.map { |k, v| "--#{k.to_s} #{v}" }.join(" ") %>"
 #     -cs3 --s3config <%= @opts[:s3config] %> \
 #     --s3backup <%= @opts[:s3backup] %> \
 #     --configcheckms <%= @opts[:configcheckms] %> \
