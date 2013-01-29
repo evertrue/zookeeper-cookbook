@@ -10,4 +10,4 @@ respawn
 
 exec sudo -u $USER sh -c "java -jar \
     /opt/exhibitor/<%= @version %>.jar \
-    <%= @opts.map { |k, v| "--#{k.to_s} #{v}" }.join(" ") %>"
+    <%= @opts.keys.sort.map { |k| "--#{k.to_s} #{@opts[k]}" }.join(" ") %>"
