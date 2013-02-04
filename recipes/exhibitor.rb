@@ -17,7 +17,7 @@ end
 
 include_recipe "zookeeper::zookeeper"
 
-["/opt/exhibitor",
+[node[:exhibitor][:install_dir],
   node[:exhibitor][:snapshot_dir],
   node[:exhibitor][:transaction_dir],
   node[:exhibitor][:log_index_dir]
@@ -38,8 +38,8 @@ end
 
 bash "move exhibitor jar" do
   user node[:exhibitor][:user]
-  code %(cp #{jar_file} /opt/exhibitor/#{node[:exhibitor][:version]}.jar)
-  creates "/opt/exhibitor/#{node[:exhibitor][:version]}.jar"
+  code %(cp #{jar_file} #{node[:exhibitor][:install_dir]}/#{node[:exhibitor][:version]}.jar)
+  creates "#{node[:exhibitor][:install_dir]}/#{node[:exhibitor][:version]}.jar"
 end
 
 service "exhibitor" do
@@ -58,7 +58,7 @@ template "exhibitor.upstart.conf" do
   notifies :start, "service[exhibitor]"
   variables(
       :user => node[:exhibitor][:user],
-      :version => node[:exhibitor][:version],
+      :jar => "#{node[:exhibitor][:install_dir]}/#{node[:exhibitor][:version]}.jar",
       :opts => node[:exhibitor][:opts]
   )
 end

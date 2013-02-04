@@ -9,6 +9,7 @@ default[:exhibitor][:version] = "1.4.5"
 default[:exhibitor][:user] = "zookeeper"
 default[:exhibitor][:uid] = "61000"
 default[:exhibitor][:group] = "nogroup"
+default[:exhibitor][:install_dir] = "/opt/exhibitor"
 
 
 default[:exhibitor][:snapshot_dir] = "/tmp/zookeeper_snapshots"
