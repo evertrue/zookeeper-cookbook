@@ -2,7 +2,7 @@
 # Cookbook Name:: zookeeper
 # Recipe:: zookeeper
 #
-# Copyright 2012, Simple
+# Copyright 2013, Simple Finance Technology Corp.
 #
 # All rights reserved - Do Not Redistribute
 #
