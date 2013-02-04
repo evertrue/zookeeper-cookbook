@@ -30,13 +30,13 @@ end
 
 jar_file = "#{Chef::Config[:file_cache_path]}/exhibitor/build/libs/exhibitor-#{node[:exhibitor][:version]}.jar"
 
-execute "build exhibitor" do
+bash "build exhibitor" do
   cwd "#{Chef::Config[:file_cache_path]}/exhibitor"
   code %(gradle jar)
   creates jar_file
 end
 
-execute "move exhibitor jar" do
+bash "move exhibitor jar" do
   user node[:exhibitor][:user]
   code %(cp #{jar_file} /opt/exhibitor/#{node[:exhibitor][:version]}.jar)
   creates "/opt/exhibitor/#{node[:exhibitor][:version]}.jar"

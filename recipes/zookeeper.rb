@@ -22,14 +22,14 @@ directory node[:zookeeper][:install_dir] do
   mode "0755"
 end
 
-execute "untar zookeeper" do
+bash "untar zookeeper" do
   user "root"
   cwd "#{Chef::Config[:file_cache_path]}"
   code %(tar zxf #{zk_basename}.tar.gz)
   creates "#{Chef::Config[:file_cache_path]}/#{zk_basename}"
 end
 
-execute "copy zk root" do
+bash "copy zk root" do
   user node[:exhibitor][:user]
   cwd "#{Chef::Config[:file_cache_path]}"
   code %(cp -r #{zk_basename} #{node[:zookeeper][:install_dir]}/)
