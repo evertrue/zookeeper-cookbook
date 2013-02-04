@@ -45,7 +45,6 @@ end
 service "exhibitor" do
   provider Chef::Provider::Service::Upstart
   supports :start => true, :status => true, :restart => true
-  action [ :start ]
 end
 
 template "exhibitor.upstart.conf" do
