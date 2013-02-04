@@ -1,11 +1,15 @@
 default[:zookeeper][:version] = "3.4.5"
 default[:zookeeper][:mirror] = "http://mirrors.ibiblio.org/apache/zookeeper/zookeeper-#{default[:zookeeper][:version]}/zookeeper-#{default[:zookeeper][:version]}.tar.gz"
+default[:zookeeper][:install_dir] = "/opt/zookeeper"
 
 default[:gradle][:version] = "1.3"
 default[:gradle][:mirror] = "http://services.gradle.org/distributions/gradle-#{default[:gradle][:version]}-bin.zip"
 
 default[:exhibitor][:version] = "1.4.5"
 default[:exhibitor][:user] = "zookeeper"
+default[:exhibitor][:uid] = "61000"
+default[:exhibitor][:group] = "nogroup"
+
 
 default[:exhibitor][:snapshot_dir] = "/tmp/zookeeper_snapshots"
 default[:exhibitor][:transaction_dir] = "/tmp/zookeeper_transactions"
@@ -39,7 +43,7 @@ default[:exhibitor][:opts][:configtype] = "file"
 default[:exhibitor][:opts][:fsconfigdir] = "/tmp"
 
 default[:exhibitor][:defaultconfig][:cleanup_period_ms] = '30000'
-default[:exhibitor][:defaultconfig][:zookeeper_install_directory] = '/opt/zookeeper/*'
+default[:exhibitor][:defaultconfig][:zookeeper_install_directory] = "#{node[:zookeeper][:install_dir]}/*"
 default[:exhibitor][:defaultconfig][:check_ms] = '30000'
 default[:exhibitor][:defaultconfig][:backup_period_ms] = '0'
 default[:exhibitor][:defaultconfig][:client_port] = '2181'

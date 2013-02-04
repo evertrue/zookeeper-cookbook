@@ -21,11 +21,11 @@ end
 
 dest_path = "#{Chef::Config[:file_cache_path]}/gradle-#{node[:gradle][:version]}"
 
-bash "unzip gradle" do
+script "unzip gradle" do
   user "root"
   cwd "#{Chef::Config[:file_cache_path]}"
   code %(unzip #{dest_file})
-  not_if { File.exists? dest_path }
+  creates dest_path
 end
 
 ENV["PATH"] += ":#{dest_path}/bin"

@@ -11,8 +11,8 @@
 include_recipe "zookeeper::gradle"
 
 user node[:exhibitor][:user] do
-  uid 61004
-  gid "nogroup"
+  uid node[:exhibitor][:uid]
+  gid node[:exhibitor][:group]
 end
 
 include_recipe "zookeeper::zookeeper"
@@ -30,22 +30,22 @@ end
 
 jar_file = "#{Chef::Config[:file_cache_path]}/exhibitor/build/libs/exhibitor-#{node[:exhibitor][:version]}.jar"
 
-bash "build exhibitor" do
+execute "build exhibitor" do
   cwd "#{Chef::Config[:file_cache_path]}/exhibitor"
   code %(gradle jar)
-  not_if {File.exists? jar_file}
+  creates jar_file
 end
 
-bash "move exhibitor jar" do
+execute "move exhibitor jar" do
   user node[:exhibitor][:user]
   code %(cp #{jar_file} /opt/exhibitor/#{node[:exhibitor][:version]}.jar)
-  not_if {File.exists? "/opt/exhibitor/#{node[:exhibitor][:version]}.jar"}
+  creates "/opt/exhibitor/#{node[:exhibitor][:version]}.jar"
 end
 
 service "exhibitor" do
   provider Chef::Provider::Service::Upstart
   supports :start => true, :status => true, :restart => true
-  # action [ :start ]
+  action [ :start ]
 end
 
 template "exhibitor.upstart.conf" do
