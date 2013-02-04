@@ -12,6 +12,7 @@ include_recipe "java"
 zk_basename = "zookeeper-#{node[:zookeeper][:version]}"
 
 remote_file "#{Chef::Config[:file_cache_path]}/#{zk_basename}.tar.gz" do
+  action :create_if_missing
   owner "root"
   source node[:zookeeper][:mirror]
   mode "0644"
