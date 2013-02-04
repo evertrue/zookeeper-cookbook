@@ -21,7 +21,7 @@ end
 
 dest_path = "#{Chef::Config[:file_cache_path]}/gradle-#{node[:gradle][:version]}"
 
-script "unzip gradle" do
+bash "unzip gradle" do
   user "root"
   cwd Chef::Config[:file_cache_path]
   code %(unzip #{dest_file})
