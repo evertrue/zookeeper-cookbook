@@ -1,5 +1,6 @@
 #
-# check_exhibitor
+# Cookbook Name:: zookeeper
+# Recipe:: monitoring
 #
 # Copyright 2012 Simple Finance Technology Corp. All rights reserved.
 #
