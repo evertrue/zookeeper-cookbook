@@ -28,7 +28,7 @@ end
 
 nagios_conf "check_exhibitor" do
   variables {
-      :host => node[:exhibitor][:nagios][:exhibitor_hostname],
+      :host => node[:exhibitor][:hostname],
       :notes_url => node[:exhibitor][:nagios][:notes_url]
   }
 end

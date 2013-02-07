@@ -23,7 +23,13 @@ require 'net/http'
 require 'uri'
 
 
-def discover_zookeepers(exhibitor_host)
+def discover_zookeepers(*args)
+    if args.length == 1
+        exhibitor_host = args[0]
+    else
+        exhibitor_host = node[:exhibitor][:hostname]
+    end
+
     url = URI.parse(exhibitor_host) + '/exhibitor/v1/cluster/list'
     req = Net::HTTP::Get.new(url.path)
     res = Net::HTTP.start(url.host, url.port) {|http|

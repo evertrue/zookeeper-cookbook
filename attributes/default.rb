@@ -39,7 +39,7 @@ default[:exhibitor][:defaultconfig][:auto_manage_instances] = '1'
 
 
 #override me
-default[:exhibitor][:nagios][:exhibitor_hostname] = "http://localhost:8080"
+default[:exhibitor][:hostname] = "http://localhost:8080"
 default[:exhibitor][:nagios][:plugins_dir] = "/usr/lib/nagios/plugins"
 default[:exhibitor][:nagios][:user] = "nagios"
 default[:exhibitor][:nagios][:group] = "nagios"
