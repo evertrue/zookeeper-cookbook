@@ -51,11 +51,6 @@ bash "move exhibitor jar" do
   creates "#{node[:exhibitor][:install_dir]}/#{node[:exhibitor][:version]}.jar"
 end
 
-service "exhibitor" do
-  provider Chef::Provider::Service::Upstart
-  supports :start => true, :status => true, :restart => true
-end
-
 template "exhibitor.upstart.conf" do
   path "/etc/init/exhibitor.conf"
   source "exhibitor.upstart.conf.erb"
@@ -82,6 +77,12 @@ template "defaultconfig.erb" do
       :log_index_dir => node[:exhibitor][:log_index_dir],
       :defaultconfig => node[:exhibitor][:defaultconfig]
   )
+end
+
+service "exhibitor" do
+  provider Chef::Provider::Service::Upstart
+  supports :start => true, :status => true, :restart => true
+  action :start
 end
 
 # TODO
