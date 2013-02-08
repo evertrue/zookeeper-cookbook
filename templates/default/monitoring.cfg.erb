@@ -1,7 +1,7 @@
 #
-# Cookbook Name:: exhibitor_discovery
+# check_exhibitor.cfg
 #
-# Copyright 2013, Simple Finance Technology Corp.
+# Copyright 2012 Simple Finance Technology Corp. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,23 +16,13 @@
 # limitations under the License.
 #
 
+define service {
+  use                       exhibitor-service
+  host_name                 <%= @host %>
 
-require 'json'
-require 'net/http'
-require 'uri'
-
-
-def discover_zookeepers(*args)
-    if args.length == 1
-        exhibitor_host = args[0]
-    else
-        exhibitor_host = node[:exhibitor][:hostname]
-    end
-
-    url = URI.parse(exhibitor_host) + '/exhibitor/v1/cluster/list'
-    req = Net::HTTP::Get.new(url.path)
-    res = Net::HTTP.start(url.host, url.port) {|http|
-          http.request(req)
-    }
-    return JSON.parse(res.body)
-end
+  servicegroups             Exhibitor
+  service_description       ZooKeeper status
+  check_command             check_exhibitor.py!<%= @host %>
+  notes_url                 <%= @notes_url %>
+  first_notification_delay  120
+}
