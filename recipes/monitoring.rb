@@ -1,7 +1,8 @@
 #
-# Cookbook Name:: exhibitor_discovery
+# Cookbook Name:: zookeeper
+# Recipe:: monitoring
 #
-# Copyright 2013, Simple Finance Technology Corp.
+# Copyright 2012 Simple Finance Technology Corp. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,23 +17,18 @@
 # limitations under the License.
 #
 
+include_recipe "nagios"
 
-require 'json'
-require 'net/http'
-require 'uri'
+cookbook_file "#{node[:exhibitor][:nagios][:plugins_dir]}/check_exhibitor.py" do
+    mode "0755"
+    user node[:exhibitor][:nagios][:user]
+    group node[:exhibitor][:nagios][:group]
+    backup false
+end
 
-
-def discover_zookeepers(*args)
-    if args.length == 1
-        exhibitor_host = args[0]
-    else
-        exhibitor_host = node[:exhibitor][:hostname]
-    end
-
-    url = URI.parse(exhibitor_host) + '/exhibitor/v1/cluster/list'
-    req = Net::HTTP::Get.new(url.path)
-    res = Net::HTTP.start(url.host, url.port) {|http|
-          http.request(req)
-    }
-    return JSON.parse(res.body)
+nagios_conf "check_exhibitor" do
+  variables {
+      :host => node[:exhibitor][:hostname],
+      :notes_url => node[:exhibitor][:nagios][:notes_url]
+  }
 end
