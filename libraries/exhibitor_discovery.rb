@@ -22,17 +22,24 @@ require 'net/http'
 require 'uri'
 
 
-def discover_zookeepers(*args)
-    if args.length == 1
-        exhibitor_host = args[0]
-    else
-        exhibitor_host = node[:exhibitor][:hostname]
-    end
-
+def discover_zookeepers(exhibitor_host = node[:exhibitor][:hostname])
     url = URI.parse(exhibitor_host) + '/exhibitor/v1/cluster/list'
     req = Net::HTTP::Get.new(url.path)
     res = Net::HTTP.start(url.host, url.port) {|http|
           http.request(req)
     }
     return JSON.parse(res.body)
+end
+
+def zk_connect_str(zookeepers, chroot = nil)
+  # zookeepers: as returned from discover_zookeepers
+  # chroot: optional chroot
+  #
+  # returns a zk connect string as used by kafka, storm, and others
+  # host1:port,...,hostN:port[/<chroot>]
+
+  zk_connect = zookeepers["servers"].collect { |server| "#{server}:#{zookeepers['port']}" }.join ","
+  if not chroot.nil?
+    zk_connect += "/#{chroot}"
+  end
 end
