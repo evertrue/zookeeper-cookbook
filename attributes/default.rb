@@ -40,10 +40,6 @@ default[:exhibitor][:defaultconfig][:auto_manage_instances] = '1'
 
 #override me
 default[:exhibitor][:hostname] = "http://localhost:8080"
-default[:exhibitor][:nagios][:plugins_dir] = "/usr/lib/nagios/plugins"
-default[:exhibitor][:nagios][:user] = "nagios"
-default[:exhibitor][:nagios][:group] = "nagios"
-default[:exhibitor][:nagios][:notes_url] = "https://github.com/SimpleFinance/chef-zookeeper/wiki"
 
 
 # default options. see https://github.com/Netflix/exhibitor/wiki/Running-Exhibitor
