@@ -27,8 +27,8 @@ cookbook_file "#{node[:exhibitor][:nagios][:plugins_dir]}/check_exhibitor.py" do
 end
 
 nagios_conf "check_exhibitor" do
-  variables(
+  variables({
       :host => node[:exhibitor][:hostname],
       :notes_url => node[:exhibitor][:nagios][:notes_url]
-  )
+  })
 end

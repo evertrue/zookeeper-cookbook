@@ -16,13 +16,22 @@
 # limitations under the License.
 #
 
-define service {
-  use                       exhibitor-service
-  host_name                 <%= @host %>
+define servicegroup { 
+  servicegroup_name Zookeeper
+  alias Zookeeper
+}
 
-  servicegroups             Exhibitor
+define command {
+  command_name    check_exhibitor
+  command_line    $USER1$/check_exhibitor.py $ARG1$
+}
+
+define service {  
+  use                       prod-service
+  host_name                 services-prod
+
+  servicegroups             Zookeeper
   service_description       ZooKeeper status
-  check_command             check_exhibitor.py!<%= @host %>
+  check_command             check_exhibitor!<%= @host %>
   notes_url                 <%= @notes_url %>
-  first_notification_delay  120
 }
