@@ -35,7 +35,7 @@ def zk_connect_str(zookeepers, chroot = nil)
   # zookeepers: as returned from discover_zookeepers
   # chroot: optional chroot
   #
-  # returns a zk connect string as used by kafka, storm, and others
+  # returns a zk connect string as used by kafka, and others
   # host1:port,...,hostN:port[/<chroot>]
 
   zk_connect = zookeepers["servers"].collect { |server| "#{server}:#{zookeepers['port']}" }.join ","
