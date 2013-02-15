@@ -11,7 +11,11 @@ from unittest import TestCase
 
 
 log = logging.getLogger(__name__)
-log.addHandler(logging.NullHandler())
+try:
+    log.addHandler(logging.NullHandler())
+except AttributeError:
+    # py 2.6 compatibility
+    pass
 
 
 class CheckException(Exception):
