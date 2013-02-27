@@ -38,10 +38,6 @@ default[:exhibitor][:defaultconfig][:auto_manage_instances_settling_period_ms] =
 default[:exhibitor][:defaultconfig][:auto_manage_instances] = '1'
 
 
-#override me
-default[:exhibitor][:hostname] = "http://localhost:8080"
-
-
 # default options. see https://github.com/Netflix/exhibitor/wiki/Running-Exhibitor
 #
 # If true, enables AWS S3 backup of ZooKeeper log files (s3credentials may be provided as well).
