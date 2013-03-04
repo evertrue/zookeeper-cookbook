@@ -1,7 +1,3 @@
-chef_gem "zookeeper" do
-  action :install
-end
- 
 require 'zookeeper'
 
 def get_zk()
