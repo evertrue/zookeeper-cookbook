@@ -1,6 +1,10 @@
+begin
+  require 'zookeeper'
+rescue LoadError
+  Chef::Log.warn("Missing gem 'zookeeper'")
+end
 
 def get_zk()
-  require 'zookeeper'
   # todo: memoize
   return Zookeeper.new(@new_resource.zk_connection)
 end
