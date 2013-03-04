@@ -1,6 +1,6 @@
-require 'zookeeper'
 
 def get_zk()
+  require 'zookeeper'
   # todo: memoize
   return Zookeeper.new(@new_resource.zk_connection)
 end
