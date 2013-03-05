@@ -20,7 +20,7 @@ action :create do
     zk.create(:path => @new_resource.path, :data => @new_resource.data)
   end
 end
- 
+
 action :delete do
   zk = get_zk()
   zk.delete(:path => @new_resource.path)
