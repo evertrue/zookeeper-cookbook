@@ -1,15 +1,14 @@
-
 def get_zk()
   require 'zookeeper'
   # todo: memoize
   return Zookeeper.new(@new_resource.connect_str)
 end
 
-
 action :create_if_missing do
   zk = get_zk()
-  return if zk.stat(:path => @new_resource.path)[:stat].exists?
-  zk.create(:path => @new_resource.path, :data => @new_resource.data)
+  if not zk.stat(:path => @new_resource.path)[:stat].exists?
+    zk.create(:path => @new_resource.path, :data => @new_resource.data)
+  end
 end
 
 action :create do
