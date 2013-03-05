@@ -13,7 +13,7 @@ end
 
 action :create do
   zk = get_zk()
-  if zk.stat(:path => @new_resource.path)[:stat].exists
+  if zk.stat(:path => @new_resource.path)[:stat].exists?
     zk.set(:path => @new_resource.path, :data => @new_resource.data)
   else
     zk.create(:path => @new_resource.path, :data => @new_resource.data)
