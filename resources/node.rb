@@ -5,7 +5,7 @@ attribute :path, :kind_of => String, :name_attribute => true
 attribute :connect_str, :kind_of => String, :required => true
 attribute :data, :kind_of => String
 
-# zookeeper "/jones" do
+# zookeeper_node "/jones" do
 #   action :create_if_missing
 #   connect_str  "localhost:2181"
 #   data "my-id"
