@@ -6,7 +6,7 @@ end
 
 def get_zk()
   # todo: memoize
-  return Zookeeper.new(@new_resource.zk_connection)
+  return Zookeeper.new(@new_resource.connect_str)
 end
 
 
