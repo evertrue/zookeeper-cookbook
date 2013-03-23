@@ -37,11 +37,7 @@ default[:exhibitor][:log_index_dir] = "/tmp/zookeeper_log_indexes"
 # Extra text to display in UI header
 #default[:exhibitor][:opts][:headingtext] = "Exhibitor"
 
-if node[:cloud]
-  default[:exhibitor][:opts][:hostname] =  node[:cloud][:public_hostname]
-else
-  default[:exhibitor][:opts][:hostname] =  node[:ipaddress]
-end
+default[:exhibitor][:opts][:hostname] =  node[:ipaddress]
 default[:exhibitor][:opts][:defaultconfig] = "#{Chef::Config[:file_cache_path]}/exhibitor-defaultconfig"
 
 default[:exhibitor][:opts][:configtype] = "file"
