@@ -18,7 +18,7 @@
 #
 
 sensu_check 'zookeeper-metrics' do
-  command 'zookeeper-metrics.rb'
+  command 'zookeeper-metrics.py'
   subscribers node[:zookeeper][:sensu][:subscribers]
   interval node[:zookeeper][:sensu][:interval]
   handlers node[:zookeeper][:sensu][:handlers]
