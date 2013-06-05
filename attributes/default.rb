@@ -4,7 +4,7 @@ default[:zookeeper][:install_dir] = "/opt/zookeeper"
 
 default[:zookeeper][:sensu][:subscribers] = ['zookeeper']
 default[:zookeeper][:sensu][:interval] = 60
-default[:zookeeper][:sensu][:handlers] = ['default']
+default[:zookeeper][:sensu][:handlers] = ['metric']
 default[:zookeeper][:sensu][:additional] = {}
 
 default[:gradle][:version] = "1.3"
