@@ -28,7 +28,7 @@ def do(host):
 
 
 def parse_response(response):
-    return json.loads(response).strip("\n").split("\n")
+    return response.decode('string-escape').strip("\n\"").split("\n")
 
 if __name__ == '__main__':
     root_host = sys.argv[1]
