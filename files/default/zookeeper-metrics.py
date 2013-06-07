@@ -36,4 +36,4 @@ if __name__ == '__main__':
     for host, resp in do(root_host):
         # kv takes the form {key}\t{value}
         for kv in resp:
-            print "exhibitor.%s.%s\t%d" % (host, kv, time.time())
+            print "exhibitor.%s.%s\t%d" % (host.replace('.', '-'), kv, time.time())
