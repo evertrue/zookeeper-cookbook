@@ -35,7 +35,6 @@ class UnknownException(CheckException):
 
 
 def fetch_status(host):
-    socket.setdefaulttimeout(1)
     status_url = urlparse.urljoin(host, '/exhibitor/v1/cluster/status')
 
     f = urllib.urlopen(status_url)
@@ -114,6 +113,7 @@ class TestCheck(TestCase):
 
 
 if __name__ == '__main__':
+    socket.setdefaulttimeout(1)
     log.addHandler(logging.StreamHandler(sys.stderr))
 
     try:
