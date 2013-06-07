@@ -15,7 +15,7 @@ default[:exhibitor][:user] = "zookeeper"
 default[:exhibitor][:uid] = "61000"
 default[:exhibitor][:group] = "nogroup"
 default[:exhibitor][:install_dir] = "/opt/exhibitor"
-
+default[:exhibitor][:hostname] = "http://exhibitor.example.com"
 
 default[:exhibitor][:snapshot_dir] = "/tmp/zookeeper_snapshots"
 default[:exhibitor][:transaction_dir] = "/tmp/zookeeper_transactions"
