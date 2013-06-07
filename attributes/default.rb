@@ -2,6 +2,11 @@ default[:zookeeper][:version] = "3.4.5"
 default[:zookeeper][:mirror] = "http://mirrors.ibiblio.org/apache/zookeeper/zookeeper-#{default[:zookeeper][:version]}/zookeeper-#{default[:zookeeper][:version]}.tar.gz"
 default[:zookeeper][:install_dir] = "/opt/zookeeper"
 
+default[:zookeeper][:sensu][:subscribers] = ['zookeeper']
+default[:zookeeper][:sensu][:interval] = 60
+default[:zookeeper][:sensu][:handlers] = ['metric']
+default[:zookeeper][:sensu][:additional] = {}
+
 default[:gradle][:version] = "1.3"
 default[:gradle][:mirror] = "http://services.gradle.org/distributions/gradle-#{default[:gradle][:version]}-bin.zip"
 
