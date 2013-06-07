@@ -34,5 +34,6 @@ if __name__ == '__main__':
     root_host = sys.argv[1]
     socket.setdefaulttimeout(1)
     for host, resp in do(root_host):
+        # kv takes the form {key}\t{value}
         for kv in resp:
             print "exhibitor.%s.%s\t%d" % (host, kv, time.time())
