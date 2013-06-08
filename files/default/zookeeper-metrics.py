@@ -31,9 +31,11 @@ def parse_response(response):
     return response.decode('string-escape').strip("\n\"").split("\n")
 
 if __name__ == '__main__':
-    root_host = sys.argv[1]
+    path_prefix = sys.argv[1].rstrip('.')
+    root_host = sys.argv[2]
     socket.setdefaulttimeout(1)
     for host, resp in do(root_host):
         # kv takes the form {key}\t{value}
         for kv in resp:
-            print "exhibitor.%s.%s\t%d" % (host.replace('.', '-'), kv, time.time())
+            print "%s.exhibitor.%s.%s\t%d" % (
+                path_prefix, host.replace('.', '-'), kv, time.time())
