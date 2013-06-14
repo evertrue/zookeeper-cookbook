@@ -5,14 +5,16 @@ import json
 import socket
 import time
 import urllib
-import urlparse
 
 from check_exhibitor import fetch_status
 
 def get_stat(host, hostname):
     path = '/exhibitor/v1/cluster/4ltr/mntr/' + hostname
 
-    stat_url = urlparse.urljoin(host, path)
+    stat_url = urllib.basejoin(host, path)
+    #url = urlparse.urlsplit(stat_url)
+    #socket.gethostbyaddr(url[1].split(':')[0])
+
     f = urllib.urlopen(stat_url)
 
     if f.getcode() != 200:
