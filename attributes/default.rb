@@ -16,6 +16,8 @@ default[:exhibitor][:snapshot_dir] = "/tmp/zookeeper_snapshots"
 default[:exhibitor][:transaction_dir] = "/tmp/zookeeper_transactions"
 default[:exhibitor][:log_index_dir] = "/tmp/zookeeper_log_indexes"
 
+# Port for the HTTP Server
+default[:exhibitor][:opts][:port] = "8080"
 default[:exhibitor][:opts][:hostname] =  node[:ipaddress]
 default[:exhibitor][:opts][:defaultconfig] = "#{Chef::Config[:file_cache_path]}/exhibitor-defaultconfig"
 
@@ -46,8 +48,6 @@ default[:exhibitor][:defaultconfig][:auto_manage_instances] = '1'
 # default[:exhibitor][:opts][:loglines] = "1000"
 # If true, the Explorer UI will allow nodes to be modified (use with caution).
 # default[:exhibitor][:opts][:nodemodification] = "false"
-# Port for the HTTP Server
-# default[:exhibitor][:opts][:port] = "8080"
 # true/false (default is false).
 # If enabled, ZooKeeper will be queried once a minute for its state via the 'mntr' four letter word
 # (this requires ZooKeeper 3.4.x+). Servo will be used to publish this data via JMX.
