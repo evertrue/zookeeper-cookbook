@@ -20,7 +20,6 @@
 include_recipe "zookeeper::gradle"
 
 user node[:exhibitor][:user] do
-  uid node[:exhibitor][:uid]
   gid node[:exhibitor][:group]
 end
 
