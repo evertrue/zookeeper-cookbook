@@ -19,6 +19,8 @@
 
 include_recipe "zookeeper::gradle"
 
+group node[:exhibitor][:group]
+
 user node[:exhibitor][:user] do
   gid node[:exhibitor][:group]
 end
