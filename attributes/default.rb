@@ -7,8 +7,7 @@ default[:gradle][:mirror] = "http://services.gradle.org/distributions/gradle-#{d
 
 default[:exhibitor][:version] = "1.4.5"
 default[:exhibitor][:user] = "zookeeper"
-default[:exhibitor][:uid] = "61000"
-default[:exhibitor][:group] = "nogroup"
+default[:exhibitor][:group] = "zookeeper"
 default[:exhibitor][:install_dir] = "/opt/exhibitor"
 
 
