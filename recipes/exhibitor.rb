@@ -31,12 +31,10 @@ include_recipe "zookeeper::zookeeper"
   node[:exhibitor][:snapshot_dir],
   node[:exhibitor][:transaction_dir],
   node[:exhibitor][:log_index_dir]
-].each do |dir|
-  if dir.length > 0
-    directory dir do
-      owner node[:exhibitor][:user]
-      mode "0755"
-    end
+].uniq.each do |dir|
+  directory dir do
+    owner node[:exhibitor][:user]
+    mode "0755"
   end
 end
 

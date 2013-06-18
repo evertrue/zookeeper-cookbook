@@ -12,7 +12,7 @@ default[:exhibitor][:install_dir] = "/opt/exhibitor"
 
 
 default[:exhibitor][:snapshot_dir] = "/tmp/zookeeper"
-default[:exhibitor][:transaction_dir] = ''
+default[:exhibitor][:transaction_dir] = "/tmp/zookeeper"
 default[:exhibitor][:log_index_dir] = "/tmp/zookeeper_log_indexes"
 
 # Port for the HTTP Server
