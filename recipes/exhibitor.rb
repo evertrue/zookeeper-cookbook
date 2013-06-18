@@ -32,10 +32,12 @@ include_recipe "zookeeper::zookeeper"
   node[:exhibitor][:transaction_dir],
   node[:exhibitor][:log_index_dir]
 ].each do |dir|
+  if dir.length > 0
     directory dir do
       owner node[:exhibitor][:user]
       mode "0755"
     end
+  end
 end
 
 jar_file = "#{Chef::Config[:file_cache_path]}/exhibitor/build/libs/exhibitor-#{node[:exhibitor][:version]}.jar"
