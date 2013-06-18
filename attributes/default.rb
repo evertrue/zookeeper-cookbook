@@ -11,8 +11,8 @@ default[:exhibitor][:group] = "zookeeper"
 default[:exhibitor][:install_dir] = "/opt/exhibitor"
 
 
-default[:exhibitor][:snapshot_dir] = "/tmp/zookeeper_snapshots"
-default[:exhibitor][:transaction_dir] = "/tmp/zookeeper_transactions"
+default[:exhibitor][:snapshot_dir] = "/tmp/zookeeper"
+default[:exhibitor][:transaction_dir] = "/tmp/zookeeper"
 default[:exhibitor][:log_index_dir] = "/tmp/zookeeper_log_indexes"
 
 # Port for the HTTP Server
@@ -23,12 +23,12 @@ default[:exhibitor][:opts][:defaultconfig] = "#{Chef::Config[:file_cache_path]}/
 default[:exhibitor][:opts][:configtype] = "file"
 default[:exhibitor][:opts][:fsconfigdir] = "/tmp"
 
-default[:exhibitor][:defaultconfig][:cleanup_period_ms] = '30000'
+default[:exhibitor][:defaultconfig][:cleanup_period_ms] = 5 * 60 * 1000
 default[:exhibitor][:defaultconfig][:zookeeper_install_directory] = "#{node[:zookeeper][:install_dir]}/*"
 default[:exhibitor][:defaultconfig][:check_ms] = '30000'
 default[:exhibitor][:defaultconfig][:backup_period_ms] = '0'
 default[:exhibitor][:defaultconfig][:client_port] = '2181'
-default[:exhibitor][:defaultconfig][:cleanup_max_files] = '3'
+default[:exhibitor][:defaultconfig][:cleanup_max_files] = '20'
 default[:exhibitor][:defaultconfig][:backup_max_store_ms] = '0'
 default[:exhibitor][:defaultconfig][:connect_port] = '2888'
 default[:exhibitor][:defaultconfig][:backup_extra] = ''

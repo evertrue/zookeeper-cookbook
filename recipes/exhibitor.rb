@@ -31,11 +31,11 @@ include_recipe "zookeeper::zookeeper"
   node[:exhibitor][:snapshot_dir],
   node[:exhibitor][:transaction_dir],
   node[:exhibitor][:log_index_dir]
-].each do |dir|
-    directory dir do
-      owner node[:exhibitor][:user]
-      mode "0755"
-    end
+].uniq.each do |dir|
+  directory dir do
+    owner node[:exhibitor][:user]
+    mode "0755"
+  end
 end
 
 jar_file = "#{Chef::Config[:file_cache_path]}/exhibitor/build/libs/exhibitor-#{node[:exhibitor][:version]}.jar"
