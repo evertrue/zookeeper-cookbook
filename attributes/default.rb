@@ -5,7 +5,7 @@ default[:zookeeper][:install_dir] = "/opt/zookeeper"
 default[:gradle][:version] = "1.3"
 default[:gradle][:mirror] = "http://services.gradle.org/distributions/gradle-#{default[:gradle][:version]}-bin.zip"
 
-default[:exhibitor][:version] = "1.4.7"
+default[:exhibitor][:version] = "1.4.8"
 default[:exhibitor][:user] = "zookeeper"
 default[:exhibitor][:group] = "zookeeper"
 default[:exhibitor][:install_dir] = "/opt/exhibitor"
