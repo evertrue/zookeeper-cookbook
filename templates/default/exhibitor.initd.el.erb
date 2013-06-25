@@ -25,6 +25,9 @@ fi
 EXHIBITOR_USER="${EXHIBITOR_USER:-<%= @user %>}"
 EXHIBITOR_JAR="${EXHIBITOR_JAR:-<%= @jar %>}"
 EXHIBITOR_OPTS="${EXHIBITOR_OPTS:-<%= @opts.keys.sort.map { |k| "--#{k.to_s} #{@opts[k]}" }.join(' ') %>}"
+EXHIBITOR_LOGFILE="${EXHIBITOR_LOGFILE:-<%= ::File.join(@log_dir, @log_file) %>}"
+
+RETVAL="0"
 
 #check status function, are we running?
 check_status() {
@@ -56,7 +59,7 @@ start() {
   echo "EXHIBITOR_JAR = $EXHIBITOR_JAR" >> /var/log/exhibitor/exhibitor.log
   echo "EXHIBITOR_OPTS = $EXHIBITOR_OPTS" >> /var/log/exhibitor/exhibitor.log
 
-  sudo -u $EXHIBITOR_USER sh -c "java -jar $EXHIBITOR_JAR $EXHIBITOR_OPTS" >> /var/log/exhibitor/exhibitor.log 2>&1 &
+  sudo -u $EXHIBITOR_USER sh -c "java -jar $EXHIBITOR_JAR $EXHIBITOR_OPTS" >> EXHIBITOR_LOGFILE 2>&1 &
   echo "OK"
 }
 
@@ -73,7 +76,7 @@ stop() {
   fi
 
   echo -n "Stopping $NAME: "
-  kill -9 $pid &
+  kill -TERM $pid &
   echo "OK"
 }
 
@@ -83,8 +86,10 @@ status() {
 
   if [ $? -ne 0 ] ; then
     echo "$NAME is started"
+    RETVAL="0"
   else
     echo "$NAME is stopped"
+    RETVAL="3"
   fi
 
 }
@@ -108,4 +113,4 @@ case "$1" in
     exit 1
 esac
 
-exit 0
+exit $RETVAL

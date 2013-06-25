@@ -67,28 +67,28 @@ end
 
 # == UPSTART
 
-template "exhibitor.upstart.conf" do
-  path "/etc/init/exhibitor.conf"
-  source "exhibitor.upstart.conf.erb"
-  owner "root"
-  group "root"
-  mode "0644"
-  notifies :stop, "service[exhibitor]" # :restart doesn't reload upstart conf
-  notifies :start, "service[exhibitor]"
-  variables(
-      :user => node[:exhibitor][:user],
-      :jar => "#{node[:exhibitor][:install_dir]}/#{node[:exhibitor][:version]}.jar",
-      :opts => node[:exhibitor][:opts]
-  )
-  only_if { node[:exhibitor][:upstart] }
-end
+# template "exhibitor.upstart.conf" do
+#   path "/etc/init/exhibitor.conf"
+#   source "exhibitor.upstart.conf.erb"
+#   owner "root"
+#   group "root"
+#   mode "0644"
+#   notifies :stop, "service[exhibitor]" # :restart doesn't reload upstart conf
+#   notifies :start, "service[exhibitor]"
+#   variables(
+#       :user => node[:exhibitor][:user],
+#       :jar => "#{node[:exhibitor][:install_dir]}/#{node[:exhibitor][:version]}.jar",
+#       :opts => node[:exhibitor][:opts]
+#   )
+#   only_if { node[:exhibitor][:upstart] }
+# end
 
-service "exhibitor" do
-  provider Chef::Provider::Service::Upstart
-  supports :start => true, :status => true, :restart => true
-  action :start
-  only_if { node[:exhibitor][:upstart] }
-end
+# service "exhibitor" do
+#   provider Chef::Provider::Service::Upstart
+#   supports :start => true, :status => true, :restart => true
+#   action :start
+#   only_if { node[:exhibitor][:upstart] }
+# end
 
 # == INIT.D
 
@@ -101,7 +101,9 @@ template "/etc/init.d/exhibitor" do
   variables(
       :user => node[:exhibitor][:user],
       :jar => "#{node[:exhibitor][:install_dir]}/#{node[:exhibitor][:version]}.jar",
-      :opts => node[:exhibitor][:opts]
+      :opts => node[:exhibitor][:opts],
+      :log_dir => node[:exhibitor][:initd][:log_dir],
+      :log_file => node[:exhibitor][:initd][:log_file]
   )
   not_if { node[:exhibitor][:upstart] }
 end
