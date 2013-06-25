@@ -1,0 +1,111 @@
+#!/bin/bash
+#
+# chkconfig: 2345 85 15
+# description: Summary: Exhibitor is a supervisor system for ZooKeeper.
+# processname: java
+#
+### BEGIN INIT INFO
+# Provides:          exhibitor
+# Required-Start:    $network $local_fs
+# Required-Stop:
+# Should-Start:      $named
+# Should-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Exhibitor is a supervisor system for ZooKeeper.
+### END INIT INFO
+
+NAME="$(basename $0)"
+
+# Get instance specific config file, which is located per the debian convention
+if [ -r "/etc/default/${NAME}" ]; then
+    . /etc/default/${NAME}
+fi
+
+EXHIBITOR_USER="${EXHIBITOR_USER:-<%= @user %>}"
+EXHIBITOR_JAR="${EXHIBITOR_JAR:-<%= @jar %>}"
+EXHIBITOR_OPTS="${EXHIBITOR_OPTS:-<%= @opts.keys.sort.map { |k| "--#{k.to_s} #{@opts[k]}" }.join(' ') %>}"
+
+#check status function, are we running?
+check_status() {
+
+  s=`ps -ef | grep "java -jar $EXHIBITOR_JAR" | grep "sudo"| grep -v grep | awk '{print $2}'`
+
+  if [ "$s" ] ; then
+    return $s
+  fi
+
+  return 0
+
+}
+
+#starts application
+start() {
+
+  check_status
+
+  pid=$?
+
+  if [ $pid -ne 0 ] ; then
+    echo "$NAME is already started"
+    return
+  fi
+
+  echo -n "Starting $NAME: "
+  echo "EXHIBITOR_USER = $EXHIBITOR_USER" >> /var/log/exhibitor/exhibitor.log
+  echo "EXHIBITOR_JAR = $EXHIBITOR_JAR" >> /var/log/exhibitor/exhibitor.log
+  echo "EXHIBITOR_OPTS = $EXHIBITOR_OPTS" >> /var/log/exhibitor/exhibitor.log
+
+  sudo -u $EXHIBITOR_USER sh -c "java -jar $EXHIBITOR_JAR $EXHIBITOR_OPTS" >> /var/log/exhibitor/exhibitor.log 2>&1 &
+  echo "OK"
+}
+
+#stop application
+stop() {
+
+  check_status
+
+  pid=$?
+
+  if [ $pid -eq 0 ] ; then
+    echo "$NAME is already stopped"
+    return
+  fi
+
+  echo -n "Stopping $NAME: "
+  kill -9 $pid &
+  echo "OK"
+}
+
+status() {
+
+  check_status
+
+  if [ $? -ne 0 ] ; then
+    echo "$NAME is started"
+  else
+    echo "$NAME is stopped"
+  fi
+
+}
+
+case "$1" in
+  start)
+    start
+    ;;
+  stop)
+    stop
+    ;;
+  status)
+    status
+    ;;
+  restart|reload)
+    stop
+    start
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart|reload|status}"
+    exit 1
+esac
+
+exit 0
