@@ -6,8 +6,6 @@ import socket
 import time
 import urllib
 
-from check_exhibitor import fetch_status
-
 def get_stat(host, hostname):
     path = '/exhibitor/v1/cluster/4ltr/mntr/' + hostname
 
@@ -24,6 +22,8 @@ def get_stat(host, hostname):
 
 
 def stat_fanout(host):
+    from check_exhibitor import fetch_status
+
     hosts = [h['hostname'] for h in fetch_status(host)]
     for hostname in hosts:
         yield hostname, parse_response(get_stat(host, hostname))
