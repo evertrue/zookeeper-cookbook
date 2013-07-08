@@ -52,21 +52,6 @@ bash "move exhibitor jar" do
   creates "#{node[:exhibitor][:install_dir]}/#{node[:exhibitor][:version]}.jar"
 end
 
-template "exhibitor.upstart.conf" do
-  path "/etc/init/exhibitor.conf"
-  source "exhibitor.upstart.conf.erb"
-  owner "root"
-  group "root"
-  mode "0644"
-  notifies :stop, "service[exhibitor]" # :restart doesn't reload upstart conf
-  notifies :start, "service[exhibitor]"
-  variables(
-      :user => node[:exhibitor][:user],
-      :jar => "#{node[:exhibitor][:install_dir]}/#{node[:exhibitor][:version]}.jar",
-      :opts => node[:exhibitor][:opts]
-  )
-end
-
 template "defaultconfig.erb" do
   path node[:exhibitor][:opts][:defaultconfig]
   source "defaultconfig.erb"
@@ -80,10 +65,49 @@ template "defaultconfig.erb" do
   )
 end
 
-service "exhibitor" do
-  provider Chef::Provider::Service::Upstart
-  supports :start => true, :status => true, :restart => true
-  action :start
+if platform_family? "debian"
+  if node["platform"] == "ubuntu"
+    template "exhibitor.upstart.conf" do
+      path "/etc/init/exhibitor.conf"
+      source "exhibitor.upstart.conf.erb"
+      owner "root"
+      group "root"
+      mode "0644"
+      notifies :stop, "service[exhibitor]" # :restart doesn't reload upstart conf
+      notifies :start, "service[exhibitor]"
+      variables(
+          :user => node[:exhibitor][:user],
+          :jar => "#{node[:exhibitor][:install_dir]}/#{node[:exhibitor][:version]}.jar",
+          :opts => node[:exhibitor][:opts]
+      )
+    end
+    service "exhibitor" do
+      provider Chef::Provider::Service::Upstart
+      supports :start => true, :status => true, :restart => true
+      action :start
+    end
+  elsif node["platform"] == "debian"
+    template "exhibitor" do
+      path "/etc/init.d/exhibitor"
+      source "exhibitor.init.conf.erb" 
+      owner "root"
+      group "root"
+      mode "0755"
+      notifies :stop, "service[exhibitor]" # :restart doesn't reload upstart conf
+      notifies :start, "service[exhibitor]"
+      variables(
+          :user => node[:exhibitor][:user],
+          :group => node[:exhibitor][:group],
+          :jar => "#{node[:exhibitor][:install_dir]}/#{node[:exhibitor][:version]}.jar",
+          :opts => node[:exhibitor][:opts]
+      )  
+    end
+    service "exhibitor" do
+      provider Chef::Provider::Service::Init
+      supports :start => true, :restart => true
+      action :start
+    end 
+  end
 end
 
 # TODO

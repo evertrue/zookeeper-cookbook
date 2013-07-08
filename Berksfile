@@ -1,0 +1,2 @@
+metadata
+cookbook 'java'
