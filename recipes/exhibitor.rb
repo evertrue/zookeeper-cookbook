@@ -85,7 +85,3 @@ service "exhibitor" do
   supports :start => true, :status => true, :restart => true
   action :start
 end
-
-# TODO
-# JMX? (servo) -- monitoring
-# set up logging?

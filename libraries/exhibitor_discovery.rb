@@ -21,14 +21,19 @@ require 'json'
 require 'net/http'
 require 'uri'
 
+class ExhibitorError < StandardError
+end
+
 
 def discover_zookeepers(exhibitor_host)
     url = URI.parse(exhibitor_host) + '/exhibitor/v1/cluster/list'
-    req = Net::HTTP::Get.new(url.path)
-    res = Net::HTTP.start(url.host, url.port) {|http|
-          http.request(req)
-    }
-    return JSON.parse(res.body)
+    begin
+      http = Net::HTTP.new(uri.host)
+      http.read_timeout = http.open_timeout = 3
+      JSON.parse(http.get(uri.path).body)
+    rescue StandardError
+      raise ExhibitorError
+    end
 end
 
 def zk_connect_str(zookeepers, chroot = nil)
