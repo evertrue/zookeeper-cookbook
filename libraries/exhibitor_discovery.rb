@@ -30,7 +30,7 @@ end
 
 
 def discover_zookeepers(exhibitor_host)
-    url = URI.parse(exhibitor_host) + '/exhibitor/v1/cluster/list'
+    url = URI.parse(exhibitor_host + '/exhibitor/v1/cluster/list')
     begin
       http = Net::HTTP.new(url.host)
       http.read_timeout = http.open_timeout = 3
