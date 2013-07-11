@@ -32,9 +32,9 @@ end
 def discover_zookeepers(exhibitor_host)
     url = URI.parse(exhibitor_host) + '/exhibitor/v1/cluster/list'
     begin
-      http = Net::HTTP.new(uri.host)
+      http = Net::HTTP.new(url.host)
       http.read_timeout = http.open_timeout = 3
-      JSON.parse(http.get(uri.path).body)
+      JSON.parse(http.get(url.path).body)
     rescue StandardError => reason
       raise ExhibitorError.new(reason)
     end
