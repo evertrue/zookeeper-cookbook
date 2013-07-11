@@ -10,6 +10,10 @@ default[:exhibitor][:user] = "zookeeper"
 default[:exhibitor][:group] = "zookeeper"
 default[:exhibitor][:install_dir] = "/opt/exhibitor"
 
+# Upstart vs init.d
+default[:exhibitor][:upstart] = true
+default[:exhibitor][:initd][:log_dir] = "/var/log/exhibitor"
+default[:exhibitor][:initd][:log_file] = "exhibitor.log"
 
 default[:exhibitor][:snapshot_dir] = "/tmp/zookeeper"
 default[:exhibitor][:transaction_dir] = "/tmp/zookeeper"

@@ -52,21 +52,6 @@ bash "move exhibitor jar" do
   creates "#{node[:exhibitor][:install_dir]}/#{node[:exhibitor][:version]}.jar"
 end
 
-template "exhibitor.upstart.conf" do
-  path "/etc/init/exhibitor.conf"
-  source "exhibitor.upstart.conf.erb"
-  owner "root"
-  group "root"
-  mode "0644"
-  notifies :stop, "service[exhibitor]" # :restart doesn't reload upstart conf
-  notifies :start, "service[exhibitor]"
-  variables(
-      :user => node[:exhibitor][:user],
-      :jar => "#{node[:exhibitor][:install_dir]}/#{node[:exhibitor][:version]}.jar",
-      :opts => node[:exhibitor][:opts]
-  )
-end
-
 template "defaultconfig.erb" do
   path node[:exhibitor][:opts][:defaultconfig]
   source "defaultconfig.erb"
@@ -80,8 +65,57 @@ template "defaultconfig.erb" do
   )
 end
 
+# == UPSTART
+
+# template "exhibitor.upstart.conf" do
+#   path "/etc/init/exhibitor.conf"
+#   source "exhibitor.upstart.conf.erb"
+#   owner "root"
+#   group "root"
+#   mode "0644"
+#   notifies :stop, "service[exhibitor]" # :restart doesn't reload upstart conf
+#   notifies :start, "service[exhibitor]"
+#   variables(
+#       :user => node[:exhibitor][:user],
+#       :jar => "#{node[:exhibitor][:install_dir]}/#{node[:exhibitor][:version]}.jar",
+#       :opts => node[:exhibitor][:opts]
+#   )
+#   only_if { node[:exhibitor][:upstart] }
+# end
+
+# service "exhibitor" do
+#   provider Chef::Provider::Service::Upstart
+#   supports :start => true, :status => true, :restart => true
+#   action :start
+#   only_if { node[:exhibitor][:upstart] }
+# end
+
+# == INIT.D
+
+template "/etc/init.d/exhibitor" do
+  source "exhibitor.initd.el.erb"
+  owner "root"
+  group "root"
+  mode "0755"
+  notifies :restart, "service[exhibitor]"
+  variables(
+      :user => node[:exhibitor][:user],
+      :jar => "#{node[:exhibitor][:install_dir]}/#{node[:exhibitor][:version]}.jar",
+      :opts => node[:exhibitor][:opts],
+      :log_dir => node[:exhibitor][:initd][:log_dir],
+      :log_file => node[:exhibitor][:initd][:log_file]
+  )
+  not_if { node[:exhibitor][:upstart] }
+end
+
+directory "/var/log/exhibitor" do
+  owner node[:exhibitor][:user]
+  mode "755"
+  not_if { node[:exhibitor][:upstart] }
+end
+
 service "exhibitor" do
-  provider Chef::Provider::Service::Upstart
   supports :start => true, :status => true, :restart => true
-  action :start
+  action [ :enable, :start ]
+  not_if { node[:exhibitor][:upstart] }
 end
