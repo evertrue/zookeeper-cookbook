@@ -2,12 +2,17 @@
 description "Exhibitor Server"
 
 env USER=<%= @user %>
+setuid <%= @user %>
+setgid <%= @group %>
 
 start on startup
 stop on shutdown
 
 respawn
 
-exec sudo -u $USER sh -c "java -jar \
-    <%= @jar %> \
-    <%= @opts.keys.sort.map { |k| "--#{k.to_s} #{@opts[k]}" }.join(" ") %>"
+exec java -jar <%= @jar %> \
+    <%= @opts.keys.sort.map { |k| "--#{k.to_s} #{@opts[k]}" }.join(" ") %>
+
+post-start script
+  while ! nc -z localhost 2181; do sleep 1 ; done
+end script
