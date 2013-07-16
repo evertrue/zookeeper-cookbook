@@ -54,9 +54,7 @@ end
 
 check_script = ::File.join(node[:exhibitor][:script_dir], 'check-local-zk.py')
 
-template "check-local-zk.py.erb" do
-  path check_script
-  source "check-local-zk.py.erb"
+template check_script do
   owner node[:exhibitor][:user]
   mode "0744"
   variables(
@@ -65,8 +63,7 @@ template "check-local-zk.py.erb" do
   )
 end
 
-template "exhibitor.upstart.conf" do
-  path "/etc/init/exhibitor.conf"
+template "/etc/init/exhibitor.conf" do
   source "exhibitor.upstart.conf.erb"
   owner "root"
   group "root"
@@ -81,9 +78,7 @@ template "exhibitor.upstart.conf" do
   )
 end
 
-template "defaultconfig.erb" do
-  path node[:exhibitor][:opts][:defaultconfig]
-  source "defaultconfig.erb"
+template node[:exhibitor][:opts][:defaultconfig] do
   owner node[:exhibitor][:user]
   mode "0644"
   variables(

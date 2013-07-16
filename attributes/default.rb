@@ -19,7 +19,7 @@ default[:exhibitor][:log_index_dir] = "/tmp/zookeeper_log_indexes"
 # Port for the HTTP Server
 default[:exhibitor][:opts][:port] = "8080"
 default[:exhibitor][:opts][:hostname] =  node[:ipaddress]
-default[:exhibitor][:opts][:defaultconfig] = "#{Chef::Config[:file_cache_path]}/exhibitor-defaultconfig"
+default[:exhibitor][:opts][:defaultconfig] = "#{Chef::Config[:file_cache_path]}/defaultconfig.exhibitor"
 
 default[:exhibitor][:opts][:configtype] = "file"
 default[:exhibitor][:opts][:fsconfigdir] = "/tmp"
