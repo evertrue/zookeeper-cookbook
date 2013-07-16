@@ -4,16 +4,17 @@ import argparse
 import json
 import socket
 import time
-import urllib
+import urllib2
+import urlparse
 
 def get_stat(host, hostname):
     path = '/exhibitor/v1/cluster/4ltr/mntr/' + hostname
 
-    stat_url = urllib.basejoin(host, path)
+    stat_url = urlparse.urljoin(host, path)
     #url = urlparse.urlsplit(stat_url)
     #socket.gethostbyaddr(url[1].split(':')[0])
 
-    f = urllib.urlopen(stat_url)
+    f = urllib2.urlopen(stat_url, timeout=30)
 
     if f.getcode() != 200:
         raise Exception("Non 200 response from exhibitor")

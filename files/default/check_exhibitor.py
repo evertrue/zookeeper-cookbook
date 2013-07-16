@@ -5,7 +5,7 @@ import json
 import logging
 import socket
 import sys
-import urllib
+import urllib2
 import urlparse
 from unittest import TestCase
 
@@ -37,7 +37,7 @@ class UnknownException(CheckException):
 def fetch_status(host):
     status_url = urlparse.urljoin(host, '/exhibitor/v1/cluster/status')
 
-    f = urllib.urlopen(status_url)
+    f = urllib2.urlopen(status_url, timeout=10)
 
     if f.getcode() != 200:
         raise UnknownException("Non 200 response from exhibitor")
