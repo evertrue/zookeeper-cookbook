@@ -1,8 +1,8 @@
 !/usr/bin/env ruby
 
 version = 'ubuntu-12.04'
-box = "opscode-#{version}"
-url = "https://opscode-vm.s3.amazonaws.com/vagrant/opscode_#{box}_provisionerless.box"
+box = "opscode_#{version}_provisionerless"
+url = "https://opscode-vm.s3.amazonaws.com/vagrant/#{box}.box"
 Vagrant.configure('2') do |config|
   config.vm.hostname = 'zookeeper'
   config.vm.box = box
