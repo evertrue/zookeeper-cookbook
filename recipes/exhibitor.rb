@@ -75,7 +75,6 @@ template "exhibitor.upstart.conf" do
   notifies :start, "service[exhibitor]"
   variables(
       :user => node[:exhibitor][:user],
-      :group => node[:exhibitor][:group],
       :jar => "#{node[:exhibitor][:install_dir]}/#{node[:exhibitor][:version]}.jar",
       :opts => node[:exhibitor][:opts],
       :check_script => tpl

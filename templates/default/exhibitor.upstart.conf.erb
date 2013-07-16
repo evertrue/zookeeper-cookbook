@@ -2,8 +2,6 @@
 description "Exhibitor Server"
 
 env USER=<%= @user %>
-setuid <%= @user %>
-setgid <%= @group %>
 
 start on startup
 stop on shutdown
@@ -14,8 +12,5 @@ exec sudo -u $USER java -jar <%= @jar %> \
     <%= @opts.keys.sort.map { |k| "--#{k.to_s} #{@opts[k]}" }.join(" ") %>
 
 post-start script
-# curl localhost:8080/exhibitor/v1/cluster/state/10.0.2.15 | grep '"description":"serving"'
-# while ! nc -z localhost 2182; do sleep 1 ; done
-#  while ! { echo "get /exhibitor/v1/cluster/state/10.0.2.15"; sleep 1;} | telnet localhost 8080 | grep '"description":"serving"'; done
-  timeout 5 sh -c "while ! /usr/local/bin/check-local-zk.py; do sleep 1; done" || { stop ; exit 1; }
+  timeout 5 sh -c "while ! <%= @check_script %>; do sleep 1; done" || { stop ; exit 1; }
 end script
