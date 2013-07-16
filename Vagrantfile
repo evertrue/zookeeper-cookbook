@@ -4,7 +4,7 @@ version = 'ubuntu-12.04'
 box = "opscode-#{version}"
 url = "https://opscode-vm.s3.amazonaws.com/vagrant/opscode_#{box}_provisionerless.box"
 Vagrant.configure('2') do |config|
-  config.vm.hostname = 'COOKBOOK'
+  config.vm.hostname = 'zookeeper'
   config.vm.box = box
   config.vm.box_url = url
   config.omnibus.chef_version = :latest
