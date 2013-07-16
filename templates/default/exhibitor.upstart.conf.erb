@@ -12,5 +12,5 @@ exec sudo -u $USER java -jar <%= @jar %> \
     <%= @opts.keys.sort.map { |k| "--#{k.to_s} #{@opts[k]}" }.join(" ") %>
 
 post-start script
-  timeout 300 sh -c "while ! <%= @check_script %>; do sleep 1; done" || { stop ; exit 1; }
+  <%= @check_script %> || { stop ; exit 1; }
 end script

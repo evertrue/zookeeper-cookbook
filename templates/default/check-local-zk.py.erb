@@ -1,12 +1,17 @@
 #!/usr/bin/env python
+# vim: ft=python:
+
 import json
 import sys
-import urllib
+import time
+import urllib2
+from datetime import datetime, timedelta
+
 
 def get_stat():
     url = 'http://localhost:<%= @exhibitor_port %>/exhibitor/v1/cluster/state/<%= @localhost %>'
 
-    f = urllib.urlopen(url)
+    f = urllib2.urlopen(url, timeout=1)
 
     if f.getcode() != 200:
         raise Exception("Non 200 response from exhibitor")
@@ -14,9 +19,12 @@ def get_stat():
     return json.loads(f.read())['response']
 
 if __name__ == '__main__':
-    try:
-        if get_stat()['description'] == 'serving':
-            sys.exit(0)
-    except Exception, e:
-        print e
+    end = datetime.now() + timedelta(minutes=5)
+    while datetime.now() < end:
+        try:
+            if get_stat()['description'] == 'serving':
+                sys.exit(0)
+        except Exception, e:
+            print e
+        time.sleep(1)
     sys.exit(1)
