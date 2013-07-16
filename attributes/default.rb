@@ -10,6 +10,7 @@ default[:exhibitor][:user] = "zookeeper"
 default[:exhibitor][:group] = "zookeeper"
 default[:exhibitor][:install_dir] = "/opt/exhibitor"
 
+default[:exhibitor][:script_dir] = '/usr/local/bin/'
 
 default[:exhibitor][:snapshot_dir] = "/tmp/zookeeper"
 default[:exhibitor][:transaction_dir] = "/tmp/zookeeper"

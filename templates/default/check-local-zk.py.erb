@@ -18,5 +18,6 @@ if __name__ == '__main__':
         if get_stat()['description'] == 'serving':
             sys.exit(0)
     except Exception, e:
+        print e
         pass
     sys.exit(1)
