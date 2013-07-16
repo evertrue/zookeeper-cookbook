@@ -1,0 +1,22 @@
+#!/usr/bin/env python
+import json
+import sys
+import urllib
+
+def get_stat():
+    url = 'http://localhost:<%= @exhibitor_port %>/exhibitor/v1/cluster/state/<%= @localhost %>'
+
+    f = urllib.urlopen(url)
+
+    if f.getcode() != 200:
+        raise Exception("Non 200 response from exhibitor")
+
+    return json.loads(f.read())['response']
+
+if __name__ == '__main__':
+    try:
+        if get_stat()['description'] == 'serving':
+            sys.exit(0)
+    except Exception, e:
+        print e
+    sys.exit(1)

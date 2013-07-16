@@ -52,8 +52,18 @@ bash "move exhibitor jar" do
   creates "#{node[:exhibitor][:install_dir]}/#{node[:exhibitor][:version]}.jar"
 end
 
-template "exhibitor.upstart.conf" do
-  path "/etc/init/exhibitor.conf"
+check_script = ::File.join(node[:exhibitor][:script_dir], 'check-local-zk.py')
+
+template check_script do
+  owner node[:exhibitor][:user]
+  mode "0744"
+  variables(
+    :exhibitor_port => node[:exhibitor][:opts][:port],
+    :localhost => node[:exhibitor][:opts][:hostname]
+  )
+end
+
+template "/etc/init/exhibitor.conf" do
   source "exhibitor.upstart.conf.erb"
   owner "root"
   group "root"
@@ -63,13 +73,12 @@ template "exhibitor.upstart.conf" do
   variables(
       :user => node[:exhibitor][:user],
       :jar => "#{node[:exhibitor][:install_dir]}/#{node[:exhibitor][:version]}.jar",
-      :opts => node[:exhibitor][:opts]
+      :opts => node[:exhibitor][:opts],
+      :check_script => check_script
   )
 end
 
-template "defaultconfig.erb" do
-  path node[:exhibitor][:opts][:defaultconfig]
-  source "defaultconfig.erb"
+template node[:exhibitor][:opts][:defaultconfig] do
   owner node[:exhibitor][:user]
   mode "0644"
   variables(
