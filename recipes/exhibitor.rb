@@ -51,10 +51,6 @@ bash "move exhibitor jar" do
   creates "#{node[:exhibitor][:install_dir]}/#{node[:exhibitor][:version]}.jar"
 end
 
-bash 'chown exhibitor jar' do
-  code  "chown #{node[:exhibitor][:user]} #{node[:exhibitor][:install_dir]}/#{node[:exhibitor][:version]}.jar"
-end
-
 check_script = ::File.join(node[:exhibitor][:script_dir], 'check-local-zk.py')
 
 template check_script do
