@@ -22,10 +22,6 @@ require 'net/http'
 require 'uri'
 
 class ExhibitorError < StandardError
-  attr :reason
-  def initialize(reason)
-    @reason = reason
-  end
 end
 
 
@@ -36,7 +32,7 @@ def discover_zookeepers(exhibitor_host)
       http.read_timeout = http.open_timeout = 3
       JSON.parse(http.get(url.path).body)
     rescue StandardError => reason
-      raise ExhibitorError.new(reason)
+      raise ExhibitorError, reason
     end
 end
 
