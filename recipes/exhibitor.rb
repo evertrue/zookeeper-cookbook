@@ -19,7 +19,9 @@
 
 include_recipe "zookeeper::gradle"
 
-group node[:exhibitor][:group]
+group node[:exhibitor][:group] do
+  action :create
+end
 
 user node[:exhibitor][:user] do
   gid node[:exhibitor][:group]
@@ -40,10 +42,11 @@ end
 
 jar_file = "#{Chef::Config[:file_cache_path]}/exhibitor/build/libs/exhibitor-#{node[:exhibitor][:version]}.jar"
 
-bash "build exhibitor" do
-  cwd "#{Chef::Config[:file_cache_path]}/exhibitor"
-  code %(gradle jar)
-  creates jar_file
+if !::File.exists?(jar_file)
+  execute "build exhibitor" do
+    cwd ::File.join(Chef::Config[:file_cache_path], 'exhibitor')
+    command 'gradle jar'
+  end
 end
 
 bash "move exhibitor jar" do
@@ -53,7 +56,6 @@ bash "move exhibitor jar" do
 end
 
 check_script = ::File.join(node[:exhibitor][:script_dir], 'check-local-zk.py')
-
 template check_script do
   owner node[:exhibitor][:user]
   mode "0744"
