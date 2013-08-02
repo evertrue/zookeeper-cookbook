@@ -61,8 +61,7 @@ template check_script do
   mode "0744"
   variables(
     :exhibitor_port => node[:exhibitor][:opts][:port],
-    :localhost => node[:exhibitor][:opts][:hostname]
-  )
+    :localhost => node[:exhibitor][:opts][:hostname] )
 end
 
 template "/etc/init/exhibitor.conf" do
@@ -73,22 +72,20 @@ template "/etc/init/exhibitor.conf" do
   notifies :stop, "service[exhibitor]" # :restart doesn't reload upstart conf
   notifies :start, "service[exhibitor]"
   variables(
-      :user => node[:exhibitor][:user],
-      :jar => "#{node[:exhibitor][:install_dir]}/#{node[:exhibitor][:version]}.jar",
-      :opts => node[:exhibitor][:opts],
-      :check_script => check_script
-  )
+    :user => node[:exhibitor][:user],
+    :jar => "#{node[:exhibitor][:install_dir]}/#{node[:exhibitor][:version]}.jar",
+    :opts => node[:exhibitor][:opts],
+    :check_script => check_script )
 end
 
 template node[:exhibitor][:opts][:defaultconfig] do
   owner node[:exhibitor][:user]
   mode "0644"
   variables(
-      :snapshot_dir => node[:exhibitor][:snapshot_dir],
-      :transaction_dir => node[:exhibitor][:transaction_dir],
-      :log_index_dir => node[:exhibitor][:log_index_dir],
-      :defaultconfig => node[:exhibitor][:defaultconfig]
-  )
+    :snapshot_dir => node[:exhibitor][:snapshot_dir],
+    :transaction_dir => node[:exhibitor][:transaction_dir],
+    :log_index_dir => node[:exhibitor][:log_index_dir],
+    :defaultconfig => node[:exhibitor][:defaultconfig] )
 end
 
 service "exhibitor" do
@@ -96,3 +93,4 @@ service "exhibitor" do
   supports :start => true, :status => true, :restart => true
   action :start
 end
+
