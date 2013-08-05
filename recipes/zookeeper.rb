@@ -36,11 +36,10 @@ end
 
 if !Dir.exists?(::File.join(Chef::Config[:file_cache_path], zk_basename))
   execute 'install zookeeper' do
-    user "root"
+    user node[:exhibitor][:user]
     cwd Chef::Config[:file_cache_path]
     command <<-eos 
-      tar zxf #{zk_basename}.tar.gz
-      cp -r #{zk_basename} #{node[:zookeeper][:install_dir]}
+      tar -C #{node[:zookeeper][:install_dir]} -zxf #{zk_basename}.tar.gz
     eos
   end
 end
