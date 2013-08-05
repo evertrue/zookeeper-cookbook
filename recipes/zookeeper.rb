@@ -40,7 +40,7 @@ if !Dir.exists?(::File.join(Chef::Config[:file_cache_path], zk_basename))
     cwd Chef::Config[:file_cache_path]
     command <<-eos 
       tar zxf #{zk_basename}.tar.gz
-      cp -r #{zk_basename} #{node[:zookeeper][:install_dir}
+      cp -r #{zk_basename} #{node[:zookeeper][:install_dir]}
     eos
   end
 end

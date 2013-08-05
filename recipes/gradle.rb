@@ -41,7 +41,7 @@ end
 
 ENV["PATH"] += ":#{dest_path}/bin"
 
-directory ::File.join(Chef::Config[:file_cache_path], exhibitor) do
+directory ::File.join(Chef::Config[:file_cache_path], 'exhibitor') do
   action :create
 end
 

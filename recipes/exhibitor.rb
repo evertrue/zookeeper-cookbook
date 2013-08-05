@@ -48,7 +48,7 @@ if !::File.exists?(jar_file)
   end
 end
 
-exhibitor_jar = ::File.join(node[:exhibitor][:install_dir], "#{node[exhibitor][:version]}.jar")
+exhibitor_jar = ::File.join(node[:exhibitor][:install_dir], "#{node[:exhibitor][:version]}.jar")
 if !::File.exists?(exhibitor_jar)
   execute "move exhibitor jar" do
     user node[:exhibitor][:user]
