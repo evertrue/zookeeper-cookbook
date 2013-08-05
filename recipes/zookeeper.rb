@@ -41,8 +41,10 @@ bash "untar zookeeper" do
 end
 
 bash "copy zk root" do
-  user node[:exhibitor][:user]
   cwd "#{Chef::Config[:file_cache_path]}"
-  code %(cp -r #{zk_basename} #{node[:zookeeper][:install_dir]}/)
   creates "#{node[:zookeeper][:install_dir]}/#{zk_basename}"
+  code  <<-EOF
+  		cp -r #{zk_basename} #{node[:zookeeper][:install_dir]}/
+  		chown -R #{node[:exhibitor][:user]} #{node[:zookeeper][:install_dir]}/#{zk_basename}
+	EOF
 end

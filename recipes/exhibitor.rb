@@ -47,7 +47,6 @@ bash "build exhibitor" do
 end
 
 bash "move exhibitor jar" do
-  user node[:exhibitor][:user]
   code %(cp #{jar_file} #{node[:exhibitor][:install_dir]}/#{node[:exhibitor][:version]}.jar)
   creates "#{node[:exhibitor][:install_dir]}/#{node[:exhibitor][:version]}.jar"
 end
