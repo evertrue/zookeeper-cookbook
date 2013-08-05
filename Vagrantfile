@@ -8,6 +8,11 @@ Vagrant.configure('2') do |config|
   config.omnibus.chef_version = :latest
   config.vm.network :forwarded_port, guest: 8080, host: 8080
 
+  config.vm.provision :shell do |shell|
+    shell.inline = 'test -f $1 || (sudo apt-get update -y && touch $1)'
+    shell.args = '/var/run/apt-get-update'
+  end
+
   config.vm.provision :chef_solo do |chef|
     chef.run_list = [
       'recipe[zookeeper::default]'
