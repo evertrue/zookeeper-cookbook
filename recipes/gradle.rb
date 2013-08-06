@@ -18,35 +18,36 @@
 #
 
 dest_file = "gradle-#{node[:gradle][:version]}.zip"
-
-remote_file "#{Chef::Config[:file_cache_path]}/#{dest_file}" do
+remote_file ::File.join(Chef::Config[:file_cache_path], dest_file) do
   owner "root"
-  source node[:gradle][:mirror]
   mode "0644"
-  action :create_if_missing
+  source node[:gradle][:mirror]
+  checksum node[:gradle][:checksum]
+  action :create
 end
 
 package "unzip" do
   action :install
 end
 
-dest_path = "#{Chef::Config[:file_cache_path]}/gradle-#{node[:gradle][:version]}"
-
-bash "unzip gradle" do
-  user "root"
-  cwd Chef::Config[:file_cache_path]
-  code %(unzip #{dest_file})
-  creates dest_path
+dest_path = ::File.join(Chef::Config[:file_cache_path], "gradle-#{node[:gradle][:version]}")
+if !Dir.exists?(dest_path)
+  execute "unzip gradle" do
+    user "root"
+    cwd Chef::Config[:file_cache_path]
+    command "unzip #{dest_file}"
+  end
 end
 
 ENV["PATH"] += ":#{dest_path}/bin"
 
-directory "#{Chef::Config[:file_cache_path]}/exhibitor"
-
-template "build.gradle" do
-  path "#{Chef::Config[:file_cache_path]}/exhibitor/build.gradle"
-  source "build.gradle.erb"
-  variables(
-    :version => node[:exhibitor][:version]
-  )
+directory ::File.join(Chef::Config[:file_cache_path], 'exhibitor') do
+  action :create
 end
+
+template ::File.join(Chef::Config[:file_cache_path], 'exhibitor', 'build.gradle') do
+  variables(
+    :version => node[:exhibitor][:version] )
+  action :create
+end
+

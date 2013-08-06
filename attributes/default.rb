@@ -1,9 +1,11 @@
 default[:zookeeper][:version] = "3.4.5"
 default[:zookeeper][:mirror] = "http://mirrors.ibiblio.org/apache/zookeeper/zookeeper-#{default[:zookeeper][:version]}/zookeeper-#{default[:zookeeper][:version]}.tar.gz"
+default[:zookeeper][:checksum] = 'e92b634e99db0414c6642f6014506cc22eefbea42cc912b57d7d0527fb7db132'
 default[:zookeeper][:install_dir] = "/opt/zookeeper"
 
 default[:gradle][:version] = "1.3"
 default[:gradle][:mirror] = "http://services.gradle.org/distributions/gradle-#{default[:gradle][:version]}-bin.zip"
+default[:gradle][:checksum] = 'ada68561efbb9f1cae0f9063974cbde15c180351a2f92bc2f1106e39ddcae5ba'
 
 default[:exhibitor][:version] = "1.4.8"
 default[:exhibitor][:user] = "zookeeper"
@@ -60,3 +62,4 @@ default[:exhibitor][:defaultconfig][:auto_manage_instances] = '1'
 #default[:exhibitor][:opts][:jquerystyle] = "red"
 # Extra text to display in UI header
 #default[:exhibitor][:opts][:headingtext] = "Exhibitor"
+
