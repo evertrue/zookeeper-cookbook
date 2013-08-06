@@ -18,6 +18,8 @@
 #
 
 include_recipe "zookeeper::gradle"
+chef_gem "zookeeper"
+chef_gem "json"
 
 group node[:exhibitor][:group] do
   action :create
