@@ -17,7 +17,6 @@
 #
 
 
-require 'json'
 require 'net/http'
 require 'uri'
 
@@ -26,6 +25,7 @@ end
 
 
 def discover_zookeepers(exhibitor_host)
+    require 'json'
     url = URI.join(exhibitor_host, '/exhibitor/v1/cluster/list')
     begin
       http = Net::HTTP.new(url.host, url.port)
