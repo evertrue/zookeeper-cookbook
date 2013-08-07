@@ -19,6 +19,13 @@
 
 include_recipe "java::default"
 
+override['build_essential']['compiletime'] = true
+include_recipe "build-essential"
+
+chef_gem "zookeeper"
+chef_gem "json"
+
+
 group node[:zookeeper][:group] do
   action :create
 end
