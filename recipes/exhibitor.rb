@@ -17,9 +17,9 @@
 # limitations under the License.
 #
 
-include_recipe "zookeeper::gradle"
 chef_gem "zookeeper"
 chef_gem "json"
+package "gradle"
 
 group node[:exhibitor][:group] do
   action :create
