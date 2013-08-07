@@ -1,7 +1,7 @@
 version := $(shell grep "^version" metadata.rb | sed -E 's/[a-z ]+"(.+)"/\1/g')
 
 metadata.json:
-	 @rbenv exec knife cookbook metadata from file metadata.rb
+	 @knife cookbook metadata from file metadata.rb
 
 chef-zookeeper-$(version).tgz: metadata.json
 	@git archive --format tgz -o chef-zookeeper-$(version).tgz --prefix zookeeper/ master
