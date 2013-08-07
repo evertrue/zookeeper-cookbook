@@ -20,14 +20,6 @@
 chef_gem "zookeeper"
 chef_gem "json"
 
-group node[:exhibitor][:group] do
-  action :create
-end
-
-user node[:exhibitor][:user] do
-  gid node[:exhibitor][:group]
-end
-
 include_recipe "zookeeper::zookeeper"
 
 exhibitor_build_path = ::File.join(Chef::Config[:file_cache_path], 'exhibitor')
@@ -39,7 +31,7 @@ exhibitor_build_path = ::File.join(Chef::Config[:file_cache_path], 'exhibitor')
   exhibitor_build_path
 ].uniq.each do |dir|
   directory dir do
-    owner node[:exhibitor][:user]
+    owner node[:zookeeper][:user]
     mode "0755"
   end
 end
@@ -63,14 +55,14 @@ end
 exhibitor_jar = ::File.join(node[:exhibitor][:install_dir], "#{node[:exhibitor][:version]}.jar")
 if !::File.exists?(exhibitor_jar)
   execute "move exhibitor jar" do
-    user node[:exhibitor][:user]
+    user node[:zookeeper][:user]
     command "cp #{jar_file} #{exhibitor_jar}"
   end
 end
 
 check_script = ::File.join(node[:exhibitor][:script_dir], 'check-local-zk.py')
 template check_script do
-  owner node[:exhibitor][:user]
+  owner node[:zookeeper][:user]
   mode "0744"
   variables(
     :exhibitor_port => node[:exhibitor][:opts][:port],
@@ -85,14 +77,14 @@ template "/etc/init/exhibitor.conf" do
   notifies :stop, "service[exhibitor]" # :restart doesn't reload upstart conf
   notifies :start, "service[exhibitor]"
   variables(
-    :user => node[:exhibitor][:user],
+    :user => node[:zookeeper][:user],
     :jar => exhibitor_jar,
     :opts => node[:exhibitor][:opts],
     :check_script => check_script )
 end
 
 template node[:exhibitor][:opts][:defaultconfig] do
-  owner node[:exhibitor][:user]
+  owner node[:zookeeper][:user]
   mode "0644"
   variables(
     :snapshot_dir => node[:exhibitor][:snapshot_dir],
