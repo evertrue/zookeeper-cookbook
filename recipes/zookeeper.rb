@@ -19,7 +19,7 @@
 
 include_recipe "java::default"
 
-override['build_essential']['compiletime'] = true
+node.override['build_essential']['compiletime'] = true
 include_recipe "build-essential"
 
 chef_gem "zookeeper"
