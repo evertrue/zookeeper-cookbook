@@ -19,6 +19,14 @@
 
 include_recipe "java::default"
 
+group node[:exhibitor][:group] do
+  action :create
+end
+
+user node[:exhibitor][:user] do
+  gid node[:exhibitor][:group]
+end
+
 zk_basename = "zookeeper-#{node[:zookeeper][:version]}"
 
 remote_file ::File.join(Chef::Config[:file_cache_path], "#{zk_basename}.tar.gz") do

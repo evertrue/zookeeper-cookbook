@@ -21,14 +21,6 @@ include_recipe "zookeeper::gradle"
 chef_gem "zookeeper"
 chef_gem "json"
 
-group node[:exhibitor][:group] do
-  action :create
-end
-
-user node[:exhibitor][:user] do
-  gid node[:exhibitor][:group]
-end
-
 include_recipe "zookeeper::zookeeper"
 
 [node[:exhibitor][:install_dir],
