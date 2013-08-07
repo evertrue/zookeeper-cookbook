@@ -19,12 +19,12 @@
 
 include_recipe "java::default"
 
-group node[:exhibitor][:group] do
+group node[:zookeeper][:group] do
   action :create
 end
 
-user node[:exhibitor][:user] do
-  gid node[:exhibitor][:group]
+user node[:zookeeper][:user] do
+  gid node[:zookeeper][:group]
 end
 
 zk_basename = "zookeeper-#{node[:zookeeper][:version]}"
@@ -38,13 +38,13 @@ remote_file ::File.join(Chef::Config[:file_cache_path], "#{zk_basename}.tar.gz")
 end
 
 directory node[:zookeeper][:install_dir] do
-  owner node[:exhibitor][:user]
+  owner node[:zookeeper][:user]
   mode "0755"
 end
 
 if !Dir.exists?(::File.join(Chef::Config[:file_cache_path], zk_basename))
   execute 'install zookeeper' do
-    user node[:exhibitor][:user]
+    user node[:zookeeper][:user]
     cwd Chef::Config[:file_cache_path]
     command <<-eos 
       tar -C #{node[:zookeeper][:install_dir]} -zxf #{zk_basename}.tar.gz
