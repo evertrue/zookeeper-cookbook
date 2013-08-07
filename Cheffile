@@ -5,6 +5,7 @@ site 'http://community.opscode.com/api/v1'
 
 cookbook 'java'
 cookbook 'apt'
+cookbook 'build-essential'
 
 cookbook 'zookeeper',
   :path => './'

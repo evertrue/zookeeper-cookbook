@@ -17,9 +17,6 @@
 # limitations under the License.
 #
 
-chef_gem "zookeeper"
-chef_gem "json"
-
 include_recipe "zookeeper::zookeeper"
 
 exhibitor_build_path = ::File.join(Chef::Config[:file_cache_path], 'exhibitor')
