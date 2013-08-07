@@ -5,4 +5,5 @@ license          "All rights reserved"
 description      "Installs/Configures zookeeper"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 depends          "java"
-version          "1.4.1"
+depends          "build-essential"
+version          "1.4.2"
