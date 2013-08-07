@@ -17,6 +17,7 @@
 # limitations under the License.
 #
 
+include_recipe "build-essential"
 chef_gem "zookeeper"
 chef_gem "json"
 
