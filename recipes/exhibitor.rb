@@ -17,7 +17,6 @@
 # limitations under the License.
 #
 
-include_recipe "zookeeper::gradle"
 chef_gem "zookeeper"
 chef_gem "json"
 
@@ -31,10 +30,13 @@ end
 
 include_recipe "zookeeper::zookeeper"
 
+exhibitor_build_path = ::File.join(Chef::Config[:file_cache_path], 'exhibitor')
+
 [node[:exhibitor][:install_dir],
   node[:exhibitor][:snapshot_dir],
   node[:exhibitor][:transaction_dir],
-  node[:exhibitor][:log_index_dir]
+  node[:exhibitor][:log_index_dir],
+  exhibitor_build_path
 ].uniq.each do |dir|
   directory dir do
     owner node[:exhibitor][:user]
@@ -42,10 +44,18 @@ include_recipe "zookeeper::zookeeper"
   end
 end
 
-jar_file = "#{Chef::Config[:file_cache_path]}/exhibitor/build/libs/exhibitor-#{node[:exhibitor][:version]}.jar"
+template ::File.join(exhibitor_build_path, 'build.gradle') do
+  variables(
+    :version => node[:exhibitor][:version] )
+  action :create
+end
+
+include_recipe "zookeeper::gradle"
+
+jar_file = "#{exhibitor_build_path}/build/libs/exhibitor-#{node[:exhibitor][:version]}.jar"
 if !::File.exists?(jar_file)
   execute "build exhibitor" do
-    cwd ::File.join(Chef::Config[:file_cache_path], 'exhibitor')
+    cwd exhibitor_build_path
     command 'gradle jar'
   end
 end
@@ -76,7 +86,7 @@ template "/etc/init/exhibitor.conf" do
   notifies :start, "service[exhibitor]"
   variables(
     :user => node[:exhibitor][:user],
-    :jar => "#{node[:exhibitor][:install_dir]}/#{node[:exhibitor][:version]}.jar",
+    :jar => exhibitor_jar,
     :opts => node[:exhibitor][:opts],
     :check_script => check_script )
 end
