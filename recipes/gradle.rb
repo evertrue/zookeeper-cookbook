@@ -40,14 +40,3 @@ if !Dir.exists?(dest_path)
 end
 
 ENV["PATH"] += ":#{dest_path}/bin"
-
-directory ::File.join(Chef::Config[:file_cache_path], 'exhibitor') do
-  action :create
-end
-
-template ::File.join(Chef::Config[:file_cache_path], 'exhibitor', 'build.gradle') do
-  variables(
-    :version => node[:exhibitor][:version] )
-  action :create
-end
-
