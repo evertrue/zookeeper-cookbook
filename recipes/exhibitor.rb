@@ -44,6 +44,7 @@ include_recipe "zookeeper::gradle"
 jar_file = "#{exhibitor_build_path}/build/libs/exhibitor-#{node[:exhibitor][:version]}.jar"
 if !::File.exists?(jar_file)
   execute "build exhibitor" do
+    user "root"
     cwd exhibitor_build_path
     command 'gradle jar'
   end
