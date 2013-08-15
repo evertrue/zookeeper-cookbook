@@ -31,7 +31,7 @@ package "unzip" do
 end
 
 dest_path = ::File.join(Chef::Config[:file_cache_path], "gradle-#{node[:gradle][:version]}")
-if !Dir.exists?(dest_path)
+unless ::File.exists?(dest_path)
   execute "unzip gradle" do
     user "root"
     cwd Chef::Config[:file_cache_path]
