@@ -7,6 +7,7 @@ Vagrant.configure('2') do |config|
   config.vm.box_url = "https://opscode-vm.s3.amazonaws.com/vagrant/#{box}.box"
   config.omnibus.chef_version = :latest
   config.vm.network :forwarded_port, guest: 8080, host: 8080
+  config.vm.network :forwarded_port, guest: 2181, host: 2181
 
   config.vm.provision :shell do |shell|
     shell.inline = 'test -f $1 || (sudo apt-get update -y && touch $1)'
