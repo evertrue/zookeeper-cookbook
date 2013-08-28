@@ -47,4 +47,5 @@ def zk_connect_str(zookeepers, chroot = nil)
   if not chroot.nil?
     zk_connect += "/#{chroot}"
   end
+  zk_connect
 end
