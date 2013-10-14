@@ -51,8 +51,7 @@ end
 
 unless ::File.exists?(::File.join(node[:zookeeper][:install_dir], zk_basename))
   execute 'install zookeeper' do
-    user node[:zookeeper][:user]
     cwd Chef::Config[:file_cache_path]
-    command "tar -C #{node[:zookeeper][:install_dir]} -zxf #{zk_basename}.tar.gz"
+    command "tar -C '#{node[:zookeeper][:install_dir]}' -zxf '#{zk_basename}.tar.gz' && chown -R '#{node[:zookeeper][:user]}:#{node[:zookeeper][:group]}' #{node[:zookeeper][:install_dir]}"
   end
 end
