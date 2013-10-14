@@ -53,8 +53,7 @@ end
 exhibitor_jar = ::File.join(node[:exhibitor][:install_dir], "#{node[:exhibitor][:version]}.jar")
 if !::File.exists?(exhibitor_jar)
   execute "move exhibitor jar" do
-    user node[:zookeeper][:user]
-    command "cp #{jar_file} #{exhibitor_jar}"
+    command "cp '#{jar_file}' '#{exhibitor_jar}' && chown '#{node[:zookeeper][:user]}:#{node[:zookeeper][:group]}' '#{exhibitor_jar}'"
   end
 end
 
