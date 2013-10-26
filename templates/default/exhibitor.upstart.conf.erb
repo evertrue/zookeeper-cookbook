@@ -8,6 +8,12 @@ stop on shutdown
 
 respawn
 
-exec sudo -u $USER sh -c "java -jar \
+exec sudo -u $USER sh -c "java \
+    <% if node[:newrelic][:use_java_agent] == "true" %>
+    -Dnewrelic.config.file=<%= node[:newrelic][:config] %> \
+    -Dnewrelic.environment=<%= node[:newrelic][:environment] %> \
+    -javaagent:<%= node[:newrelic][:agent_install_path] %> \
+    <% end %>
+    -jar \
     <%= @jar %> \
     <%= @opts.keys.sort.map { |k| "--#{k.to_s} #{@opts[k]}" }.join(" ") %>"
