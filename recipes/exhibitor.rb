@@ -19,10 +19,11 @@
 
 include_recipe "zookeeper::gradle"
 
-user node[:exhibitor][:user] do
-  uid node[:exhibitor][:uid]
-  gid node[:exhibitor][:group]
-end
+# User is created by recipe[goindex::setup_goindex]
+#user node[:exhibitor][:user] do
+#  uid node[:exhibitor][:uid]
+#  gid node[:exhibitor][:group]
+#end
 
 include_recipe "zookeeper::zookeeper"
 
