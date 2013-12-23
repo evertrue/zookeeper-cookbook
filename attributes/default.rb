@@ -40,6 +40,7 @@ default[:exhibitor][:defaultconfig][:election_port] = '3888'
 default[:exhibitor][:defaultconfig][:zoo_cfg_extra] = 'tickTime\=2000&initLimit\=10&syncLimit\=5'
 default[:exhibitor][:defaultconfig][:auto_manage_instances_settling_period_ms] = '0'
 default[:exhibitor][:defaultconfig][:auto_manage_instances] = '1'
+default[:exhibitor][:defaultconfig][:servers_spec] = "1:#{node[:ipaddress]}"
 
 
 # default options. see https://github.com/Netflix/exhibitor/wiki/Running-Exhibitor
