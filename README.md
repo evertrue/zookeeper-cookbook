@@ -6,6 +6,12 @@ Requirements
 ============
 java
 
+Errata
+======
+
+- version 1.4.7 on the community site is in fact version 1.4.8. The result of
+of duplicating information.
+
 Attributes
 ==========
 To override exhibitor command line options, add them to node[:exhibitor][:opts].
