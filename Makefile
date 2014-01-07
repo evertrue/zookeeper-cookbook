@@ -13,7 +13,7 @@ $(staging)/metadata.json: metadata.json $(staging)
 	@mv metadata.json $(staging)
 
 chef-zookeeper-$(version).tar:
-	@git archive --format tar -o chef-zookeeper-$(version).tar --prefix zookeeper/ master
+	@git archive --format tar -o chef-zookeeper-$(version).tar --prefix zookeeper/ HEAD
 
 chef-zookeeper-$(version).tar.gz: $(staging)/metadata.json chef-zookeeper-$(version).tar
 	@tar -uf chef-zookeeper-$(version).tar -C $(builddir) zookeeper/metadata.json
