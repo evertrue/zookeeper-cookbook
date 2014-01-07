@@ -4,3 +4,4 @@ Cheffile.lock
 tmp
 chef-zookeeper*.tgz
 metadata.json
+.build
