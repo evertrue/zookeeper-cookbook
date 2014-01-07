@@ -3,3 +3,4 @@ Cheffile.lock
 .vagrant/
 tmp
 chef-zookeeper*.tgz
+metadata.json

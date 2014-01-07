@@ -13,6 +13,3 @@ build: chef-zookeeper-$(version).tgz
 clean:
 	@rm -f chef-zookeeper-*.tgz
 	@rm -f metadata.json
-
-pre-commit: clean metadata.json
-	@git add metadata.json
