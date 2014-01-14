@@ -21,6 +21,9 @@ chef-zookeeper-$(version).tar.gz: $(staging)/metadata.json chef-zookeeper-$(vers
 
 .PHONY=build clean
 
+tag:
+	@git tag v$(version)
+
 build: clean chef-zookeeper-$(version).tar.gz
 
 clean:
