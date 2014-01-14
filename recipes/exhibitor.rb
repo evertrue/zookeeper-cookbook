@@ -66,6 +66,10 @@ template check_script do
     :localhost => node[:exhibitor][:opts][:hostname] )
 end
 
+if node[:exhibitor][:opts][:configtype] != "file"
+    node.default[:exhibitor][:opts].delete(:fsconfigdir)
+end
+
 if node[:exhibitor][:s3key]
     node.default[:exhibitor][:opts][:s3credentials] = node.default[:exhibitor][:s3credentials]
     template node[:exhibitor][:opts][:s3credentials] do
