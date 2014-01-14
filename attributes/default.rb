@@ -23,16 +23,22 @@ default[:exhibitor][:opts][:port] = "8080"
 default[:exhibitor][:opts][:hostname] =  node[:ipaddress]
 default[:exhibitor][:opts][:defaultconfig] = "#{Chef::Config[:file_cache_path]}/defaultconfig.exhibitor"
 
-default[:exhibitor][:opts][:configtype] = "file"
+configtype = "file"
+default[:exhibitor][:opts][:configtype] = configtype
 
-# For --configtype s3, set:
-# [:exhibitor][:s3key] = "key"
-# [:exhibitor][:s3secret] = "secret"
-# [:exhibitor][:opts][:s3config] = "bucket:config-key"
-# [:exhibitor][:opts][:s3region] = "region" # i.e. us-east-1
+case configtype
+when "file"
+  default[:exhibitor][:opts][:fsconfigdir] = "/tmp"
+when "s3"
+  default[:exhibitor][:opts][:s3credentials] = "#{Chef::Config[:file_cache_path]}/exhibitor.s3.properties"
+  default[:exhibitor][:s3key] = "key"
+  default[:exhibitor][:s3secret] = "secret"
+  default[:exhibitor][:opts][:s3config] = "bucket:config-key"
+  default[:exhibitor][:opts][:s3region] = "region" # i.e. us-east-1
+when "zookeeper"
+  raise RuntimeError, "zookeeper configtype support not implemented."
+end
 
-# For --contiftype file
-default[:exhibitor][:opts][:fsconfigdir] = "/tmp"
 
 default[:exhibitor][:defaultconfig][:cleanup_period_ms] = 5 * 60 * 1000
 default[:exhibitor][:defaultconfig][:zookeeper_install_directory] = "#{node[:zookeeper][:install_dir]}/*"
