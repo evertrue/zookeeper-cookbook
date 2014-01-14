@@ -23,14 +23,15 @@ default[:exhibitor][:opts][:port] = "8080"
 default[:exhibitor][:opts][:hostname] =  node[:ipaddress]
 default[:exhibitor][:opts][:defaultconfig] = "#{Chef::Config[:file_cache_path]}/defaultconfig.exhibitor"
 
+default[:exhibitor][:opts][:configtype] = "file"
+
 # For --configtype s3, set:
 # [:exhibitor][:s3key] = "key"
 # [:exhibitor][:s3secret] = "secret"
 # [:exhibitor][:opts][:s3config] = "bucket:config-key"
 # [:exhibitor][:opts][:s3region] = "region" # i.e. us-east-1
-default[:exhibitor][:s3credentials] = "#{Chef::Config[:file_cache_path]}/exhibitor.s3.properties"
 
-default[:exhibitor][:opts][:configtype] = "file"
+# For --contiftype file
 default[:exhibitor][:opts][:fsconfigdir] = "/tmp"
 
 default[:exhibitor][:defaultconfig][:cleanup_period_ms] = 5 * 60 * 1000
