@@ -2,6 +2,9 @@
 
 This file is used to list changes made in each version of zookeeper.
 
+## 1.4.9
+- Added: s3credentials template to assist with --configtype s3
+
 ## 1.4.8
 - Added config hook and default for servers-spec setting
 - bugfix: cache permission denied error on exhibitor jar move
