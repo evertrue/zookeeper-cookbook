@@ -71,7 +71,7 @@ if node[:exhibitor][:opts][:configtype] != "file"
 end
 
 if node[:exhibitor][:opts][:configtype] == 's3'
-  s3_creds = "#{Chef::Config[:file_cache_path]}/exhibitor.s3.properties"
+  s3_creds = "#{node[:exhibitor][:install_dir]}/exhibitor.s3.properties"
   node.default[:exhibitor][:opts][:s3credentials] = s3_creds
   template s3_creds do
     source "exhibitor.s3.properties.erb"
@@ -81,6 +81,17 @@ if node[:exhibitor][:opts][:configtype] == 's3'
       :s3key => node[:exhibitor][:s3key],
       :s3secret => node[:exhibitor][:s3secret] )
   end
+end
+
+log4j_props = ::File.join(node[:exhibitor][:install_dir], "log4j.properties")
+template log4j_props do
+  source "log4j.properties.erb"
+  owner "root"
+  group "root"
+  mode "0644"
+  variables(
+      :loglevel => node[:exhibitor][:loglevel]
+  )
 end
 
 template "/etc/init/exhibitor.conf" do
@@ -93,11 +104,15 @@ template "/etc/init/exhibitor.conf" do
   variables(
     :user => node[:zookeeper][:user],
     :jar => exhibitor_jar,
+    :log4j_props => log4j_props,
     :opts => node[:exhibitor][:opts],
+    :exec_output => (node[:exhibitor][:log_to_syslog].to_s == "1" ||
+                     node[:exhibitor][:log_to_syslog] == true) ? "| logger -t zookeeper" : "",
     :check_script => check_script )
 end
 
 template node[:exhibitor][:opts][:defaultconfig] do
+  source "exhibitor.properties.erb"
   owner node[:zookeeper][:user]
   mode "0644"
   variables(

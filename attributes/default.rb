@@ -17,13 +17,16 @@ default[:exhibitor][:script_dir] = '/usr/local/bin/'
 default[:exhibitor][:snapshot_dir] = "/tmp/zookeeper"
 default[:exhibitor][:transaction_dir] = "/tmp/zookeeper"
 default[:exhibitor][:log_index_dir] = "/tmp/zookeeper_log_indexes"
+default[:exhibitor][:log_to_syslog] = "1"
 
 # Port for the HTTP Server
 default[:exhibitor][:opts][:port] = "8080"
 default[:exhibitor][:opts][:hostname] =  node[:ipaddress]
-default[:exhibitor][:opts][:defaultconfig] = "#{Chef::Config[:file_cache_path]}/defaultconfig.exhibitor"
+default[:exhibitor][:opts][:defaultconfig] = "#{node[:exhibitor][:install_dir]}/exhibitor.properties"
 
 default[:exhibitor][:opts][:configtype] = "file"
+
+default[:exhibitor][:loglevel] = "info"
 
 # For --configtype s3, set:
 # [:exhibitor][:s3key] = "key"
