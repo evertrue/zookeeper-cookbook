@@ -17,6 +17,7 @@ default[:exhibitor][:script_dir] = '/usr/local/bin/'
 default[:exhibitor][:snapshot_dir] = "/tmp/zookeeper"
 default[:exhibitor][:transaction_dir] = "/tmp/zookeeper"
 default[:exhibitor][:log_index_dir] = "/tmp/zookeeper_log_indexes"
+default[:exhibitor][:log_to_syslog] = "1"
 
 # Port for the HTTP Server
 default[:exhibitor][:opts][:port] = "8080"

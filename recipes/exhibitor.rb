@@ -106,6 +106,8 @@ template "/etc/init/exhibitor.conf" do
     :jar => exhibitor_jar,
     :log4j_props => log4j_props,
     :opts => node[:exhibitor][:opts],
+    :exec_output => (node[:exhibitor][:log_to_syslog].to_s == "1" ||
+                     node[:exhibitor][:log_to_syslog] == true) ? "| logger -t zookeeper" : "",
     :check_script => check_script )
 end
 
