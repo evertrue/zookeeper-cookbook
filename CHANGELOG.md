@@ -2,6 +2,14 @@
 
 This file is used to list changes made in each version of zookeeper.
 
+## 1.4.10
+- changes: Skip S3 credentials file if AWS credentials are not provided
+
+### OpsWorks related changes
+- Moved property files from inaccessible chef dir to exhibitor install dir.
+- Logged output to syslog.
+- Added option to set exhibitor/amazon log level
+
 ## 1.4.9
 - Added: s3credentials template to assist with --configtype s3
 
@@ -24,7 +32,7 @@ This file is used to list changes made in each version of zookeeper.
 
 * Initial release of zookeeper
 
-- - - 
+- - -
 Check the [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) for help with Markdown.
 
 The [Github Flavored Markdown page](http://github.github.com/github-flavored-markdown/) describes the differences between markdown on github and standard markdown.
