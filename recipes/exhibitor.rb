@@ -70,7 +70,9 @@ if node[:exhibitor][:opts][:configtype] != "file"
     node.default[:exhibitor][:opts].delete(:fsconfigdir)
 end
 
-if node[:exhibitor][:opts][:configtype] == 's3'
+if node[:exhibitor][:opts][:configtype] == 's3' &&
+    node[:exhibitor].attribute?(:s3key) &&
+    node[:exhibitor].attribute?(:s3secret)
   s3_creds = "#{node[:exhibitor][:install_dir]}/exhibitor.s3.properties"
   node.default[:exhibitor][:opts][:s3credentials] = s3_creds
   template s3_creds do
@@ -127,4 +129,3 @@ service "exhibitor" do
   supports :start => true, :status => true, :restart => true
   action :start
 end
-
