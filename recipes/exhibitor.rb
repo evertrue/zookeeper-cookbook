@@ -33,28 +33,41 @@ exhibitor_build_path = ::File.join(Chef::Config[:file_cache_path], 'exhibitor')
   end
 end
 
-template ::File.join(exhibitor_build_path, 'build.gradle') do
-  variables(
-    :version => node[:exhibitor][:version] )
-  action :create
-end
-
-include_recipe "zookeeper::gradle"
-
-jar_file = "#{exhibitor_build_path}/build/libs/exhibitor-#{node[:exhibitor][:version]}.jar"
-if !::File.exists?(jar_file)
-  execute "build exhibitor" do
-    user "root"
-    cwd exhibitor_build_path
-    command 'gradle jar'
-  end
-end
-
 exhibitor_jar = ::File.join(node[:exhibitor][:install_dir], "#{node[:exhibitor][:version]}.jar")
+
 if !::File.exists?(exhibitor_jar)
-  execute "move exhibitor jar" do
-    command "cp '#{jar_file}' '#{exhibitor_jar}' && chown '#{node[:zookeeper][:user]}:#{node[:zookeeper][:group]}' '#{exhibitor_jar}'"
-  end
+  if node[:exhibitor][:install_method] == 'download'
+    remote_file ::File.join(exhibitor_jar) do
+      owner "root"
+      mode "0644"
+      source node[:exhibitor][:mirror]
+      checksum node[:exhibitor][:checksum]
+      action :create
+    end
+  else  #build exhibitor jar using gradle
+    jar_file = "#{exhibitor_build_path}/build/libs/exhibitor-#{node[:exhibitor][:version]}.jar"
+    template ::File.join(exhibitor_build_path, 'build.gradle') do
+      variables(
+	:version => node[:exhibitor][:version] )
+      action :create
+    end
+
+    include_recipe "zookeeper::gradle"
+
+    if !::File.exists?(jar_file)
+      execute "build exhibitor" do
+	user "root"
+	cwd exhibitor_build_path
+	command 'gradle jar'
+      end
+    end
+
+    if !::File.exists?(exhibitor_jar)
+      execute "move exhibitor jar" do
+	command "cp '#{jar_file}' '#{exhibitor_jar}' && chown '#{node[:zookeeper][:user]}:#{node[:zookeeper][:group]}' '#{exhibitor_jar}'"
+      end
+    end
+  end 
 end
 
 check_script = ::File.join(node[:exhibitor][:script_dir], 'check-local-zk.py')
