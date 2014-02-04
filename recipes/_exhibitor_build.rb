@@ -1,3 +1,10 @@
+exhibitor_build_path = ::File.join(Chef::Config[:file_cache_path], 'exhibitor')
+
+directory exhibitor_build_path do
+  owner node[:zookeeper][:user]
+  mode "0755"
+end
+
 template ::File.join(exhibitor_build_path, 'build.gradle') do
   variables(
     :version => node[:exhibitor][:version] )

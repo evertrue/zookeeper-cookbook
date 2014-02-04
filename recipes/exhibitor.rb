@@ -19,13 +19,10 @@
 
 include_recipe "zookeeper::zookeeper"
 
-exhibitor_build_path = ::File.join(Chef::Config[:file_cache_path], 'exhibitor')
-
 [node[:exhibitor][:install_dir],
   node[:exhibitor][:snapshot_dir],
   node[:exhibitor][:transaction_dir],
-  node[:exhibitor][:log_index_dir],
-  exhibitor_build_path
+  node[:exhibitor][:log_index_dir]
 ].uniq.each do |dir|
   directory dir do
     owner node[:zookeeper][:user]
