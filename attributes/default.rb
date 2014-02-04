@@ -12,13 +12,13 @@ default[:gradle][:checksum] = 'a5511a0659caa47d9d74fd2844c9da43157d2f78e63a0223c
 # Exhibitor install options:
 #    one of download or build
 #
-#    build will pull down gradle and build exhibitor on the server 
+#    build will pull down gradle and build exhibitor on the server
 default[:exhibitor][:install_method] = 'build'
 
 #    dowlnload will pull down a prebuilt exhibitor jar
 #default[:exhibitor][:mirror] = 'http://example.com/exhibitor-1.5.0.jar'
 #default[:exhibitor][:install_method] = 'download'
-#default[:exhibitor][:checksum] = '' 
+#default[:exhibitor][:checksum] = ''
 
 
 default[:exhibitor][:version] = "1.5.0"
