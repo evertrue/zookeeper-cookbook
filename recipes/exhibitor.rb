@@ -19,13 +19,10 @@
 
 include_recipe "zookeeper::zookeeper"
 
-exhibitor_build_path = ::File.join(Chef::Config[:file_cache_path], 'exhibitor')
-
 [node[:exhibitor][:install_dir],
   node[:exhibitor][:snapshot_dir],
   node[:exhibitor][:transaction_dir],
-  node[:exhibitor][:log_index_dir],
-  exhibitor_build_path
+  node[:exhibitor][:log_index_dir]
 ].uniq.each do |dir|
   directory dir do
     owner node[:zookeeper][:user]
@@ -33,27 +30,19 @@ exhibitor_build_path = ::File.join(Chef::Config[:file_cache_path], 'exhibitor')
   end
 end
 
-template ::File.join(exhibitor_build_path, 'build.gradle') do
-  variables(
-    :version => node[:exhibitor][:version] )
-  action :create
-end
+node.default[:exhibitor][:jar_dest] = exhibitor_jar = ::File.join(node[:exhibitor][:install_dir], "#{node[:exhibitor][:version]}.jar")
 
-include_recipe "zookeeper::gradle"
-
-jar_file = "#{exhibitor_build_path}/build/libs/exhibitor-#{node[:exhibitor][:version]}.jar"
-if !::File.exists?(jar_file)
-  execute "build exhibitor" do
-    user "root"
-    cwd exhibitor_build_path
-    command 'gradle jar'
-  end
-end
-
-exhibitor_jar = ::File.join(node[:exhibitor][:install_dir], "#{node[:exhibitor][:version]}.jar")
 if !::File.exists?(exhibitor_jar)
-  execute "move exhibitor jar" do
-    command "cp '#{jar_file}' '#{exhibitor_jar}' && chown '#{node[:zookeeper][:user]}:#{node[:zookeeper][:group]}' '#{exhibitor_jar}'"
+  if node[:exhibitor][:install_method] == 'download'
+    remote_file ::File.join(exhibitor_jar) do
+      owner "root"
+      mode "0644"
+      source node[:exhibitor][:mirror]
+      checksum node[:exhibitor][:checksum]
+      action :create
+    end
+  else  #build exhibitor jar using gradle
+    include_recipe "zookeeper::_exhibitor_build"
   end
 end
 
