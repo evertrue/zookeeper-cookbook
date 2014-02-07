@@ -23,8 +23,9 @@ chef-zookeeper-$(version).tar.gz: $(staging)/metadata.json chef-zookeeper-$(vers
 
 tag:
 	@git tag v$(version)
+	@git push --tags
 
-build: clean chef-zookeeper-$(version).tar.gz
+build: clean chef-zookeeper-$(version).tar.gz tag
 
 clean:
 	@rm -f chef-zookeeper-*.tar.gz
