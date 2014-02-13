@@ -2,6 +2,12 @@
 
 This file is used to list changes made in each version of zookeeper.
 
+## 1.5.1
+- Add correct (Apache v2) license to metadta.rb (#61)
+
+## 1.5.0
+- Add logic to download existing exhibitor jar
+
 ## 1.4.10
 - changes: Skip S3 credentials file if AWS credentials are not provided
 
