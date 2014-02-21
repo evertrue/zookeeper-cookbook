@@ -6,4 +6,5 @@ description      "Installs/Configures zookeeper"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 depends          "java"
 depends          "build-essential"
+depends          "runit"
 version          "1.5.1"
