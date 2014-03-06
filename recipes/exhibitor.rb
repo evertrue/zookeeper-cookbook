@@ -109,8 +109,7 @@ template node[:exhibitor][:opts][:defaultconfig] do
   variables(
     :snapshot_dir => node[:exhibitor][:snapshot_dir],
     :transaction_dir => node[:exhibitor][:transaction_dir],
-    :log_index_dir => node[:exhibitor][:log_index_dir],
-    :defaultconfig => node[:exhibitor][:defaultconfig] )
+    :log_index_dir => node[:exhibitor][:log_index_dir])
 end
 
 service "exhibitor" do
