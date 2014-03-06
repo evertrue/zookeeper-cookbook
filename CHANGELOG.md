@@ -2,6 +2,9 @@
 
 This file is used to list changes made in each version of zookeeper.
 
+## 1.6.0
+- Attribute overrides to defaultconfig should now work (thank @trane)
+
 ## 1.5.1
 - Add correct (Apache v2) license to metadta.rb (#61)
 
