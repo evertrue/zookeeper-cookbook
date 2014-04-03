@@ -85,21 +85,46 @@ template log4j_props do
   )
 end
 
-template "/etc/init/exhibitor.conf" do
-  source "exhibitor.upstart.conf.erb"
-  owner "root"
-  group "root"
-  mode "0644"
-  notifies :stop, "service[exhibitor]" # :restart doesn't reload upstart conf
-  notifies :start, "service[exhibitor]"
-  variables(
-    :user => node[:zookeeper][:user],
-    :jar => exhibitor_jar,
-    :log4j_props => log4j_props,
-    :opts => node[:exhibitor][:opts],
-    :exec_output => (node[:exhibitor][:log_to_syslog].to_s == "1" ||
-                     node[:exhibitor][:log_to_syslog] == true) ? "| logger -t zookeeper" : "",
-    :check_script => check_script )
+if platform_family?("debian") # others that use upstart?
+	template "/etc/init/exhibitor.conf" do
+	  source "exhibitor.upstart.conf.erb"
+	  owner "root"
+	  group "root"
+	  mode "0644"
+	  notifies :stop, "service[exhibitor]" # :restart doesn't reload upstart conf
+	  notifies :start, "service[exhibitor]"
+	  variables(
+		:user => node[:zookeeper][:user],
+		:jar => exhibitor_jar,
+		:log4j_props => log4j_props,
+		:opts => node[:exhibitor][:opts],
+		:exec_output => (node[:exhibitor][:log_to_syslog].to_s == "1" ||
+						 node[:exhibitor][:log_to_syslog] == true) ? "| logger -t zookeeper" : "",
+		:check_script => check_script )
+	end
+	service "exhibitor" do
+	  provider Chef::Provider::Service::Upstart
+	  supports :start => true, :status => true, :restart => true
+	  action :start
+	end
+elsif platform_family?("fedora")
+	template "/etc/systemd/system/exhibitor.service" do
+		source "exhibitor.service.erb"
+		variables(
+			:java_bin => `which java`.chomp!,
+			:user => node[:zookeeper][:user],
+			:jar => exhibitor_jar,
+			:log4j_props => log4j_props,
+			:opts => node[:exhibitor][:opts],
+		)
+	end
+	service "exhibitor.service" do
+	  provider Chef::Provider::Service::Systemd
+	  supports :start => true, :enable => true
+	  action :enable
+	end
+else
+	Chef::Log::Info("startup/init scripts currently not supported for " + platform_family)
 end
 
 template node[:exhibitor][:opts][:defaultconfig] do
@@ -112,8 +137,3 @@ template node[:exhibitor][:opts][:defaultconfig] do
     :log_index_dir => node[:exhibitor][:log_index_dir])
 end
 
-service "exhibitor" do
-  provider Chef::Provider::Service::Upstart
-  supports :start => true, :status => true, :restart => true
-  action :start
-end

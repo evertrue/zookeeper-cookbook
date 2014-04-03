@@ -1,0 +1,14 @@
+[Unit]
+Description=Zookeeper
+
+[Service]
+Type=simple
+Environment=JAVA_HOME=/usr/lib/jvm/jre-1.7.0
+Environment=ZOO_LOG_DIR=/home/zookeeper
+User=<%= @user %>
+ExecStart=<%= @java_bin %> -Dlog4j.configuration=file://<%= @log4j_props %> -jar <%= @jar %> \
+    <%= @opts.keys.sort.map { |k| "--#{k.to_s} #{@opts[k]}" }.join(" ") %> <%= @exec_output %>
+SyslogIdentifier=zookeeper
+
+[Install]
+WantedBy=multi-user.service
