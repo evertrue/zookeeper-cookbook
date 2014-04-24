@@ -2,9 +2,17 @@
 
 This file is used to list changes made in each version of zookeeper.
 
+## 2.0.0
+- Full version bump to accommodate Runit
+- Re-add check-local-zk.py script but punt on utilizing it
+- This means we recommend staying on 1.6.1 or below if you use Upstart
+- In the meantime, we are working on a strategy to integrate this functionality
+  into the Runit script, to support dependent services
+
 ## 1.7.0
 - Switched to Runit for process supervision (contributed by @gansbrest)
 - DEPRECATION WARNING: Upstart is no longer supported and has been removed
+- Unreleased
 
 ## 1.6.0
 - Attribute overrides to defaultconfig should now work (thank @trane)

@@ -47,6 +47,15 @@ if !::File.exists?(exhibitor_jar)
   end
 end
 
+check_script = ::File.join(node[:exhibitor][:script_dir], 'check-local-zk.py')
+template check_script do
+  owner node[:zookeeper][:user]
+  mode "0744"
+  variables(
+    exhibitor_port: node[:exhibitor][:opts][:port],
+    localhost: node[:exhibitor][:opts][:hostname] )
+end
+
 if node[:exhibitor][:opts][:configtype] != "file"
     node.default[:exhibitor][:opts].delete(:fsconfigdir)
 end
@@ -90,10 +99,10 @@ end
 runit_service "exhibitor" do
   action [:enable, :start]
   default_logger true
-  options ({
+  options({
     user: node[:zookeeper][:user],
     jar: exhibitor_jar,
     log4j_props: log4j_props,
-    opts: node[:exhibitor][:opts],
+    opts: node[:exhibitor][:opts] 
   })
 end
