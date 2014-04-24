@@ -91,9 +91,9 @@ runit_service "exhibitor" do
   action [:enable, :start]
   default_logger true
   options ({
-    :user => node[:zookeeper][:user],
-    :jar => exhibitor_jar,
-    :log4j_props => log4j_props,
-    :opts => node[:exhibitor][:opts],
+    user: node[:zookeeper][:user],
+    jar: exhibitor_jar,
+    log4j_props: log4j_props,
+    opts: node[:exhibitor][:opts],
   })
 end
