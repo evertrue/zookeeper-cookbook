@@ -1,9 +1,10 @@
 name             "zookeeper"
 maintainer       "Simple Finance Technology Corp."
-maintainer_email "mwhooker@simple.com"
+maintainer_email "ops@simple.com"
 license          "Apache v2.0"
 description      "Installs/Configures zookeeper"
-long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-depends          "java"
+version          "1.7.0"
+
 depends          "build-essential"
-version          "1.6.1"
+depends          "java"
+depends          "runit"

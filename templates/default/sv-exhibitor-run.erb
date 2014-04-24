@@ -1,0 +1,4 @@
+#!/bin/sh
+exec 2>&1
+exec chpst -u <%= @options[:user] %> java -Dlog4j.configuration=file://<%= @options[:log4j_props] %> -jar <%= @options[:jar] %> \
+    <%= @options[:opts].keys.sort.map { |k| "--#{k.to_s} #{@options[:opts][k]}" }.join(" ") %>

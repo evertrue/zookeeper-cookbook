@@ -17,6 +17,7 @@
 # limitations under the License.
 #
 
+include_recipe "runit"
 include_recipe "zookeeper::zookeeper"
 
 [node[:exhibitor][:install_dir],
@@ -44,15 +45,6 @@ if !::File.exists?(exhibitor_jar)
   else  #build exhibitor jar using gradle
     include_recipe "zookeeper::_exhibitor_build"
   end
-end
-
-check_script = ::File.join(node[:exhibitor][:script_dir], 'check-local-zk.py')
-template check_script do
-  owner node[:zookeeper][:user]
-  mode "0744"
-  variables(
-    :exhibitor_port => node[:exhibitor][:opts][:port],
-    :localhost => node[:exhibitor][:opts][:hostname] )
 end
 
 if node[:exhibitor][:opts][:configtype] != "file"
@@ -85,23 +77,6 @@ template log4j_props do
   )
 end
 
-template "/etc/init/exhibitor.conf" do
-  source "exhibitor.upstart.conf.erb"
-  owner "root"
-  group "root"
-  mode "0644"
-  notifies :stop, "service[exhibitor]" # :restart doesn't reload upstart conf
-  notifies :start, "service[exhibitor]"
-  variables(
-    :user => node[:zookeeper][:user],
-    :jar => exhibitor_jar,
-    :log4j_props => log4j_props,
-    :opts => node[:exhibitor][:opts],
-    :exec_output => (node[:exhibitor][:log_to_syslog].to_s == "1" ||
-                     node[:exhibitor][:log_to_syslog] == true) ? "| logger -t zookeeper" : "",
-    :check_script => check_script )
-end
-
 template node[:exhibitor][:opts][:defaultconfig] do
   source "exhibitor.properties.erb"
   owner node[:zookeeper][:user]
@@ -112,8 +87,13 @@ template node[:exhibitor][:opts][:defaultconfig] do
     :log_index_dir => node[:exhibitor][:log_index_dir])
 end
 
-service "exhibitor" do
-  provider Chef::Provider::Service::Upstart
-  supports :start => true, :status => true, :restart => true
-  action :start
+runit_service "exhibitor" do
+  action [:enable, :start]
+  default_logger true
+  options ({
+    :user => node[:zookeeper][:user],
+    :jar => exhibitor_jar,
+    :log4j_props => log4j_props,
+    :opts => node[:exhibitor][:opts],
+  })
 end
