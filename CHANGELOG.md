@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of zookeeper.
 
+## 1.7.0
+- Switched to Runit for process supervision (contributed by @gansbrest)
+- DEPRECATION WARNING: Upstart is no longer supported and has been removed
+
 ## 1.6.0
 - Attribute overrides to defaultconfig should now work (thank @trane)
 
