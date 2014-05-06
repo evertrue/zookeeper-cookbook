@@ -1,0 +1,21 @@
+---
+driver:
+  name: vagrant
+
+platforms:
+<% %w(11.8.2).each do |chef_version| %>
+  - name: ubuntu-12.04
+    driver_config:
+      box: opscode_ubuntu-12.04
+      require_chef_omnibus: <%= chef_version %>
+
+  - name: centos-6.4
+  - name: centos-6.5
+<% end %>
+
+suites:
+  - name: default
+    run_list:
+      - recipe[apt::default]
+      - recipe[zookeeper::default]
+    attributes:
