@@ -25,7 +25,6 @@ include_recipe "build-essential"
 chef_gem "zookeeper"
 chef_gem "json"
 
-
 group node[:zookeeper][:group] do
   action :create
 end
