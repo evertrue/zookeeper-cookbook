@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: zookeeper
-# Recipe:: zookeeper
+# Recipe:: default
 #
 # Copyright 2013, Simple Finance Technology Corp.
 #
