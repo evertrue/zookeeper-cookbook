@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: zookeeper
-# Recipe:: default
+# Recipe:: zookeeper
 #
 # Copyright 2013, Simple Finance Technology Corp.
 #
@@ -17,5 +17,40 @@
 # limitations under the License.
 #
 
-include_recipe "zookeeper::exhibitor"
+include_recipe "java::default"
 
+node.override['build-essential']['compile_time'] = true
+include_recipe "build-essential"
+
+chef_gem "zookeeper"
+chef_gem "json"
+
+group node[:zookeeper][:group] do
+  action :create
+end
+
+user node[:zookeeper][:user] do
+  gid node[:zookeeper][:group]
+end
+
+zk_basename = "zookeeper-#{node[:zookeeper][:version]}"
+
+remote_file ::File.join(Chef::Config[:file_cache_path], "#{zk_basename}.tar.gz") do
+  owner "root"
+  mode "0644"
+  source node[:zookeeper][:mirror]
+  checksum node[:zookeeper][:checksum]
+  action :create
+end
+
+directory node[:zookeeper][:install_dir] do
+  owner node[:zookeeper][:user]
+  mode "0755"
+end
+
+unless ::File.exists?(::File.join(node[:zookeeper][:install_dir], zk_basename))
+  execute 'install zookeeper' do
+    cwd Chef::Config[:file_cache_path]
+    command "tar -C '#{node[:zookeeper][:install_dir]}' -zxf '#{zk_basename}.tar.gz' && chown -R '#{node[:zookeeper][:user]}:#{node[:zookeeper][:group]}' #{node[:zookeeper][:install_dir]}"
+  end
+end
