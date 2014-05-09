@@ -4,6 +4,7 @@ This file is used to list changes made in each version of zookeeper.
 
 ## 2.0.0
 - Full version bump to accommodate Runit
+- Full version bump to accomodate split exhibitor cookbook
 - Re-add check-local-zk.py script but punt on utilizing it
 - This means we recommend staying on 1.6.1 or below if you use Upstart
 - In the meantime, we are working on a strategy to integrate this functionality
