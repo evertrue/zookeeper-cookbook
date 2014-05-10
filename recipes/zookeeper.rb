@@ -34,6 +34,7 @@ user node[:zookeeper][:user] do
 end
 
 zk_basename = "zookeeper-#{node[:zookeeper][:version]}"
+node.default[:zookeeper][:mirror] = "http://mirrors.ibiblio.org/apache/zookeeper/zookeeper-#{default[:zookeeper][:version]}/zookeeper-#{default[:zookeeper][:version]}.tar.gz"
 
 remote_file ::File.join(Chef::Config[:file_cache_path], "#{zk_basename}.tar.gz") do
   owner "root"
