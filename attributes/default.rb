@@ -4,7 +4,7 @@ default[:zookeeper][:install_dir] = "/opt/zookeeper"
 default[:zookeeper][:user] = "zookeeper"
 default[:zookeeper][:group] = "zookeeper"
 
-default['build-essential']['compile_time'] = true
+override['build-essential']['compile_time'] = true
 
 default[:gradle][:version] = "1.5"
 default[:gradle][:mirror] = "http://services.gradle.org/distributions/gradle-#{default[:gradle][:version]}-bin.zip"
