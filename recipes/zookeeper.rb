@@ -18,8 +18,6 @@
 #
 
 include_recipe "java::default"
-
-node.override['build-essential']['compile_time'] = true
 include_recipe "build-essential"
 
 chef_gem "zookeeper"
