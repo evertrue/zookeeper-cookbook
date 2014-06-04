@@ -2,17 +2,32 @@
 
 This file is used to list changes made in each version of zookeeper.
 
-## 2.0.0
-- Full version bump to accommodate Runit
-- Re-add check-local-zk.py script but punt on utilizing it
-- This means we recommend staying on 1.6.1 or below if you use Upstart
-- In the meantime, we are working on a strategy to integrate this functionality
-  into the Runit script, to support dependent services
+* NOTE: An error was made in the past bumping this cookbook to 2.0.0. This was
+  to support Runit for service management. The version was then brought down
+  again to 1.7.1 and development has continued as normal. Therefore, version
+  1.7.0 and above uses Runit and is likely not backwards-compatible. Apologies
+  for the mess!
+
+## 1.7.4
+- Force build-essential to run at compile time (contributed by @davidgiesberg)
+
+## 1.7.3
+- Bugfix for attribute access (fixes 1.7.2 bug)
+
+## 1.7.2
+- Move ZK download location calculation to recipe to eliminate ordering bug
+
+## 1.7.1
+- Test-kitchen support added
+- Patch installed to support CentOS platform
 
 ## 1.7.0
 - Switched to Runit for process supervision (contributed by @gansbrest)
 - DEPRECATION WARNING: Upstart is no longer supported and has been removed
-- Unreleased
+- Re-add check-local-zk.py script but punt on utilizing it
+- This means we recommend staying on 1.6.1 or below if you use Upstart
+- In the meantime, we are working on a strategy to integrate this functionality
+  into the Runit script, to support dependent services
 
 ## 1.6.0
 - Attribute overrides to defaultconfig should now work (thank @trane)
