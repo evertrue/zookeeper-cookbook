@@ -1,6 +1,4 @@
-#
-# Cookbook Name:: zookeeper
-# Recipe:: default
+# providers/node.rb
 #
 # Copyright 2013, Simple Finance Technology Corp.
 #
@@ -15,8 +13,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
-
 
 def get_zk()
   require 'zookeeper'
