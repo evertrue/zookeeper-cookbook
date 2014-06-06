@@ -1,6 +1,6 @@
-# recipes/default.rb
+# resources/default.rb
 #
-# Copyright 2013, Simple Finance Technology Corp.
+# Copyright 2014, Simple Finance Technology Corp.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,15 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-node.override['build-essential']['compile_time'] = true
+actions(:install, :uninstall)
+default_action(:install)
 
-include_recipe "java::default"
-include_recipe "build-essential"
-
-zookeeper node[:zookeeper][:version] do
-  user        node[:zookeeper][:user]
-  mirror      node[:zookeeper][:mirror]
-  checksum    node[:zookeeper][:checksum]
-  install_dir node[:zookeeper][:install_dir]
-  action      :install
-end
+attribute :version,     kind_of: String, name_attribute: true
+attribute :mirror,      kind_of: String, required: true
+attribute :user,        kind_of: String, default: 'zookeeper'
+attribute :install_dir, kind_of: String, default: '/opt/zookeeper'
+attribute :checksum,    kind_of: String
+attribute :autostart,   kind_of: [TrueClass, FalseClass], default: true
