@@ -2,6 +2,8 @@
 
 - [Zookeeper](#zookeeper)
   - [Usage](#usage)
+    - [Resources](#resources)
+      - [zookeeper](#zookeeper)
     - [discover\_zookeepers](#discover\_zookeepers)
   - [Errata](#errata)
   - [Author and License](#author-and-license)
