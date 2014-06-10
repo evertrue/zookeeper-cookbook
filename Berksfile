@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-site 'http://community.opscode.com/api/v1'
+site :opscode
 
 cookbook 'apt'
 cookbook 'build-essential'
