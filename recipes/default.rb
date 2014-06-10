@@ -16,8 +16,8 @@
 
 node.override['build-essential']['compile_time'] = true
 
-include_recipe "java::default"
-include_recipe "build-essential"
+include_recipe 'build-essential::default'
+include_recipe 'java::default'
 
 zookeeper node[:zookeeper][:version] do
   user        node[:zookeeper][:user]

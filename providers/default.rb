@@ -22,14 +22,12 @@ def initialize(new_resource, run_context)
   @mirror          = new_resource.mirror
   @checksum        = new_resource.checksum
   @install_dir     = new_resource.install_dir
-  @autostart       = new_resource.autostart
   @dependency_gems = zk_dependency_gems
   @user_res        = zk_user_resource(@user)
   @group_res       = zk_group_resource(@group)
   @install_dir_res = zk_install_dir(@install_dir)
   @zk_source       = zk_source("zookeeper-#{@version}")
   @zk_install_cmd  = zk_install_command('install zookeeper')
-  @zk_service      = zk_service_resource('zookeeper')
 end
 
 # Install Zookeeper
@@ -65,11 +63,6 @@ chown -R #{@user}:#{@group} #{@install_dir}
     eos
     @zk_install_cmd.run_action(:run)
   end
-
-  if @autostart
-    @zk_service.provider(Chef::Provider::Service::Init)
-    @zk_service.run_action(:start)
-  end
 end
 
 action :uninstall do
@@ -100,10 +93,6 @@ end
 
 def zk_install_command(cmd='')
   return Chef::Resource::Execute.new(cmd, @run_context)
-end
-
-def zk_service_resource(name='')
-  return Chef::Resource::Service.new(name, @run_context)
 end
 
 def zk_installed?

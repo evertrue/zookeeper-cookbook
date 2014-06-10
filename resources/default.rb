@@ -22,4 +22,3 @@ attribute :mirror,      kind_of: String, required: true
 attribute :user,        kind_of: String, default: 'zookeeper'
 attribute :install_dir, kind_of: String, default: '/opt/zookeeper'
 attribute :checksum,    kind_of: String
-attribute :autostart,   kind_of: [TrueClass, FalseClass], default: true
