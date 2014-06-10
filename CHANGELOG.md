@@ -1,9 +1,18 @@
 # CHANGELOG for zookeeper
 This file is used to list changes made in each version of zookeeper.
 
-## 2.0.0-pre
-* Full version bump for factoring out of Exhibitor (contributed by @wolf31o2)
-* Marked as a pre-release for testing
+## 2.0.0
+* Exhibitor cookbook factored out (contributed by @wolf31o2)
+* Zookeeper recipe rewritten as LWRP
+* Documentation updated slightly
+* Tested and verified and (hopefully) as backwards-compatible as possible
+  - Being a full version bump, there are no backwards-compatibility promises
+* TODO
+  - Better documentation
+  - `zookeeper_service` resource
+  - `zookeeper_config` resource
+  - Better tests
+  - Swap out "community" Java
 
 ## 1.7.4
 * Force build-essential to run at compile time (contributed by @davidgiesberg)
