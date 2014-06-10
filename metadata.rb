@@ -1,10 +1,10 @@
-name             "zookeeper"
-maintainer       "Simple Finance Technology Corp."
-maintainer_email "ops@simple.com"
-license          "Apache v2.0"
-description      "Installs/Configures zookeeper"
-version          "2.0.0"
+name             'zookeeper'
+maintainer       'Simple Finance Technology Corp.'
+maintainer_email 'ops@simple.com'
+license          'Apache v2.0'
+description      'Installs/Configures zookeeper'
+version          '2.0.0'
 
-depends          "build-essential"
-depends          "java"
-depends          "runit"
+depends          'build-essential'
+depends          'java'
+depends          'runit'

@@ -1,8 +1,7 @@
-#!/usr/bin/env ruby
+source "https://api.berkshelf.com"
 
-site :opscode
+group :integration do
+  cookbook 'apt'
+end
 
-cookbook 'apt'
-cookbook 'build-essential'
-cookbook 'java'
-cookbook 'zookeeper', path:'./'
+metadata
