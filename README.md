@@ -41,10 +41,29 @@ Parameters:
 Example:
 ``` ruby
 zookeeper '3.4.6' do
-  user 'zookeeper'
-  mirror 'http://www.poolsaboveground.com/apache/zookeeper'
+  user     'zookeeper'
+  mirror   'http://www.poolsaboveground.com/apache/zookeeper'
   checksum '01b3938547cd620dc4c93efe07c0360411f4a66962a70500b163b59014046994'
-  action :install
+  action   :install
+end
+```
+
+#### zookeeper\_config
+This resource renders a Zookeeper configuration file.
+
+Actions: `:render`, `:delete`
+
+Parameters:
+* `user`: The user to give ownership of the file to (default: `zookeeper`)
+* `config`: Hash of configuration parameters to add to the file
+* `path`: Path to write the configuration file to.
+
+Example:
+``` ruby
+zookeeper_config '/opt/zookeeper/zookeeper-3.4.6/conf/zoo.cfg' do
+  config {clientPort: 2181, dataDir: '/mnt/zk', tickTime: 2000}
+  user   'zookeeper'
+  action :render
 end
 ```
 
