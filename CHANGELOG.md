@@ -1,6 +1,10 @@
 # CHANGELOG for zookeeper
 This file is used to list changes made in each version of zookeeper.
 
+## 2.1.0
+* A basic configuration is rendered by default.
+* Clarify some points in the README about zookeeper\_config
+
 ## 2.0.0
 * Exhibitor cookbook factored out (contributed by @wolf31o2)
 * Zookeeper recipe rewritten as LWRP
