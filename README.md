@@ -49,7 +49,9 @@ end
 ```
 
 #### zookeeper\_config
-This resource renders a Zookeeper configuration file.
+This resource renders a Zookeeper configuration file. Period-delimited
+parameters can be specified either as a flat hash, or by embeddeding each
+sub-section within a separate hash. See the example below for an example.
 
 Actions: `:render`, `:delete`
 
@@ -60,8 +62,18 @@ Parameters:
 
 Example:
 ``` ruby
+config_hash = {
+  clientPort: 2181, 
+  dataDir: '/mnt/zk', 
+  tickTime: 2000,
+  autopurge: {
+    snapRetainCount: 1,
+    purgeInterval: 1
+  }
+}
+
 zookeeper_config '/opt/zookeeper/zookeeper-3.4.6/conf/zoo.cfg' do
-  config {clientPort: 2181, dataDir: '/mnt/zk', tickTime: 2000}
+  config config_hash
   user   'zookeeper'
   action :render
 end
