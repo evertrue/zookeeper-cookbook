@@ -5,3 +5,9 @@ default[:zookeeper][:checksum]    = '01b3938547cd620dc4c93efe07c0360411f4a66962a
 default[:zookeeper][:mirror]      = 'http://www.poolsaboveground.com/apache/zookeeper'
 default[:zookeeper][:user]        = 'zookeeper'
 default[:zookeeper][:install_dir] = '/opt/zookeeper'
+
+default[:zookeeper][:config] = {
+  clientPort: 2181,
+  dataDir: '/var/lib/zookeeper',
+  tickTime: 2000
+}

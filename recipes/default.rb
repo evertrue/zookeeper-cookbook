@@ -26,3 +26,14 @@ zookeeper node[:zookeeper][:version] do
   install_dir node[:zookeeper][:install_dir]
   action      :install
 end
+
+config_path = ::File.join(node[:zookeeper][:install_dir],
+                          "zookeeper-#{node[:zookeeper][:version]}",
+                          'conf',
+                          'zoo.cfg')
+
+zookeeper_config config_path do
+  config node[:zookeeper][:config]
+  user   node[:zookeeper][:user]
+  action :render
+end
