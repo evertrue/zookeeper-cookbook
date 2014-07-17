@@ -6,6 +6,9 @@ default[:zookeeper][:mirror]      = 'http://www.poolsaboveground.com/apache/zook
 default[:zookeeper][:user]        = 'zookeeper'
 default[:zookeeper][:install_dir] = '/opt/zookeeper'
 
+# One of: 'runit', 'exhibitor'
+default[:zookeeper][:service_style] = 'runit'
+
 default[:zookeeper][:config] = {
   clientPort: 2181,
   dataDir: '/var/lib/zookeeper',
