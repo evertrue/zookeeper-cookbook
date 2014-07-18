@@ -1,6 +1,10 @@
 # CHANGELOG for zookeeper
 This file is used to list changes made in each version of zookeeper.
 
+## 2.1.1
+* Added a service recipe which can be run and activated using new service_style
+  attribute.
+
 ## 2.1.0
 * A basic configuration is rendered by default.
 * Clarify some points in the README about zookeeper\_config
