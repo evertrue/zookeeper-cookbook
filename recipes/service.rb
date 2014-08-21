@@ -20,6 +20,28 @@ executable_path = ::File.join(node[:zookeeper][:install_dir],
                               'zkServer.sh')
 
 case node[:zookeeper][:service_style]
+when 'upstart'
+  template "/etc/default/zookeeper" do
+    source 'environment-defaults.erb'
+    owner 'zookeeper'
+    group 'zookeeper'
+    action :create
+    mode '0644'
+    notifies :restart, 'service[zookeeper]', :delayed
+  end
+  template "/etc/init/zookeeper.conf" do
+    source 'zookeeper.init.erb'
+    owner 'root'
+    group 'root'
+    action :create
+    mode '0644'
+    notifies :restart, 'service[zookeeper]', :delayed
+  end
+  service 'zookeeper' do
+    provider Chef::Provider::Service::Upstart
+    supports :status => true, :restart => true, :reload => true
+    action :enable
+  end
 when 'runit'
   runit_service 'zookeeper' do
     default_logger true
