@@ -3,7 +3,7 @@ maintainer       'Simple Finance Technology Corp.'
 maintainer_email 'ops@simple.com'
 license          'Apache v2.0'
 description      'Installs/Configures zookeeper'
-version          '2.1.1'
+version          '2.2.0'
 
 depends          'build-essential'
 depends          'java'

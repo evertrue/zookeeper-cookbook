@@ -1,6 +1,9 @@
 # CHANGELOG for zookeeper
 This file is used to list changes made in each version of zookeeper.
 
+## 2.2.0
+* Upstart support (contributed by @solarce)
+
 ## 2.1.1
 * Added a service recipe which can be run and activated using new service_style
   attribute.
