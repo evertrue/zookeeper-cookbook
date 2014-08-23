@@ -1,6 +1,10 @@
 # CHANGELOG for zookeeper
 This file is used to list changes made in each version of zookeeper.
 
+## 2.2.1
+* Set minimum build-essential version for RHEL support (contributed by
+  @Gazzonyx)
+
 ## 2.2.0
 * Upstart support (contributed by @solarce)
 
