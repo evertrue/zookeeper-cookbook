@@ -20,6 +20,8 @@ resource to handle the installation and configuration of Zookeeper. It ships
 with a default recipe for backwards compatibility pre-LWRP which will work
 fine, but is really just an example.
 
+Use the "install" recipe to install the binaries, but perform no further actions.
+
 ### Resources
 This cookbook ships with one resource, with future plans for two more covering
 service management and configuration rendering.
