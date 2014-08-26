@@ -1,4 +1,4 @@
-# recipes/install.rb                                                                               
+# recipes/install.rb
 #
 # Copyright 2014, Simple Finance Technology Corp.
 #
@@ -16,14 +16,13 @@
 
 node.override['build-essential']['compile_time'] = true
 
-
 include_recipe 'build-essential::default'
 include_recipe 'java::default'
 
 zookeeper node[:zookeeper][:version] do
-	user        node[:zookeeper][:user]
-	mirror      node[:zookeeper][:mirror]
-	checksum    node[:zookeeper][:checksum]
-	install_dir node[:zookeeper][:install_dir]
-	action      :install
+  user        node[:zookeeper][:user]
+  mirror      node[:zookeeper][:mirror]
+  checksum    node[:zookeeper][:checksum]
+  install_dir node[:zookeeper][:install_dir]
+  action      :install
 end
