@@ -1,4 +1,6 @@
-# Copyright 2014, Spanlink Communications.
+# recipes/install.rb                                                                               
+#
+# Copyright 2014, Simple Finance Technology Corp.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
