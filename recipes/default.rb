@@ -18,4 +18,4 @@
 include_recipe 'zookeeper::install'
 
 # set config path and render config
-include_recipe 'zookeepeer::config_render'
+include_recipe 'zookeeper::config_render'
