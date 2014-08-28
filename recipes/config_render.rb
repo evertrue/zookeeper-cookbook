@@ -1,4 +1,4 @@
-# recipes/default.rb
+# recipes/config_render.rb
 #
 # Copyright 2013, Simple Finance Technology Corp.
 #
@@ -14,8 +14,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# download and install base package
-include_recipe 'zookeeper::install'
+# set the config path based on default attributes
+config_path = ::File.join(node[:zookeeper][:install_dir],
+                          "zookeeper-#{node[:zookeeper][:version]}",
+                          'conf',
+                          'zoo.cfg')
 
-# set config path and render config
-include_recipe 'zookeepeer::config_render'
+# render out our config
+zookeeper_config config_path do
+  config node[:zookeeper][:config]
+  user   node[:zookeeper][:user]
+  action :render
+end
