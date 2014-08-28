@@ -1,6 +1,9 @@
 # CHANGELOG for zookeeper
 This file is used to list changes made in each version of zookeeper.
 
+## 2.4.0
+* Split out config rendering to separate recipe (contributed by @solarce)
+
 ## 2.3.0
 * Split out installation to a separate recipe (contributed by @Gazzonyx)
 
