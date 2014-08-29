@@ -15,7 +15,7 @@
 # limitations under the License.
 
 if node[:zookeeper][:use_java_cookbook] == true
-  node.override[:build-essential][:compile_time] = true
+  node.override['build-essential']['compile_time'] = true
 
   include_recipe 'build-essential::default'
   include_recipe 'java::default'
