@@ -1,6 +1,9 @@
 # CHANGELOG for zookeeper
 This file is used to list changes made in each version of zookeeper.
 
+## 2.4.3
+* Fix erroneous attribute reference
+
 ## 2.4.2
 * Allow pre-installed Java (contributed by @solarce)
 
