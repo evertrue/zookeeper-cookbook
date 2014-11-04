@@ -95,6 +95,10 @@ def zk_source(path='')
   return Chef::Resource::RemoteFile.new(path, @run_context)
 end
 
+def zk_data_dir(path = '')
+  Chef::Resource::Directory.new(path, @run_context)
+end
+
 def zk_install_dir(path='')
   return Chef::Resource::Directory.new(path, @run_context)
 end
