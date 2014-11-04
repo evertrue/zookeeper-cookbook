@@ -28,5 +28,6 @@ zookeeper node[:zookeeper][:version] do
   mirror      node[:zookeeper][:mirror]
   checksum    node[:zookeeper][:checksum]
   install_dir node[:zookeeper][:install_dir]
+  data_dir    node[:zookeeper][:config][:dataDir]
   action      :install
 end

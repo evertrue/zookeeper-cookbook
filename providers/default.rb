@@ -22,10 +22,12 @@ def initialize(new_resource, run_context)
   @mirror          = new_resource.mirror
   @checksum        = new_resource.checksum
   @install_dir     = new_resource.install_dir
+  @data_dir        = new_resource.data_dir
   @dependency_gems = zk_dependency_gems
   @user_res        = zk_user_resource(@user)
   @group_res       = zk_group_resource(@group)
   @install_dir_res = zk_install_dir(@install_dir)
+  @data_dir_res    = zk_data_dir(@data_dir)
   @zk_source       = zk_source("zookeeper-#{@version}")
   @zk_install_cmd  = zk_install_command('install zookeeper')
 end
@@ -53,6 +55,12 @@ action :install do
   @install_dir_res.recursive(true)
   @install_dir_res.mode(00700)
   @install_dir_res.run_action(:create)
+
+  @data_dir_res.owner(@user)
+  @data_dir_res.group(@group)
+  @data_dir_res.recursive(true)
+  @data_dir_res.mode(00700)
+  @data_dir_res.run_action(:create)
 
   unless zk_installed?
     Chef::Log.info("Zookeeper version #{@version} not installed. Installing now!")
