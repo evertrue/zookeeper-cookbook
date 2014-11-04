@@ -1,6 +1,10 @@
 # CHANGELOG for zookeeper
 This file is used to list changes made in each version of zookeeper.
 
+## 2.5.0
+* Allow configurable `data_dir` parameter for Zookeeper data directory location
+  (contributed by @eherot)
+
 ## 2.4.3
 * Fix erroneous attribute reference
 
