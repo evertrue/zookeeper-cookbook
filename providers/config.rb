@@ -2,6 +2,8 @@
 
 include Zookeeper::Config
 
+use_inline_resources
+
 def initialize(new_resource, run_context)
   super
   @path   = new_resource.path
@@ -15,6 +17,7 @@ action :render do
   @zoocfg.group(@user)
   @zoocfg.content(render_zk_config(@config))
   @zoocfg.run_action(:create)
+  new_resource.updated_by_last_action(true)
 end
 
 action :delete do
