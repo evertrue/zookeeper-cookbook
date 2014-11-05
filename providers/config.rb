@@ -17,7 +17,7 @@ action :render do
   @zoocfg.group(@user)
   @zoocfg.content(render_zk_config(@config))
   @zoocfg.run_action(:create)
-  new_resource.updated_by_last_action(true)
+  new_resource.updated_by_last_action(@zoocfg.updated_by_last_action?)
 end
 
 action :delete do
