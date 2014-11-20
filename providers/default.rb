@@ -108,7 +108,7 @@ def zk_install_command(cmd='')
 end
 
 def zk_installed?
-  return ::File.exists?(::File.join(@install_dir, "zookeeper-#{@version}.tar.gz"))
+  return ::File.exists?(::File.join(@install_dir, "zookeeper-#{@version}", "zookeeper-#{@version}.jar"))
 end
 
 def zk_source_constructed
