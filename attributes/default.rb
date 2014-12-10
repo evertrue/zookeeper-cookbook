@@ -7,7 +7,7 @@ default[:zookeeper][:user]        = 'zookeeper'
 default[:zookeeper][:install_dir] = '/opt/zookeeper'
 default[:zookeeper][:use_java_cookbook] = true
 
-# One of: 'runit', 'exhibitor'
+# One of: 'upstart', 'runit', 'exhibitor'
 default[:zookeeper][:service_style] = 'runit'
 
 default[:zookeeper][:config] = {
