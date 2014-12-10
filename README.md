@@ -4,7 +4,7 @@
   - [Usage](#usage)
     - [Resources](#resources)
       - [zookeeper](#zookeeper)
-    - [discover\_zookeepers](#discover\_zookeepers)
+      - [zookeeper_config](#zookeeper_config)
   - [Errata](#errata)
   - [Author and License](#author-and-license)
 
@@ -50,7 +50,7 @@ zookeeper '3.4.6' do
 end
 ```
 
-#### zookeeper\_config
+#### zookeeper_config
 This resource renders a Zookeeper configuration file. Period-delimited
 parameters can be specified either as a flat hash, or by embeddeding each
 sub-section within a separate hash. See the example below for an example.
@@ -87,3 +87,4 @@ end
 ## Author and License
 Simple Finance <ops@simple.com>
 Apache License, Version 2.0
+
