@@ -2,8 +2,8 @@
 
 require_relative '../spec/spec_helper'
 
-describe Zookeeper::Config do
-  include Zookeeper::Config
+describe Zk::Config do
+  include Zk::Config
 
   before do
     @flat_config = {
