@@ -1,6 +1,6 @@
 # providers/config.rb
 
-include Zookeeper::Config
+include Zk::Config
 
 use_inline_resources
 

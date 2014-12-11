@@ -1,6 +1,6 @@
 # libraries/default.rb
 
-module Zookeeper
+module Zk
   module Config
 
     # Zookeeper uses a Java properties file style of configuration. This helper
