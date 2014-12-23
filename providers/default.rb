@@ -84,7 +84,9 @@ def zk_dependency_gems
 end
 
 def zk_user_resource(user='')
-  return Chef::Resource::User.new(user, @run_context)
+  u = Chef::Resource::User.new(user, @run_context)
+  u.system(true)
+  return u
 end
 
 def zk_group_resource(group='')
