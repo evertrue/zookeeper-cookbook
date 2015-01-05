@@ -15,13 +15,14 @@
 # limitations under the License.
 
 if node[:zookeeper][:use_java_cookbook] == true
-  node.override['build-essential']['compile_time'] = true
-
-  include_recipe 'build-essential::default'
   include_recipe 'java::default'
 else
   Chef::Log.info("Assuming you've provided your own Java")
 end
+
+# build-essential is required to build the zookeeper and json gems
+node.override['build-essential']['compile_time'] = true
+include_recipe 'build-essential::default'
 
 zookeeper node[:zookeeper][:version] do
   user        node[:zookeeper][:user]
