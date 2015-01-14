@@ -1,6 +1,13 @@
 # CHANGELOG for zookeeper
 This file is used to list changes made in each version of zookeeper.
 
+## 2.5.1
+* Report `zookeeper_config` as updated only if zoo.cfg is updated (#110)
+* Fix `zk_installed` return value (#113)
+* Fix docs (#114, #115)
+* Fix for undefined new method error (#116)
+* Always install `build-essential`, regardless of usage of `java` cookbook
+
 ## 2.5.0
 * Allow configurable `data_dir` parameter for Zookeeper data directory location
   (contributed by @eherot)
