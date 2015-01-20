@@ -22,9 +22,14 @@ fine, but is really just an example.
 
 Use the "install" recipe to install the binaries, but perform no further actions.
 
-You will need the `vagrant-omnibus` Vagrant plugin for local testing:
+For local development, you can either use Vagrant, in which case you will need
+the `vagrant-omnibus` Vagrant plugin:
 
 `vagrant plugin install vagrant-omnibus`
+
+Or, you can use Test-Kitchen, which will handle the bootstrapping for you, and
+is the preferred method for testing this cookbook (usually via a wrapper
+cookbook).
 
 ### Resources
 This cookbook ships with one resource, with future plans for two more covering
