@@ -22,6 +22,10 @@ fine, but is really just an example.
 
 Use the "install" recipe to install the binaries, but perform no further actions.
 
+You will need the `vagrant-omnibus` Vagrant plugin for local testing:
+
+`vagrant plugin install vagrant-omnibus`
+
 ### Resources
 This cookbook ships with one resource, with future plans for two more covering
 service management and configuration rendering.
