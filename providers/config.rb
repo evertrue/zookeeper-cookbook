@@ -27,6 +27,6 @@ end
 
 private
 
-def zookeeper_config_resource(path='')
-  return Chef::Resource::File.new(path, @run_context)
+def zookeeper_config_resource(path = '')
+  Chef::Resource::File.new(path, @run_context)
 end

@@ -21,7 +21,7 @@ executable_path = ::File.join(node[:zookeeper][:install_dir],
 
 case node[:zookeeper][:service_style]
 when 'upstart'
-  template "/etc/default/zookeeper" do
+  template '/etc/default/zookeeper' do
     source 'environment-defaults.erb'
     owner 'zookeeper'
     group 'zookeeper'
@@ -29,7 +29,7 @@ when 'upstart'
     mode '0644'
     notifies :restart, 'service[zookeeper]', :delayed
   end
-  template "/etc/init/zookeeper.conf" do
+  template '/etc/init/zookeeper.conf' do
     source 'zookeeper.init.erb'
     owner 'root'
     group 'root'
@@ -45,13 +45,13 @@ when 'upstart'
 when 'runit'
   runit_service 'zookeeper' do
     default_logger true
-    options({
+    options(
       exec: executable_path
-    })
+    )
     action [:enable, :start]
   end
 when 'exhibitor'
-  Chef::Log.info("Assuming Exhibitor will start up Zookeeper.")
+  Chef::Log.info('Assuming Exhibitor will start up Zookeeper.')
 else
-  Chef::Log.error("You specified an invalid service style for Zookeeper, but I am continuing.")
+  Chef::Log.error('You specified an invalid service style for Zookeeper, but I am continuing.')
 end
