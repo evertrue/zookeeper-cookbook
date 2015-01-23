@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-site 'http://community.opscode.com/api/v1'
+site 'https://supermarket.chef.io/api/v1'
 
 cookbook 'apt'
 cookbook 'build-essential'

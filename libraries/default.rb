@@ -2,16 +2,13 @@
 
 module Zk
   module Config
-
     # Zookeeper uses a Java properties file style of configuration. This helper
     # method will render a hash in that style.
-    def render_zk_config(config, lead=nil)
-      rendered = ""
+    def render_zk_config(config, lead = nil)
+      rendered = ''
 
-      config.each_pair do |k,v|
-        if lead
-          rendered << "#{lead}."
-        end
+      config.each_pair do |k, v|
+        rendered << "#{lead}." if lead
 
         if v.is_a?(Hash)
           rendered << render_zk_config(v, k)
@@ -20,8 +17,7 @@ module Zk
         end
       end
 
-      return rendered
+      rendered
     end
-
   end
 end

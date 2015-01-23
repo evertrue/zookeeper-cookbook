@@ -38,5 +38,4 @@ autopurge.snapRetainCount=3\nautopurge.purgeInterval=1\n"
 
     assert_equal(expected, output)
   end
-
 end
