@@ -28,7 +28,8 @@ def initialize(new_resource, run_context)
   @group_res       = zk_group_resource(@group)
   @install_dir_res = zk_install_dir(@install_dir)
   @data_dir_res    = zk_data_dir(@data_dir)
-  @zk_source       = zk_source("zookeeper-#{@version}")
+  @zk_basename     = zk_basename_constructed
+  @zk_source       = zk_source(@zk_basename)
   @zk_install_cmd  = zk_install_command('install zookeeper')
 end
 
@@ -47,8 +48,10 @@ action :install do
   @zk_source.owner('root')
   @zk_source.mode(00644)
   @zk_source.source(zk_source_constructed)
+  @zk_source.source(@zk_source.source.first)
   @zk_source.checksum(@checksum)
   @zk_source.run_action(:create)
+
 
   @install_dir_res.owner(@user)
   @install_dir_res.group(@group)
@@ -66,7 +69,7 @@ action :install do
     Chef::Log.info("Zookeeper version #{@version} not installed. Installing now!")
     @zk_install_cmd.cwd(Chef::Config[:file_cache_path])
     @zk_install_cmd.command <<-eos
-tar -C #{@install_dir} -zxf zookeeper-#{@version}.tar.gz
+tar -C #{@install_dir} -zxf #{@zk_basename}.tar.gz
 chown -R #{@user}:#{@group} #{@install_dir}
     eos
     @zk_install_cmd.run_action(:run)
@@ -107,14 +110,26 @@ def zk_install_command(cmd = '')
   Chef::Resource::Execute.new(cmd, @run_context)
 end
 
+def zk_basename_constructed
+  if /.tar.gz$/.match(@mirror)
+    ::File.basename(@mirror).sub('.tar.gz', '')
+  else
+    "zookeeper-#{@version}"
+  end
+end
+
 def zk_installed?
-  ::File.exist?(::File.join(@install_dir, "zookeeper-#{@version}", "zookeeper-#{@version}.jar"))
+  ::File.exist?(::File.join(@install_dir, @zk_basename, "#{@zk_basename}.jar"))
 end
 
 def zk_source_constructed
-  ::File.join(@mirror, "zookeeper-#{@version}", "zookeeper-#{@version}.tar.gz")
+  if /.tar.gz$/.match(@mirror)
+    @mirror
+  else
+    ::File.join(@mirror, @zk_basename, "#{@zk_basename}.tar.gz")
+  end
 end
 
 def zk_download_path
-  ::File.join(Chef::Config[:file_cache_path], "zookeeper-#{@version}.tar.gz")
+  ::File.join(Chef::Config[:file_cache_path], "#{@zk_basename}.tar.gz")
 end
