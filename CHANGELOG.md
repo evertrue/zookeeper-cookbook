@@ -1,6 +1,9 @@
 # CHANGELOG for zookeeper
 This file is used to list changes made in each version of zookeeper.
 
+## 2.6.0
+* Run apt::default and update at compille time if on Debian (#127)
+
 ## 2.5.1
 * Report `zookeeper_config` as updated only if zoo.cfg is updated (#110)
 * Fix `zk_installed` return value (#113)
