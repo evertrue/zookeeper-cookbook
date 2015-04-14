@@ -90,6 +90,25 @@ zookeeper_config '/opt/zookeeper/zookeeper-3.4.6/conf/zoo.cfg' do
 end
 ```
 
+#### zookeeper_node
+This resource can create nodes in Zookeeper.
+
+Actions: `:create`, `:create_if_missing`, `:delete`
+
+Parameters:
+* `path`: The user to give ownership of the file to (default: The name of the resource)
+* `connect_str`: Hash of configuration parameters to add to the file (required)
+* `data`: The data to write to in the node
+
+Example:
+``` ruby
+zookeeper_node '/data/myNode' do
+  action :create
+  connect_str "localhost:2181"
+  data "my data"
+end
+```
+
 ## Errata
 * Version 1.4.7 on the community site is in fact version 1.4.8.
 

@@ -18,7 +18,7 @@ def zookeeper
   require 'zookeeper'
 
   @zookeeper ||= begin
-    Zookeeper.new(@new_resource.connect_str)
+    ::Zookeeper.new(@new_resource.connect_str)
   end
 end
 
