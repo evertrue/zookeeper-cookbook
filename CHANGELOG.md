@@ -1,6 +1,11 @@
 # CHANGELOG for zookeeper
 This file is used to list changes made in each version of zookeeper.
 
+## 2.7.0
+* Add some tests
+* Fix up zookeeper_node
+* Call runit recipe before service declaration
+
 ## 2.6.0
 * Run apt::default and update at compille time if on Debian (#127)
 
