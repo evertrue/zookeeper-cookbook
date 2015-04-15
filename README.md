@@ -20,8 +20,6 @@ resource to handle the installation and configuration of Zookeeper. It ships
 with a default recipe for backwards compatibility pre-LWRP which will work
 fine, but is really just an example.
 
-Use the "install" recipe to install the binaries, but perform no further actions.
-
 For local development, you can either use Vagrant, in which case you will need
 the `vagrant-omnibus` Vagrant plugin:
 
@@ -30,6 +28,13 @@ the `vagrant-omnibus` Vagrant plugin:
 Or, you can use Test-Kitchen, which will handle the bootstrapping for you, and
 is the preferred method for testing this cookbook (usually via a wrapper
 cookbook).
+
+### Recipes
+
+ * `zookeeper::default` : Installs and configures zookeeper. This does not start or manage the service.
+ * `zookeeper::install` : Installs the zookeeper but does not configure it.
+ * `zookeeper::config_render` : Configures zookeeper but does not install it.
+ * `zookeeper::service` : Starts and manages the zookeeper service. Requires zookeeper to be installed/configured.
 
 ### Resources
 This cookbook ships with one resource, with future plans for two more covering
@@ -96,9 +101,9 @@ This resource can create nodes in Zookeeper.
 Actions: `:create`, `:create_if_missing`, `:delete`
 
 Parameters:
-* `path`: The user to give ownership of the file to (default: The name of the resource)
-* `connect_str`: Hash of configuration parameters to add to the file (required)
-* `data`: The data to write to in the node
+* `path`: The zookeeper node path (default: The name of the resource)
+* `connect_str`: The zookeeper connection string (required)
+* `data`: The data to write to the node
 
 Example:
 ``` ruby
