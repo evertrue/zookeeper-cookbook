@@ -1,4 +1,5 @@
 
+include_recipe "zookeeper"
 include_recipe "zookeeper::service"
 
 zookeeper_node "/testing" do

@@ -14,12 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# download and install base package
-include_recipe 'zookeeper::install'
-
-# set config path and render config
-include_recipe 'zookeeper::config_render'
-
 executable_path = ::File.join(node[:zookeeper][:install_dir],
                               "zookeeper-#{node[:zookeeper][:version]}",
                               'bin',
