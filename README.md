@@ -96,9 +96,9 @@ This resource can create nodes in Zookeeper.
 Actions: `:create`, `:create_if_missing`, `:delete`
 
 Parameters:
-* `path`: The user to give ownership of the file to (default: The name of the resource)
-* `connect_str`: Hash of configuration parameters to add to the file (required)
-* `data`: The data to write to in the node
+* `path`: The zookeeper node path (default: The name of the resource)
+* `connect_str`: The zookeeper connection string (required)
+* `data`: The data to write to the node
 
 Example:
 ``` ruby
