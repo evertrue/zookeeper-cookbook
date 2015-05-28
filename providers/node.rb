@@ -29,10 +29,20 @@ action :create_if_missing do
 end
 
 action :create do
-  if zookeeper.stat(:path => @new_resource.path)[:stat].exists?
-    zookeeper.set(:path => @new_resource.path, :data => @new_resource.data)
+  if !@new_resource.collection.nil?
+    @new_resource.collection.each_pair { | key, value |
+        if zookeeper.stat(:path => @new_resource.path + "/" + key)[:stat].exists?
+            zookeeper.set(:path => @new_resource.path + "/" + key, :data => value)
+                else
+                    zookeeper.create(:path => @new_resource.path + "/" + key, :data => value)
+                end
+        }
   else
-    zookeeper.create(:path => @new_resource.path, :data => @new_resource.data)
+      if zookeeper.stat(:path => @new_resource.path)[:stat].exists?
+        zookeeper.set(:path => @new_resource.path, :data => @new_resource.data)
+      else
+        zookeeper.create(:path => @new_resource.path, :data => @new_resource.data)
+      end
   end
 end
 
