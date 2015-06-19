@@ -14,12 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-executable_path = ::File.join(node[:zookeeper][:install_dir],
-                              "zookeeper-#{node[:zookeeper][:version]}",
+executable_path = ::File.join(node['zookeeper']['install_dir'],
+                              "zookeeper-#{node['zookeeper']['version']}",
                               'bin',
                               'zkServer.sh')
 
-case node[:zookeeper][:service_style]
+case node['zookeeper']['service_style']
 when 'upstart'
   template '/etc/default/zookeeper' do
     source 'environment-defaults.erb'
@@ -52,6 +52,18 @@ when 'runit'
       exec: executable_path
     )
     action [:enable, :start]
+  end
+when 'init.d'
+  template '/etc/init.d/zookeeper' do
+    source 'init.d-zookeeper.erb'
+    owner 'root'
+    group 'root'
+    action :create
+    mode '0755'
+  end
+  service 'zookeeper' do
+    supports :status => true, :restart => true, :reload => true
+    action :enable
   end
 when 'exhibitor'
   Chef::Log.info('Assuming Exhibitor will start up Zookeeper.')

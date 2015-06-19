@@ -3,7 +3,7 @@ maintainer       'Simple Finance Technology Corp.'
 maintainer_email 'ops@simple.com'
 license          'Apache v2.0'
 description      'Installs/Configures zookeeper'
-version          '2.7.0'
+version          '2.7.1'
 
 supports         'ubuntu', '= 12.04'
 supports         'ubuntu', '= 14.04'

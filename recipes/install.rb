@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-if node[:zookeeper][:use_java_cookbook] == true
+if node['zookeeper']['use_java_cookbook'] == true
   include_recipe 'java::default'
 else
   Chef::Log.info("Assuming you've provided your own Java")
@@ -31,11 +31,11 @@ end
 node.override['build-essential']['compile_time'] = true
 include_recipe 'build-essential::default'
 
-zookeeper node[:zookeeper][:version] do
-  user        node[:zookeeper][:user]
-  mirror      node[:zookeeper][:mirror]
-  checksum    node[:zookeeper][:checksum]
-  install_dir node[:zookeeper][:install_dir]
-  data_dir    node[:zookeeper][:config][:dataDir]
+zookeeper node['zookeeper']['version'] do
+  user        node['zookeeper']['user']
+  mirror      node['zookeeper']['mirror']
+  checksum    node['zookeeper']['checksum']
+  install_dir node['zookeeper']['install_dir']
+  data_dir    node['zookeeper']['config']['dataDir']
   action      :install
 end
