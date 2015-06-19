@@ -1,6 +1,10 @@
 # CHANGELOG for zookeeper
 This file is used to list changes made in each version of zookeeper.
 
+## 2.7.1
+* Added support to CentOS 5/6 using service_style "init.d"
+* Few foodcritcs fixes (FC001 and FC019)
+
 ## 2.7.0
 * Add some tests
 * Fix up zookeeper_node
