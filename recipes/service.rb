@@ -53,7 +53,7 @@ when 'runit'
     )
     action [:enable, :start]
   end
-when 'init'
+when 'sysv'
   template '/etc/default/zookeeper' do
     source 'environment-defaults.erb'
     owner 'zookeeper'
@@ -63,7 +63,7 @@ when 'init'
     notifies :restart, 'service[zookeeper]', :delayed
   end
   template '/etc/init.d/zookeeper' do
-    source 'zookeeper.init.erb'
+    source 'zookeeper.sysv.erb'
     owner 'root'
     group 'root'
     action :create
