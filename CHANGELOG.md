@@ -1,6 +1,9 @@
 # CHANGELOG for zookeeper
 This file is used to list changes made in each version of zookeeper.
 
+## 2.8.0
+* Proper init support (contributed by @shaneramey)
+
 ## 2.7.0
 * Add some tests
 * Fix up zookeeper_node
