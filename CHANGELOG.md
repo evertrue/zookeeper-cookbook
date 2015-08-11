@@ -3,6 +3,7 @@ This file is used to list changes made in each version of zookeeper.
 
 ## 2.9.0
 * Add creation & configuration of `zookeeper-env.sh`, an optional file to bring in custom EnvVars for Zookeeper to use
+* Fix typo in source for SysV init script (#139)
 
 ## 2.8.0
 * Proper init support (contributed by @shaneramey)
