@@ -53,7 +53,7 @@ action :install do
   @install_dir_res.owner(@user)
   @install_dir_res.group(@group)
   @install_dir_res.recursive(true)
-  @install_dir_res.mode(00700)
+  @install_dir_res.mode(00755)
   @install_dir_res.run_action(:create)
 
   @data_dir_res.owner(@user)
