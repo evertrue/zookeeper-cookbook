@@ -39,3 +39,10 @@ zookeeper node[:zookeeper][:version] do
   data_dir    node[:zookeeper][:config][:dataDir]
   action      :install
 end
+
+# Add optional Zookeeper environment vars
+file "#{node[:zookeeper][:config_dir]}/zookeeper-env.sh" do
+  owner node[:zookeeper][:user]
+  content exports_config node[:zookeeper][:env_vars]
+  only_if { node[:zookeeper][:env_vars] }
+end
