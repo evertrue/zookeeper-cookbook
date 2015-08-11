@@ -63,7 +63,7 @@ when 'init'
     notifies :restart, 'service[zookeeper]', :delayed
   end
   template '/etc/init.d/zookeeper' do
-    source 'zookeeper.initd.erb'
+    source 'zookeeper.init.erb'
     owner 'root'
     group 'root'
     action :create
