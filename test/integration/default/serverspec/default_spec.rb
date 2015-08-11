@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe service('zookeeper') do
-  it { should be_running   }
+  it { should be_running }
 end
 
 describe port(2181) do
@@ -11,12 +11,11 @@ describe port(2181) do
 end
 
 describe 'zookeeper_node' do
-
   it 'should create /testing' do
-    zookeeper = Zookeeper.new("localhost:2181")
-    data = zookeeper.get(:path => "/testing")
-    expect(data[:stat].exists?).to eq(true)
-    expect(data[:data]).to eq("some data")
+    zookeeper = Zookeeper.new 'localhost:2181'
+    data = zookeeper.get path: '/testing'
+    expect(data[:stat].exists?).to eq true
+    expect(data[:data]).to eq 'some data'
   end
-
 end
+
