@@ -15,3 +15,13 @@ default[:zookeeper][:config] = {
   dataDir: '/var/lib/zookeeper',
   tickTime: 2000
 }
+
+# Set a default value to avoid Ruby errors
+default[:zookeeper][:env_vars] = false
+
+# Examples of optional environment vars
+# See the zookeeper config files (conf/zkEnv.sh, etc.) for more examples
+# set[:zookeeper][:env_vars] = {
+#   ZOO_LOG4J_PROP: 'INFO,ROLLINGFILE',
+#   ZOO_LOG_DIR: '/var/log/zookeeper'
+# }

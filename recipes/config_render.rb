@@ -17,12 +17,23 @@
 # set the config path based on default attributes
 config_path = ::File.join(node[:zookeeper][:install_dir],
                           "zookeeper-#{node[:zookeeper][:version]}",
-                          'conf',
-                          'zoo.cfg')
+                          'conf')
+
+zoo_cfg = ::File.join config_path, 'zoo.cfg'
 
 # render out our config
-zookeeper_config config_path do
+zookeeper_config zoo_cfg do
   config node[:zookeeper][:config]
   user   node[:zookeeper][:user]
   action :render
+end
+
+# Add optional Zookeeper environment vars
+if node[:zookeeper][:env_vars]
+  zookeeper_env = ::File.join config_path, 'zookeeper-env.sh'
+
+  file zookeeper_env do
+    owner node[:zookeeper][:user]
+    content exports_config node[:zookeeper][:env_vars]
+  end
 end
