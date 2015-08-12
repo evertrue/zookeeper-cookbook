@@ -40,6 +40,7 @@ action :install do
 
   @group_res.run_action(:create)
 
+  @user_res.system(true)
   @user_res.gid(@group)
   @user_res.run_action(:create)
 
