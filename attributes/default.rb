@@ -6,9 +6,9 @@ default[:zookeeper][:mirror]      = 'http://www.poolsaboveground.com/apache/zook
 default[:zookeeper][:user]        = 'zookeeper'
 default[:zookeeper][:install_dir] = '/opt/zookeeper'
 default[:zookeeper][:use_java_cookbook] = true
+default[:zookeeper][:java_opts] = "-Xms128M -Xmx512M"
 default[:zookeeper][:config_dir]  = "#{node[:zookeeper][:install_dir]}/" \
                                     "zookeeper-#{node[:zookeeper][:version]}/conf"
-
 # One of: 'upstart', 'runit', 'exhibitor'
 default[:zookeeper][:service_style] = 'runit'
 
