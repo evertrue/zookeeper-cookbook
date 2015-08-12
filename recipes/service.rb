@@ -53,6 +53,28 @@ when 'runit'
     )
     action [:enable, :start]
   end
+when 'init'
+  template '/etc/default/zookeeper' do
+    source 'environment-defaults.erb'
+    owner 'zookeeper'
+    group 'zookeeper'
+    action :create
+    mode '0644'
+    notifies :restart, 'service[zookeeper]', :delayed
+  end
+  template '/etc/init.d/zookeeper' do
+    source 'zookeeper.init.erb'
+    owner 'root'
+    group 'root'
+    action :create
+    mode '0755'
+    notifies :restart, 'service[zookeeper]', :delayed
+  end
+  service 'zookeeper' do
+    provider Chef::Provider::Service::Init::Debian
+    supports :status => true, :restart => true, :reload => true
+    action :enable
+  end
 when 'exhibitor'
   Chef::Log.info('Assuming Exhibitor will start up Zookeeper.')
 else

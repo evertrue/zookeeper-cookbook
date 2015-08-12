@@ -1,6 +1,17 @@
 # CHANGELOG for zookeeper
 This file is used to list changes made in each version of zookeeper.
 
+## 2.10.0
+* Move creationg of `zookeeper-env.sh` to `zookeeper::install`, to allow cookbooks that only call that recipe (e.g., [`exhibitor`](https://github.com/SimpleFinance/cookbook-exhibitor))
+* Relax permissions on ZK install_dir (#140)
+
+## 2.9.0
+* Add creation & configuration of `zookeeper-env.sh`, an optional file to bring in custom EnvVars for Zookeeper to use
+* Fix typo in source for SysV init script (#139)
+
+## 2.8.0
+* Proper init support (contributed by @shaneramey)
+
 ## 2.7.0
 * Add some tests
 * Fix up zookeeper_node

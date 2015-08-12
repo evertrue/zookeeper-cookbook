@@ -15,3 +15,7 @@ suites:
       - recipe[apt::default]
       - recipe[zookeeper_tester]
     attributes:
+      zookeeper:
+        env_vars:
+          ZOO_LOG4J_PROP: 'INFO,ROLLINGFILE'
+          ZOO_LOG_DIR: /var/log/zookeeper
