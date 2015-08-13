@@ -2,7 +2,7 @@
 This file is used to list changes made in each version of zookeeper.
 
 ## 2.10.0
-* Move creationg of `zookeeper-env.sh` to `zookeeper::install`, to allow cookbooks that only call that recipe (e.g., [`exhibitor`](https://github.com/SimpleFinance/cookbook-exhibitor))
+* Move creation of `zookeeper-env.sh` to `zookeeper::install`, to allow cookbooks that only call that recipe (e.g., [`exhibitor`](https://github.com/SimpleFinance/cookbook-exhibitor))
 * Relax permissions on ZK install_dir (#140)
 
 ## 2.9.0
