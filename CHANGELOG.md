@@ -1,6 +1,11 @@
 # CHANGELOG for zookeeper
 This file is used to list changes made in each version of zookeeper.
 
+## 2.11.0
+* Fix logic around creating `zookeeper-env.sh` (Fixes #141)
+* Add tests for default attribtues & using `node[:zookeeper][:env_vars]`
+* Add JAVA_OPTS attribute (#144, thanks @andrewgoktepe)
+
 ## 2.10.0
 * Move creation of `zookeeper-env.sh` to `zookeeper::install`, to allow cookbooks that only call that recipe (e.g., [`exhibitor`](https://github.com/SimpleFinance/cookbook-exhibitor))
 * Relax permissions on ZK install_dir (#140)
