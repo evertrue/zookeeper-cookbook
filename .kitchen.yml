@@ -12,7 +12,6 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[apt::default]
       - recipe[zookeeper_tester]
 
   - name: zookeeper_env
