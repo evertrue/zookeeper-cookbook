@@ -16,9 +16,8 @@
 
 def zookeeper
   require 'zookeeper'
-
-  @zookeeper ||= begin
-    ::Zookeeper.new(@new_resource.connect_str)
+  @zookeeper ||= ::Zookeeper.new(new_resource.connect_str).tap do |zk|
+    zk.add_auth(scheme: new_resource.auth_scheme, cert: new_resource.auth_cert) unless new_resource.auth_cert.nil?
   end
 end
 

@@ -104,13 +104,18 @@ Parameters:
 * `path`: The zookeeper node path (default: The name of the resource)
 * `connect_str`: The zookeeper connection string (required)
 * `data`: The data to write to the node
+* `auth_scheme`: The authentication scheme (default: digest)
+* `auth_cert`: The authentication password or data
 
 Example:
 ``` ruby
 zookeeper_node '/data/myNode' do
   action :create
-  connect_str "localhost:2181"
-  data "my data"
+  connect_str  "localhost:2181"
+  data         "my data"
+  auth_scheme  "digest"
+  auth_cert    "user1:pwd1"
+  acl_digest   "user1:a9l5yfb9zl8WCXjVmi5/XOC0Ep4=" => Zk::PERM_ALL
 end
 ```
 

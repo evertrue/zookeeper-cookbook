@@ -20,3 +20,6 @@ default_action(:create)
 attribute :path,        kind_of: String, name_attribute: true
 attribute :connect_str, kind_of: String, required: true
 attribute :data,        kind_of: String
+
+attribute :auth_cert,   kind_of: String, default: nil
+attribute :auth_scheme, kind_of: String, default: 'digest'
