@@ -15,26 +15,45 @@
 # limitations under the License.
 
 def zookeeper
-  require 'zookeeper'
   @zookeeper ||= ::Zookeeper.new(new_resource.connect_str).tap do |zk|
     zk.add_auth(scheme: new_resource.auth_scheme, cert: new_resource.auth_cert) unless new_resource.auth_cert.nil?
   end
 end
 
+use_inline_resources
+
+def whyrun_supported?
+  true
+end
+
+def load_current_resource
+  require 'zookeeper'
+
+  result = zookeeper.stat(path: new_resource.path)
+  return unless result[:stat].exists
+
+  @current_resource = Chef::Resource::ZookeeperNode.new new_resource.name
+  @current_resource.data zookeeper.get(path: new_resource.path)[:data]
+end
+
 action :create_if_missing do
-  unless zookeeper.stat(:path => @new_resource.path)[:stat].exists?
-    zookeeper.create(:path => @new_resource.path, :data => @new_resource.data)
-  end
+  run_action :create unless @current_resource
 end
 
 action :create do
-  if zookeeper.stat(:path => @new_resource.path)[:stat].exists?
-    zookeeper.set(:path => @new_resource.path, :data => @new_resource.data)
+  if @current_resource.nil?
+    converge_by "Creating #{new_resource.path} node" do
+      zookeeper.create path: new_resource.path, data: new_resource.data
+    end
   else
-    zookeeper.create(:path => @new_resource.path, :data => @new_resource.data)
+    converge_by "Updating #{new_resource.path} node" do
+      zookeeper.set path: new_resource.path, data: new_resource.data
+    end if @current_resource.data != new_resource.data
   end
 end
 
 action :delete do
-  zookeeper.delete(:path => @new_resource.path)
+  converge_by "Removing #{new_resource.path} node" do
+    zookeeper.delete(path: new_resource.path)
+  end if @current_resource
 end
