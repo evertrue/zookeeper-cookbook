@@ -10,7 +10,7 @@ default[:zookeeper][:config_dir]  = "#{node[:zookeeper][:install_dir]}/" \
                                     "zookeeper-#{node[:zookeeper][:version]}/conf"
 default[:zookeeper][:java_opts] = "-Xms128M -Xmx512M"
 
-# One of: 'upstart', 'runit', 'exhibitor'
+# One of: 'upstart', 'runit', 'init', 'exhibitor'
 default[:zookeeper][:service_style] = 'runit'
 
 default[:zookeeper][:config] = {
