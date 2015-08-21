@@ -63,15 +63,23 @@ when 'init'
     notifies :restart, 'service[zookeeper]', :delayed
   end
   template '/etc/init.d/zookeeper' do
-    source 'zookeeper.init.erb'
+    source 'zookeeper.initd.erb'
     owner 'root'
     group 'root'
     action :create
     mode '0755'
     notifies :restart, 'service[zookeeper]', :delayed
   end
+
+  service_provider = value_for_platform(
+    ['centos', 'redhat'] => {
+      'default' => Chef::Provider::Service::Init::Redhat
+    },
+    'default' => Chef::Provider::Service::Init::Debian
+  )
+
   service 'zookeeper' do
-    provider Chef::Provider::Service::Init::Debian
+    provider service_provider
     supports :status => true, :restart => true, :reload => true
     action :enable
   end
