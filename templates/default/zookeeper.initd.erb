@@ -1,0 +1,120 @@
+#!/bin/sh
+#
+# zookeeper ZooKeeper Server
+#
+# chkconfig: - 18 05
+# description: Enable ZooKeeper Server
+#
+
+### BEGIN INIT INFO
+# Provides:          zookeeper
+# Default-Start:
+# Default-Stop:
+# Required-Start:    $remote_fs $network
+# Required-Stop:     $remote_fs $network
+# Description:       zookeeper Server
+# Short-Description: Enable zookeeper  Server
+### END INIT INFO
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+# Set zookeeper env
+. /etc/default/zookeeper
+ZOOBINDIR="$ZOODIR/bin"
+
+prog="zookeeper"
+desc="zookeeper Server"
+
+[ -e /etc/sysconfig/$prog ] && . /etc/sysconfig/$prog
+
+lockfile="/var/lock/subsys/$prog"
+pidfile="/var/run/$prog.pid"
+
+[ -e "$ZOOCFGDIR/java.env" ] && . "$ZOOCFGDIR/java.env"
+
+[ "x$ZOO_LOG4J_PROP" = "x" ] && ZOO_LOG4J_PROP="INFO,CONSOLE"
+
+for f in ${ZOOBINDIR}/../zookeeper-*.jar
+do
+    CLASSPATH="$CLASSPATH:$f"
+done
+
+ZOOLIBDIR=${ZOOLIBDIR:-$ZOOBINDIR/../lib}
+for i in "$ZOOLIBDIR"/*.jar
+do
+    CLASSPATH="$CLASSPATH:$i"
+done
+
+#add the zoocfg dir to classpath
+CLASSPATH=$ZOOCFGDIR:$CLASSPATH
+
+cmd="java  \"-Dzookeeper.log.dir=${ZOO_LOG_DIR}\" \"-Dzookeeper.root.logger=${ZOO_LOG4J_PROP}\" -cp ${CLASSPATH} ${JVMFLAGS} ${ZOOMAIN} ${ZOOCFG} & echo \$! > ${pidfile}"
+
+
+start() {
+    echo -n $"Starting $desc ($prog): "
+    touch $pidfile && chown zookeeper $pidfile
+    daemon --user zookeeper --pidfile $pidfile "$cmd"
+    retval=$?
+    echo
+    [ $retval -eq 0 ] && touch $lockfile
+    return $retval
+}
+
+stop() {
+    echo -n $"Stopping $prog: "
+    killproc -p $pidfile  $prog
+    retval=$?
+    echo
+    [ $retval -eq 0 ] && rm -f $lockfile
+    return $retval
+}
+
+restart() {
+    stop
+    start
+}
+
+reload() {
+    restart
+}
+
+get_status() {
+    status $prog
+    RETVAL=$?
+    STAT=`echo stat | nc localhost $(grep clientPort $ZOOCFG | sed -e 's/.*=//') 2> /dev/null| grep Mode`
+    if [ "x$STAT" = "x" ]
+    then
+        echo "Error contacting service."
+    else
+        echo $STAT
+    fi
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart)
+        restart
+        ;;
+    reload)
+        reload
+        ;;
+    condrestart)
+        [ -e /var/lock/subsys/$prog ] && restart
+        RETVAL=$?
+        ;;
+    status)
+        get_status
+        ;;
+    *)
+        echo $"Usage: $0 {start|stop|restart|reload|condrestart|status}"
+        RETVAL=1
+esac
+
+exit $RETVAL
