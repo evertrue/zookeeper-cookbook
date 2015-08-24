@@ -18,5 +18,18 @@ context 'when all attributes are default' do
       expect(data[:stat].exists?).to eq true
       expect(data[:data]).to eq 'some data'
     end
+
+    it 'should create /secure with correct ACLs' do
+      expected_acls = [
+        { perms: 31, id: { scheme: 'digest', id: 'user1:a9l5yfb9zl8WCXjVmi5/XOC0Ep4=' } },
+        { perms: 3, id: { scheme: 'ip', id: '127.0.0.1' } },
+        { perms: 0, id: { scheme: 'world', id: 'anyone' } },
+      ]
+
+      zookeeper = Zookeeper.new 'localhost:2181'
+      result = zookeeper.get_acl path: '/secure'
+      expect(result[:stat].exists?).to eq true
+      expect(result[:acl]).to match_array expected_acls
+    end
   end
 end
