@@ -1,6 +1,13 @@
 # CHANGELOG for zookeeper
 This file is used to list changes made in each version of zookeeper.
 
+## 2.12.0
+* Add ability to configure znode ACL via node LWRP (#145 thanks @Annih)
+* Create zookeeper user as system user (#142 thanks @petere)
+* Update to prelease `runit` cookbook b/c of a bug in that cookbook
+    - Soon as the next release of it is cut, we can revert e371719
+* Switch to chef-zero for the Test Kitchen provisioner
+
 ## 2.11.0
 * Fix logic around creating `zookeeper-env.sh` (Fixes #141)
 * Add tests for default attribtues & using `node[:zookeeper][:env_vars]`

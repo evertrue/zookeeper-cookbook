@@ -20,3 +20,21 @@ default_action(:create)
 attribute :path,        kind_of: String, name_attribute: true
 attribute :connect_str, kind_of: String, required: true
 attribute :data,        kind_of: String
+
+attribute :auth_cert,   kind_of: String, default: nil
+attribute :auth_scheme, kind_of: String, default: 'digest'
+
+attribute :acl_digest,  kind_of: Hash
+attribute :acl_ip,      kind_of: Hash
+attribute :acl_sasl,    kind_of: Hash
+attribute :acl_world,   kind_of: Fixnum, default: Zk::PERM_ALL
+
+def initialize(name, run_context = nil)
+  super
+
+  # Initializes acl attributes default values
+  # We can't use `default` dsl because it'll share the hash reference
+  @acl_digest = {}
+  @acl_sasl = {}
+  @acl_ip = {}
+end
