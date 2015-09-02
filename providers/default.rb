@@ -22,11 +22,13 @@ def initialize(new_resource, run_context)
   @mirror          = new_resource.mirror
   @checksum        = new_resource.checksum
   @install_dir     = new_resource.install_dir
+  @log_dir         = new_resource.log_dir
   @data_dir        = new_resource.data_dir
   @dependency_gems = zk_dependency_gems
   @user_res        = zk_user_resource(@user)
   @group_res       = zk_group_resource(@group)
   @install_dir_res = zk_install_dir(@install_dir)
+  @log_dir_res     = zk_log_dir(@log_dir)
   @data_dir_res    = zk_data_dir(@data_dir)
   @zk_source       = zk_source("zookeeper-#{@version}")
   @zk_install_cmd  = zk_install_command('install zookeeper')
@@ -56,6 +58,12 @@ action :install do
   @install_dir_res.recursive(true)
   @install_dir_res.mode(00755)
   @install_dir_res.run_action(:create)
+
+  @log_dir_res.owner(@user)
+  @log_dir_res.group(@group)
+  @log_dir_res.recursive(true)
+  @log_dir_res.mode(00755)
+  @log_dir_res.run_action(:create)
 
   @data_dir_res.owner(@user)
   @data_dir_res.group(@group)
@@ -97,6 +105,10 @@ def zk_source(path = '')
 end
 
 def zk_data_dir(path = '')
+  Chef::Resource::Directory.new(path, @run_context)
+end
+
+def zk_log_dir(path = '')
   Chef::Resource::Directory.new(path, @run_context)
 end
 

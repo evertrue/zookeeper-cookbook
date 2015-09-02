@@ -5,7 +5,7 @@ ZOOCFGDIR="$ZOODIR/conf"
 CLASSPATH="$ZOODIR/build/classes:$ZOODIR/bin/build/lib/*.jar:$ZOODIR/lib/slf4j-log4j12-1.6.1.jar:$ZOODIR/lib/slf4j-api-1.6.1.jar:$ZOODIR/lib/netty-3.7.0.Final.jar:$ZOODIR/lib/log4j-1.2.16.jar:$ZOODIR/lib/jline-0.9.94.jar:$ZOODIR/zookeeper-3.4.6.jar:$ZOODIR/src/java/lib/*.jar:$ZOOCFGDIR"
 
 ZOOCFG="$ZOOCFGDIR/zoo.cfg"
-ZOO_LOG_DIR="/var/log/$NAME"
+ZOO_LOG_DIR="<%= node[:zookeeper][:log_dir] %>"
 USER="$NAME"
 GROUP="$NAME"
 PIDDIR="/var/run/$NAME"

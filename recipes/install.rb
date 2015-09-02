@@ -36,6 +36,7 @@ zookeeper node[:zookeeper][:version] do
   mirror      node[:zookeeper][:mirror]
   checksum    node[:zookeeper][:checksum]
   install_dir node[:zookeeper][:install_dir]
+  log_dir     node[:zookeeper][:log_dir]
   data_dir    node[:zookeeper][:config][:dataDir]
   action      :install
 end
@@ -47,3 +48,5 @@ if node[:zookeeper][:env_vars]
     content exports_config node[:zookeeper][:env_vars]
   end
 end
+
+#
