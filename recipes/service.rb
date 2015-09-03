@@ -30,7 +30,7 @@ when 'upstart'
     notifies :restart, 'service[zookeeper]', :delayed
   end
   template '/etc/init/zookeeper.conf' do
-    source 'zookeeper.init.erb'
+    source 'zookeeper.upstart.erb'
     owner 'root'
     group 'root'
     action :create
