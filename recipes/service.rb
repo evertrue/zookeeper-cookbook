@@ -70,8 +70,16 @@ when 'sysv'
     mode '0755'
     notifies :restart, 'service[zookeeper]', :delayed
   end
+
+  service_provider = value_for_platform(
+    %w(centos redhat) => {
+      'default' => Chef::Provider::Service::Init::Redhat
+    },
+    'default' => Chef::Provider::Service::Init::Debian
+  )
+
   service 'zookeeper' do
-    provider Chef::Provider::Service::Init::Debian
+    provider service_provider
     supports :status => true, :restart => true, :reload => true
     action :enable
   end
