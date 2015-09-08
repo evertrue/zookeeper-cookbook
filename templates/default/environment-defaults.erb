@@ -6,7 +6,7 @@ CLASSPATH="$ZOODIR/build/classes:$ZOODIR/bin/build/lib/*.jar:$ZOODIR/lib/slf4j-l
 
 ZOOCFG="$ZOOCFGDIR/<%= node[:zookeeper][:conf_file] %>"
 ZOO_LOG_DIR="<%= node[:zookeeper][:log_dir] %>"
-ZUSER="<%= node[:zookeeper][:user] %>"
+USER="<%= node[:zookeeper][:user] %>"
 GROUP="<%= node[:zookeeper][:user] %>"
 PIDDIR="/var/run/$NAME"
 PIDFILE="$PIDDIR/$NAME.pid"
