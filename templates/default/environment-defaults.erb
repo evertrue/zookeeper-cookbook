@@ -4,10 +4,10 @@ ZOOCFGDIR="$ZOODIR/conf"
 
 CLASSPATH="$ZOODIR/build/classes:$ZOODIR/bin/build/lib/*.jar:$ZOODIR/lib/slf4j-log4j12-1.6.1.jar:$ZOODIR/lib/slf4j-api-1.6.1.jar:$ZOODIR/lib/netty-3.7.0.Final.jar:$ZOODIR/lib/log4j-1.2.16.jar:$ZOODIR/lib/jline-0.9.94.jar:$ZOODIR/zookeeper-3.4.6.jar:$ZOODIR/src/java/lib/*.jar:$ZOOCFGDIR"
 
-ZOOCFG="$ZOOCFGDIR/zoo.cfg"
+ZOOCFG="$ZOOCFGDIR/<%= node[:zookeeper][:conf_file] %>"
 ZOO_LOG_DIR="<%= node[:zookeeper][:log_dir] %>"
-USER="$NAME"
-GROUP="$NAME"
+ZUSER="<%= node[:zookeeper][:user] %>"
+GROUP="<%= node[:zookeeper][:user] %>"
 PIDDIR="/var/run/$NAME"
 PIDFILE="$PIDDIR/$NAME.pid"
 SCRIPTNAME="/etc/init.d/$NAME"
@@ -16,3 +16,8 @@ ZOOMAIN="org.apache.zookeeper.server.quorum.QuorumPeerMain"
 ZOO_LOG4J_PROP="INFO,ROLLINGFILE"
 JMXLOCALONLY=false
 JAVA_OPTS="<%= node[:zookeeper][:java_opts] %>"
+if [ -z "$JMXDISABLE" ]; then
+    JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.ssl=false \
+      -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.port=7199 \
+      -Dcom.sun.management.jmxremote.local.only=$JMXLOCALONLY"
+fi

@@ -16,7 +16,7 @@
 
 # set the config path based on default attributes
 # render out our config
-zookeeper_config "#{node[:zookeeper][:config_dir]}/zoo.cfg" do
+zookeeper_config "#{node[:zookeeper][:config_dir]}/#{node[:zookeeper][:conf_file]}" do
   config node[:zookeeper][:config]
   user   node[:zookeeper][:user]
   action :render

@@ -30,7 +30,7 @@ when 'upstart'
     notifies :restart, 'service[zookeeper]', :delayed
   end
   template '/etc/init/zookeeper.conf' do
-    source 'zookeeper.init.erb'
+    source 'zookeeper.upstart.erb'
     owner 'root'
     group 'root'
     action :create
@@ -53,7 +53,7 @@ when 'runit'
     )
     action [:enable, :start]
   end
-when 'init'
+when 'sysv'
   template '/etc/default/zookeeper' do
     source 'environment-defaults.erb'
     owner 'zookeeper'
@@ -63,7 +63,7 @@ when 'init'
     notifies :restart, 'service[zookeeper]', :delayed
   end
   template '/etc/init.d/zookeeper' do
-    source 'zookeeper.initd.erb'
+    source 'zookeeper.sysv.erb'
     owner 'root'
     group 'root'
     action :create
@@ -72,7 +72,7 @@ when 'init'
   end
 
   service_provider = value_for_platform(
-    ['centos', 'redhat'] => {
+    %w(centos redhat) => {
       'default' => Chef::Provider::Service::Init::Redhat
     },
     'default' => Chef::Provider::Service::Init::Debian
