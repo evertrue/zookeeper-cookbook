@@ -1,6 +1,14 @@
 # CHANGELOG for zookeeper
 This file is used to list changes made in each version of zookeeper.
 
+## 2.13.0
+* Improve generally for better CentOS support (#146)
+* Create ZooKeeper log dir on installation (#147)
+* Add SysV support for CentOS systems not using Upstart/Runit/Exhibitor
+* Fix testing by dropping usage of Chef Zero
+    - Not sure why Chef Zero won’t work, but it’d be nice to get it going again
+    - Seems to complain about not being able to find something w/r/t the tester cookbook
+
 ## 2.12.0
 * Add ability to configure znode ACL via node LWRP (#145 thanks @Annih)
 * Create zookeeper user as system user (#142 thanks @petere)
