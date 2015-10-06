@@ -48,5 +48,3 @@ if node[:zookeeper][:env_vars]
     content exports_config node[:zookeeper][:env_vars]
   end
 end
-
-#
