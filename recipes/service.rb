@@ -72,7 +72,7 @@ when 'sysv'
   end
 
   service_provider = value_for_platform(
-    %w(centos redhat amzn) => {
+    %w(centos redhat amazon) => {
       'default' => Chef::Provider::Service::Init::Redhat
     },
     'default' => Chef::Provider::Service::Init::Debian
