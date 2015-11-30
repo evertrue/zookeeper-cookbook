@@ -1,6 +1,10 @@
 # CHANGELOG for zookeeper
 This file is used to list changes made in each version of zookeeper.
 
+# 2.13.1
+* Switch to using `value_for_platform_family()` to determine the SysV service script provider to use
+    - Makes the cookbook less restrictive w/r/t using it on a RHEL-based OS
+
 ## 2.13.0
 * Improve generally for better CentOS support (#146)
 * Create ZooKeeper log dir on installation (#147)
