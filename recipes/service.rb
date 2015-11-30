@@ -71,10 +71,8 @@ when 'sysv'
     notifies :restart, 'service[zookeeper]', :delayed
   end
 
-  service_provider = value_for_platform(
-    %w(centos redhat amazon) => {
-      'default' => Chef::Provider::Service::Init::Redhat
-    },
+  service_provider = value_for_platform_family(
+    'rhel'    => Chef::Provider::Service::Init::Redhat,
     'default' => Chef::Provider::Service::Init::Debian
   )
 
