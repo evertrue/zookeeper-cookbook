@@ -56,10 +56,10 @@ Parameters:
 
 Example:
 ``` ruby
-zookeeper '3.4.6' do
+zookeeper '3.4.7' do
   user     'zookeeper'
   mirror   'http://www.poolsaboveground.com/apache/zookeeper'
-  checksum '01b3938547cd620dc4c93efe07c0360411f4a66962a70500b163b59014046994'
+  checksum '2e043e04c4da82fbdb38a68e585f3317535b3842c726e0993312948afcc83870'
   action   :install
 end
 ```
@@ -88,7 +88,7 @@ config_hash = {
   }
 }
 
-zookeeper_config '/opt/zookeeper/zookeeper-3.4.6/conf/zoo.cfg' do
+zookeeper_config '/opt/zookeeper/zookeeper-3.4.7/conf/zoo.cfg' do
   config config_hash
   user   'zookeeper'
   action :render
