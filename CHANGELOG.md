@@ -1,6 +1,11 @@
 # CHANGELOG for zookeeper
 This file is used to list changes made in each version of zookeeper.
 
+## 3.0.0
+* Fix setting of `CLASSPATH` to have version dynamically set
+* Upgrade to ZooKeeper 3.4.7, due to the disappearance of ZK 3.4.6 at the chosen mirror
+    - Upgrading ZK is potentially breaking
+
 ## 2.13.1
 * Switch to using `value_for_platform_family()` to determine the SysV service script provider to use
     - Makes the cookbook less restrictive w/r/t using it on a RHEL-based OS
