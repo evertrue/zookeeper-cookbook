@@ -7,7 +7,7 @@ default[:zookeeper][:user]        = 'zookeeper'
 default[:zookeeper][:install_dir] = '/opt/zookeeper'
 default[:zookeeper][:use_java_cookbook] = true
 default[:zookeeper][:config_dir]  = "#{node[:zookeeper][:install_dir]}/" \
-                                    "zookeeper-#{node[:zookeeper][:version]}/conf"
+                                    'zookeeper-%{zookeeper_version}/conf'
 default[:zookeeper][:conf_file]   = 'zoo.cfg'
 default[:zookeeper][:java_opts] = "-Xms128M -Xmx512M"
 default[:zookeeper][:log_dir]     = "/var/log/zookeeper"
@@ -30,3 +30,5 @@ default[:zookeeper][:env_vars] = false
 #   ZOO_LOG4J_PROP: 'INFO,ROLLINGFILE',
 #   ZOO_LOG_DIR: '/var/log/zookeeper'
 # }
+
+default[:apt][:compile_time_update] = true
