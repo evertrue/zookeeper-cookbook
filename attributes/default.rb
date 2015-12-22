@@ -32,3 +32,5 @@ default[:zookeeper][:env_vars] = false
 #   ZOO_LOG4J_PROP: 'INFO,ROLLINGFILE',
 #   ZOO_LOG_DIR: '/var/log/zookeeper'
 # }
+
+default[:apt][:compile_time_update] = true
