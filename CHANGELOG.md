@@ -1,6 +1,12 @@
 # CHANGELOG for zookeeper
 This file is used to list changes made in each version of zookeeper.
 
+## 3.0.1
+* Run apt-get update at compile time
+* Use lazy evaluation for `config_dir` (#153, h/t to @Maniacal)
+* Update to testing using Chef 12.x
+    - Works around the fact that Serverspec requires a version of net-ssh that needs Ruby >= 2.0
+
 ## 3.0.0
 * Fix setting of `CLASSPATH` to have version dynamically set
 * Upgrade to ZooKeeper 3.4.7, due to the disappearance of ZK 3.4.6 at the chosen mirror
