@@ -15,6 +15,11 @@
 # limitations under the License.
 
 # set the config path based on default attributes
+# ensure config_dir exists
+directory "#{node[:zookeeper][:config_dir]}" do
+  user node[:zookeeper][:user]
+  recursive true
+end
 # render out our config
 zookeeper_config "zookeeper config" do
   path   "#{node[:zookeeper][:config_dir] % { zookeeper_version: node[:zookeeper][:version] }}/#{node[:zookeeper][:conf_file]}"
