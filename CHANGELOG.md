@@ -1,6 +1,9 @@
 # CHANGELOG for zookeeper
 This file is used to list changes made in each version of zookeeper.
 
+## 3.0.2
+* Roll back to version 3.4.6 as per a [deadlock issue](https://issues.apache.org/jira/browse/ZOOKEEPER-2347) found by @eherot on #156
+
 ## 3.0.1
 * Run apt-get update at compile time
 * Use lazy evaluation for `config_dir` (#153, h/t to @Maniacal)
