@@ -1,0 +1,27 @@
+# Lining up the attributes of some methods is advantageous for readability
+Style/SingleSpaceBeforeFirstArg:
+  Enabled: false
+
+# Chef methods tend to be self-documenting
+Style/Documentation:
+  Enabled: false
+
+# The default 79 character limit is sometimes unproductive.
+Metrics/LineLength:
+  Max: 120
+
+# The default 10 lines limit is unrealistic.
+Metrics/MethodLength:
+  Max: 50
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+AllCops:
+  Exclude:
+    - 'Guardfile'
+    - 'Rakefile'
+    - 'vendor/bundle/**/*'

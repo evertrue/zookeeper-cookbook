@@ -39,12 +39,12 @@ when 'upstart'
   end
   service 'zookeeper' do
     provider Chef::Provider::Service::Upstart
-    supports :status => true, :restart => true, :reload => true
+    supports status: true, restart: true, reload: true
     action :enable
   end
 when 'runit'
   # runit_service does not install runit itself
-  include_recipe "runit"
+  include_recipe 'runit'
 
   runit_service 'zookeeper' do
     default_logger true
@@ -78,7 +78,7 @@ when 'sysv'
 
   service 'zookeeper' do
     provider service_provider
-    supports :status => true, :restart => true, :reload => true
+    supports status: true, restart: true, reload: true
     action :enable
   end
 when 'exhibitor'

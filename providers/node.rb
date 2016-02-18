@@ -31,10 +31,10 @@ def load_current_resource
 
   result[:acl].each do |acl|
     case acl[:id][:scheme]
-      when 'world'
-        @current_resource.acl_world acl[:perms]
-      else
-        @current_resource.send("acl_#{acl[:id][:scheme]}".to_sym)[acl[:id][:id]] = acl[:perms]
+    when 'world'
+      @current_resource.acl_world acl[:perms]
+    else
+      @current_resource.send("acl_#{acl[:id][:scheme]}".to_sym)[acl[:id][:id]] = acl[:perms]
     end
   end
 end
