@@ -17,6 +17,7 @@
 def initialize(new_resource, run_context)
   super
   @user            = new_resource.user
+  @user_home       = new_resource.user_home
   @group           = new_resource.user
   @version         = new_resource.version
   @mirror          = new_resource.mirror
@@ -44,6 +45,8 @@ action :install do
 
   @user_res.system(true)
   @user_res.gid(@group)
+  @user_res.home(@user_home)
+  @user_res.manage_home(true)
   @user_res.run_action(:create)
 
   @zk_source.path(zk_download_path)
