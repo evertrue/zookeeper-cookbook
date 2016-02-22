@@ -1,6 +1,9 @@
 # CHANGELOG for zookeeper
 This file is used to list changes made in each version of zookeeper.
 
+## 3.0.4
+* Add missing `user_home` attribute to `zookeeper` resource
+
 ## 3.0.3
 * Ensure `zookeeper` user has a home folder (#163, #164)
 
