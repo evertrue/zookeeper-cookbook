@@ -20,6 +20,7 @@ default_action(:install)
 attribute :version,     kind_of: String, name_attribute: true
 attribute :mirror,      kind_of: String, required: true
 attribute :user,        kind_of: String, default: 'zookeeper'
+attribute :user_home,   kind_of: String, default: '/home/zookeeper'
 attribute :install_dir, kind_of: String, default: '/opt/zookeeper'
 attribute :log_dir,     kind_of: String, default: '/var/log/zookeeper'
 attribute :data_dir,    kind_of: String, default: '/var/lib/zookeeper'
