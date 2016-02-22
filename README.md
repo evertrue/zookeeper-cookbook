@@ -49,6 +49,7 @@ Actions: `:install`, `:uninstall`
 Parameters:
 * `version`: Version of Zookeeper to install (name attribute)
 * `user`: The user who will eventually run Zookeeper (default: `'zookeeper'`)
+* `user_home`: Path to the home folder for the Zookeeper user (default: `/home/zookeeper`)
 * `mirror`: The mirror to obtain Zookeeper from (required)
 * `checksum`: Checksum for the Zookeeper download file
 * `install_dir`: Which directory to install Zookeeper to (default:

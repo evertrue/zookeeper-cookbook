@@ -28,6 +28,7 @@ include_recipe 'build-essential::default'
 
 zookeeper node[:zookeeper][:version] do
   user        node[:zookeeper][:user]
+  user_home   node[:zookeeper][:user_home]
   mirror      node[:zookeeper][:mirror]
   checksum    node[:zookeeper][:checksum]
   install_dir node[:zookeeper][:install_dir]

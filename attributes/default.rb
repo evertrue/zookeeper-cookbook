@@ -7,6 +7,7 @@ default[:zookeeper][:checksum]    =
   '01b3938547cd620dc4c93efe07c0360411f4a66962a70500b163b59014046994'
 default[:zookeeper][:mirror]      = 'http://www.poolsaboveground.com/apache/zookeeper'
 default[:zookeeper][:user]        = 'zookeeper'
+default[:zookeeper][:user_home]   = '/home/zookeeper'
 default[:zookeeper][:install_dir] = '/opt/zookeeper'
 default[:zookeeper][:use_java_cookbook] = true
 default[:zookeeper][:config_dir]  = "#{node[:zookeeper][:install_dir]}/" \
