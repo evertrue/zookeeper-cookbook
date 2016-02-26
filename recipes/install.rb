@@ -41,6 +41,6 @@ end
 if node['zookeeper']['env_vars']
   file "#{node['zookeeper']['config_dir']}/zookeeper-env.sh" do
     owner node['zookeeper']['user']
-    content exports_config node['zookeeper']['env_vars']
+    content exports_config(node['zookeeper']['env_vars'])
   end
 end
