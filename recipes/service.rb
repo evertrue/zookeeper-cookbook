@@ -29,6 +29,7 @@ when 'upstart'
     mode '0644'
     notifies :restart, 'service[zookeeper]', :delayed
   end
+
   template '/etc/init/zookeeper.conf' do
     source 'zookeeper.upstart.erb'
     owner 'root'
@@ -37,6 +38,7 @@ when 'upstart'
     mode '0644'
     notifies :restart, 'service[zookeeper]', :delayed
   end
+
   service 'zookeeper' do
     provider Chef::Provider::Service::Upstart
     supports status: true, restart: true, reload: true
@@ -64,6 +66,7 @@ when 'sysv'
     mode '0644'
     notifies :restart, 'service[zookeeper]', :delayed
   end
+
   template '/etc/init.d/zookeeper' do
     source 'zookeeper.sysv.erb'
     owner 'root'
