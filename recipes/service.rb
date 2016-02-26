@@ -48,6 +48,8 @@ when 'runit'
 
   runit_service 'zookeeper' do
     default_logger true
+    owner node[:zookeeper][:user]
+    group node[:zookeeper][:user]
     options(
       exec: executable_path
     )
