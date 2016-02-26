@@ -38,9 +38,8 @@ zookeeper node['zookeeper']['version'] do
 end
 
 # Add optional Zookeeper environment vars
-if node['zookeeper']['env_vars']
-  file "#{node['zookeeper']['config_dir']}/zookeeper-env.sh" do
-    owner node['zookeeper']['user']
-    content exports_config(node['zookeeper']['env_vars'])
-  end
+file "#{node['zookeeper']['config_dir']}/zookeeper-env.sh" do
+  owner node['zookeeper']['user']
+  content exports_config(node['zookeeper']['env_vars'])
+  only_if { node['zookeeper']['env_vars'] }
 end
