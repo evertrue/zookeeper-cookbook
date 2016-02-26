@@ -32,3 +32,12 @@ suites:
     includes:
       - centos-6.4
       - centos-6.5
+
+  - name: upstart
+    run_list:
+      - recipe[zookeeper_tester]
+    attributes:
+      zookeeper:
+        service_style: upstart
+    includes:
+      - ubuntu-14.04
