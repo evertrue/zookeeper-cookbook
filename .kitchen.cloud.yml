@@ -1,0 +1,67 @@
+---
+driver:
+  name: ec2
+  require_chef_omnibus: 12
+  aws_ssh_key_id: <%= ENV['AWS_KEYPAIR_NAME'] %>
+  region: us-east-1
+  availability_zone: us-east-1b
+  security_group_ids:
+    - ci-testing
+  instance_type: c3.large
+  interface: public
+  tags:
+    Env: public
+    Type: test
+    Operator: <%= ENV['USER'] %>
+
+transport:
+  name: sftp
+  ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
+
+platforms:
+  - name: ubuntu-14.04
+  - name: centos-6.5
+
+suites:
+  - name: default
+    driver:
+      tags:
+        Name: zookeeper-default
+    run_list:
+      - recipe[zookeeper_tester]
+
+  - name: zookeeper_env
+    driver:
+      tags:
+        Name: zookeeper-env
+    run_list:
+      - recipe[zookeeper_tester]
+    attributes:
+      zookeeper:
+        env_vars:
+          ZOO_LOG4J_PROP: 'INFO,ROLLINGFILE'
+          ZOO_LOG_DIR: /var/log/zookeeper
+
+  - name: sysv
+    driver:
+      tags:
+        Name: zookeeper-sysv
+    run_list:
+      - recipe[zookeeper_tester]
+    attributes:
+      zookeeper:
+        service_style: sysv
+    includes:
+      - centos-6.5
+
+  - name: upstart
+    driver:
+      tags:
+        Name: zookeeper-upstart
+    run_list:
+      - recipe[zookeeper_tester]
+    attributes:
+      zookeeper:
+        service_style: upstart
+    includes:
+      - ubuntu-14.04
