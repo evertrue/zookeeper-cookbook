@@ -1,6 +1,10 @@
 # CHANGELOG for zookeeper
 This file is used to list changes made in each version of zookeeper.
 
+## 3.0.5
+* Use `node[zookeeper][user]` attribute consistently
+* Fix user for runit-managed service style (#166 #167)
+
 ## 3.0.4
 * Add missing `user_home` attribute to `zookeeper` resource
 
