@@ -23,8 +23,8 @@ case node[:zookeeper][:service_style]
 when 'upstart'
   template '/etc/default/zookeeper' do
     source 'environment-defaults.erb'
-    owner 'zookeeper'
-    group 'zookeeper'
+    owner node[:zookeeper][:user]
+    group node[:zookeeper][:user]
     action :create
     mode '0644'
     notifies :restart, 'service[zookeeper]', :delayed
@@ -58,8 +58,8 @@ when 'runit'
 when 'sysv'
   template '/etc/default/zookeeper' do
     source 'environment-defaults.erb'
-    owner 'zookeeper'
-    group 'zookeeper'
+    owner node[:zookeeper][:user]
+    group node[:zookeeper][:user]
     action :create
     mode '0644'
     notifies :restart, 'service[zookeeper]', :delayed
