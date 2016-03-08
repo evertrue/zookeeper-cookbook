@@ -18,6 +18,8 @@ context 'when all attributes are default' do
         subject { super().content }
         it { should include 'clientPort=2181' }
         it { should include 'tickTime=2000' }
+        it { should include 'initLimit: 5' }
+        it { should include 'syncLimit: 2' }
         it { should include 'dataDir=/opt/zookeeper/mydatadir' }
         it { should include 'autopurge.snapRetainCount=3' }
         it { should include 'autopurge.purgeInterval=1' }
