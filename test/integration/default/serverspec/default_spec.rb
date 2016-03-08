@@ -11,6 +11,20 @@ context 'when all attributes are default' do
     it { should be_listening }
   end
 
+  describe 'zookeeper_config' do
+    describe file '/opt/zookeeper/zookeeper-3.4.6/conf/zoo.cfg' do
+      it { should be_file }
+      describe '#content' do
+        subject { super().content }
+        it { should include 'clientPort=2181' }
+        it { should include 'tickTime=2000' }
+        it { should include 'dataDir=/opt/zookeeper/mydatadir' }
+        it { should include 'autopurge.snapRetainCount=3' }
+        it { should include 'autopurge.purgeInterval=1' }
+      end
+    end
+  end
+
   describe 'zookeeper_node' do
     it 'should create /testing' do
       zookeeper = Zookeeper.new 'localhost:2181'
