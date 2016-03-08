@@ -1,6 +1,9 @@
 # CHANGELOG for zookeeper
 This file is used to list changes made in each version of zookeeper.
 
+## 3.0.6
+* Add `initLimit` and `syncLimit` to ZooKeeper config (#171)
+
 ## 3.0.5
 * Use `node[zookeeper][user]` attribute consistently
 * Fix user for runit-managed service style (#166 #167)
