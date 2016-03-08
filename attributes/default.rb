@@ -2,9 +2,9 @@
 
 default[:apt][:compile_time_update] = true
 
-default[:zookeeper][:version]     = '3.4.6'
+default[:zookeeper][:version]     = '3.4.8'
 default[:zookeeper][:checksum]    =
-  '01b3938547cd620dc4c93efe07c0360411f4a66962a70500b163b59014046994'
+  'f10a0b51f45c4f64c1fe69ef713abf9eb9571bc7385a82da892e83bb6c965e90'
 default[:zookeeper][:mirror]      = 'http://www.poolsaboveground.com/apache/zookeeper'
 default[:zookeeper][:user]        = 'zookeeper'
 default[:zookeeper][:user_home]   = '/home/zookeeper'

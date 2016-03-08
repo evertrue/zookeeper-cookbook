@@ -12,7 +12,7 @@ context 'when all attributes are default' do
   end
 
   describe 'zookeeper_config' do
-    describe file '/opt/zookeeper/zookeeper-3.4.6/conf/zoo.cfg' do
+    describe file '/opt/zookeeper/zookeeper-3.4.8/conf/zoo.cfg' do
       it { should be_file }
       describe '#content' do
         subject { super().content }

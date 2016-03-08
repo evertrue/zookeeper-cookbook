@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 context 'when node[:zookeeper][:env_vars] is set' do
-  describe file '/opt/zookeeper/zookeeper-3.4.7/conf/zookeeper-env.sh' do
+  describe file '/opt/zookeeper/zookeeper-3.4.8/conf/zookeeper-env.sh' do
     it { should be_file }
     describe '#content' do
       subject { super().content }
