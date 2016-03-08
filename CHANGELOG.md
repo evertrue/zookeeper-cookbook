@@ -1,6 +1,9 @@
 # CHANGELOG for zookeeper
 This file is used to list changes made in each version of zookeeper.
 
+## 4.0.0
+* Upgrade to ZooKeeper 3.4.8
+
 ## 3.0.6
 * Add `initLimit` and `syncLimit` to ZooKeeper config (#171)
 
