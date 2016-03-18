@@ -1,5 +1,5 @@
 # Lining up the attributes of some methods is advantageous for readability
-Style/SingleSpaceBeforeFirstArg:
+Style/SpaceBeforeFirstArg:
   Enabled: false
 
 # Chef methods tend to be self-documenting
