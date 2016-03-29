@@ -15,6 +15,7 @@ default[:zookeeper][:config_dir]  = "#{node[:zookeeper][:install_dir]}/" \
 default[:zookeeper][:conf_file]   = 'zoo.cfg'
 default[:zookeeper][:java_opts]   = '-Xms128M -Xmx512M'
 default[:zookeeper][:jmx_port]    = '7199'
+default[:zookeeper][:jmx_local]    = 'false'
 default[:zookeeper][:log_dir]     = '/var/log/zookeeper'
 
 # One of: 'upstart', 'runit', 'exhibitor', 'sysv'
