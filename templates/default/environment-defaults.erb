@@ -14,7 +14,7 @@ SCRIPTNAME="/etc/init.d/$NAME"
 JAVA="/usr/bin/java"
 ZOOMAIN="org.apache.zookeeper.server.quorum.QuorumPeerMain"
 ZOO_LOG4J_PROP="INFO,ROLLINGFILE"
-JMXLOCALONLY=false
+JMXLOCALONLY="<%= node[:zookeeper][:jmx_local] %>"
 JAVA_OPTS="<%= node[:zookeeper][:java_opts] %>"
 if [ -z "$JMXDISABLE" ]; then
     JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.ssl=false \
