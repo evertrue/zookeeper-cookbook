@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of zookeeper.
 
+## v4.1.0
+
+* Add ability to configure JMX port & local only settings via attributes (#172 @felka)
+
 ## v4.0.0
 
 * Upgrade to ZooKeeper 3.4.8
