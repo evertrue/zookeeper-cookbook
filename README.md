@@ -22,14 +22,7 @@ resource to handle the installation and configuration of Zookeeper. It ships
 with a default recipe for backwards compatibility pre-LWRP which will work
 fine, but is really just an example.
 
-For local development, you can either use Vagrant, in which case you will need
-the `vagrant-omnibus` Vagrant plugin:
-
-`vagrant plugin install vagrant-omnibus`
-
-Or, you can use Test-Kitchen, which will handle the bootstrapping for you, and
-is the preferred method for testing this cookbook (usually via a wrapper
-cookbook).
+Testing is handled using Test Kitchen, with the expectation that you have it installed as part of the [Chef DK](https://downloads.chef.io/chef-dk/).
 
 ### Recipes
 
