@@ -22,4 +22,5 @@ zookeeper_config 'zookeeper config' do
   config node[:zookeeper][:config]
   user   node[:zookeeper][:user]
   action :render
+  notifies :restart, 'service[zookeeper]', :delayed
 end
