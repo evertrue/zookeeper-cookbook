@@ -14,17 +14,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-executable_path = ::File.join(node[:zookeeper][:install_dir],
-                              "zookeeper-#{node[:zookeeper][:version]}",
+executable_path = ::File.join(node['zookeeper']['install_dir'],
+                              "zookeeper-#{node['zookeeper']['version']}",
                               'bin',
                               'zkServer.sh')
 
-case node[:zookeeper][:service_style]
+case node['zookeeper']['service_style']
 when 'upstart'
   template '/etc/default/zookeeper' do
     source 'environment-defaults.erb'
-    owner node[:zookeeper][:user]
-    group node[:zookeeper][:user]
+    owner node['zookeeper']['user']
+    group node['zookeeper']['user']
     action :create
     mode '0644'
     notifies :restart, 'service[zookeeper]', :delayed
@@ -50,8 +50,8 @@ when 'runit'
 
   runit_service 'zookeeper' do
     default_logger true
-    owner node[:zookeeper][:user]
-    group node[:zookeeper][:user]
+    owner node['zookeeper']['user']
+    group node['zookeeper']['user']
     options(
       exec: executable_path
     )
@@ -60,8 +60,8 @@ when 'runit'
 when 'sysv'
   template '/etc/default/zookeeper' do
     source 'environment-defaults.erb'
-    owner node[:zookeeper][:user]
-    group node[:zookeeper][:user]
+    owner node['zookeeper']['user']
+    group node['zookeeper']['user']
     action :create
     mode '0644'
     notifies :restart, 'service[zookeeper]', :delayed
