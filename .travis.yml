@@ -1,0 +1,24 @@
+language: ruby
+rvm:
+- 2.2
+sudo: required
+dist: trusty
+cache:
+  directories:
+  - "$HOME/.berkshelf"
+addons:
+  apt:
+    sources:
+    - chef-stable-precise
+    packages:
+    - chefdk
+install:
+- eval "$(chef shell-init bash)"
+before_script:
+- berks
+- chef --version
+- rubocop --version
+- foodcritic --version
+script:
+- rubocop
+- foodcritic .
