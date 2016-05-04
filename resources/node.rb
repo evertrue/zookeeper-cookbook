@@ -1,5 +1,7 @@
-# resources/node.rb
 #
+# Cookbook Name:: zookeeper
+# Resource:: node
+
 # Copyright 2013, Simple Finance Technology Corp.
 # Copyright 2016, EverTrue, Inc.
 #
@@ -15,27 +17,77 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-actions(:create, :delete, :create_if_missing)
-default_action(:create)
+default_action :create
 
-attribute :path,        kind_of: String, name_attribute: true
-attribute :connect_str, kind_of: String, required: true
-attribute :data,        kind_of: String
+property :node_path,   String, name_attribute: true
+property :connect_str, String, required: true, desired_state: false
+property :data,        String
 
-attribute :auth_cert,   kind_of: String, default: nil
-attribute :auth_scheme, kind_of: String, default: 'digest'
+property :auth_cert,   [String, nil], default: nil,      desired_state: false
+property :auth_scheme,                default: 'digest', desired_state: false
 
-attribute :acl_digest,  kind_of: Hash
-attribute :acl_ip,      kind_of: Hash
-attribute :acl_sasl,    kind_of: Hash
-attribute :acl_world,   kind_of: Fixnum, default: Zk::PERM_ALL
+property :acl_digest,  Hash,   default: {}
+property :acl_ip,      Hash,   default: {}
+property :acl_sasl,    Hash,   default: {}
+property :acl_world,   Fixnum, default: Zk::PERM_ALL
 
-def initialize(name, run_context = nil)
-  super
+include Zk::Gem
 
-  # Initializes acl attributes default values
-  # We can't use `default` dsl because it'll share the hash reference
-  @acl_digest = {}
-  @acl_sasl = {}
-  @acl_ip = {}
+load_current_value do
+  result = zk.get_acl path: node_path
+  current_value_does_not_exist! unless result[:stat].exists
+
+  data zk.get(path: node_path)[:data]
+
+  result[:acl].each do |acl|
+    case acl[:id][:scheme]
+    when 'world'
+      acl_world acl[:perms]
+    else
+      send("acl_#{acl[:id][:scheme]}")[acl[:id][:id]] = acl[:perms]
+    end
+  end
+end
+
+action :create_if_missing do
+  run_action :create unless current_value
+end
+
+action :create do
+  converge_if_changed do
+    if current_value
+      if current_value.data != data
+        converge_by "Updating #{node_path} node" do
+          result = zk.set(path: node_path, data: data)[:rc]
+
+          raise "Failed with error code '#{result}' => (#{::Zk.error_message result})" unless result.zero?
+        end
+      end
+
+      if [
+        :acl_world,
+        :acl_digest,
+        :acl_ip,
+        :acl_sasl
+      ].any? { |s| current_value.send(s) != send(s) }
+        converge_by "Setting #{node_path} acls" do
+          result = zk.set_acl(path: node_path, acl: compile_acls)[:rc]
+
+          raise "Failed with error code '#{result}' => (#{::Zk.error_message result})" unless result.zero?
+        end
+      end
+    else
+      converge_by "Creating #{node_path} node" do
+        result = zk.create(path: node_path, data: data, acl: compile_acls)[:rc]
+
+        raise "Failed with error code '#{result}' => (#{::Zk.error_message result})" unless result.zero?
+      end
+    end
+  end
+end
+
+action :delete do
+  converge_by "Removing #{node_path} node" do
+    zk.delete path: node_path
+  end
 end
