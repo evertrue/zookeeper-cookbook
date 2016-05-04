@@ -1,4 +1,6 @@
-# resources/default.rb
+#
+# Cookbook Name:: zookeeper
+# Resource:: default
 #
 # Copyright 2014, Simple Finance Technology Corp.
 # Copyright 2016, EverTrue, Inc.
@@ -15,14 +17,77 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-actions(:install, :uninstall)
-default_action(:install)
+default_action :install
 
-attribute :version,     kind_of: String, name_attribute: true
-attribute :mirror,      kind_of: String, required: true
-attribute :user,        kind_of: String, default: 'zookeeper'
-attribute :user_home,   kind_of: String, default: '/home/zookeeper'
-attribute :install_dir, kind_of: String, default: '/opt/zookeeper'
-attribute :log_dir,     kind_of: String, default: '/var/log/zookeeper'
-attribute :data_dir,    kind_of: String, default: '/var/lib/zookeeper'
-attribute :checksum,    kind_of: String
+property :version,             name_attribute: true
+property :mirror,              default: 'http://apache.mirrors.tds.net/zookeeper/'
+property :checksum,            String
+property :username,            default: 'zookeeper'
+property :user_home,           default: '/home/zookeeper'
+property :install_dir,         default: '/opt/zookeeper'
+property :log_dir,             default: '/var/log/zookeeper'
+property :data_dir,            default: '/var/lib/zookeeper'
+
+# Install Zookeeper
+action :install do
+  %w(
+    zookeeper
+    json
+  ).each do |gem|
+    chef_gem gem do
+      compile_time false
+    end
+  end
+
+  group username
+
+  user username do
+    group       username
+    home        user_home
+    manage_home true
+    system      true
+  end
+
+  remote_file "#{file_cache_path}/zookeeper-#{version}.tar.gz" do
+    owner    'root'
+    group    'root'
+    mode     '0644'
+    source   "#{mirror}/zookeeper-#{version}/zookeeper-#{version}.tar.gz"
+    checksum new_resource.checksum if property_is_set? :checksum
+  end
+
+  [
+    install_dir,
+    log_dir
+  ].each do |d|
+    directory d do
+      owner     username
+      group     username
+      mode      '0755'
+      recursive true
+    end
+  end
+
+  directory data_dir do
+    owner     username
+    group     username
+    mode      '0700'
+    recursive true
+  end
+
+  unless ::File.exist? ::File.join(install_dir, "zookeeper-#{version}", "zookeeper-#{version}.jar")
+    Chef::Log.info "Zookeeper version #{version} not installed. Installing now!"
+
+    execute 'install zookeeper' do
+      cwd     file_cache_path
+      command <<-eos
+tar -C #{install_dir} -zxf zookeeper-#{version}.tar.gz
+chown -R #{user}:#{user} #{install_dir}
+      eos
+    end
+  end
+end
+
+action :uninstall do
+  Chef::Log.error "Unimplemented method :uninstall for resource `zookeeper'"
+end
