@@ -23,6 +23,7 @@ default_action :render
 property :conf_dir,  String, name_attribute: true
 property :conf_file, String,                      required: true
 property :config,    Hash,                        required: true
+property :log_dir,           default: '/var/log/zookeeper'
 property :env_vars,          default: {}
 property :user,              default: 'zookeeper'
 
@@ -33,11 +34,16 @@ action :render do
     content zookeeper_config_resource(config)
   end
 
-  # Add optional Zookeeper environment vars
+  # Ensure that, even if an attribute is passed in, we can
+  # operate on it without running into read-only issues
+  env_vars_hash = env_vars.to_hash
+  env_vars_hash['ZOOCFGDIR']   = conf_dir
+  env_vars_hash['ZOOCFG']      = conf_file
+  env_vars_hash['ZOO_LOG_DIR'] = log_dir
+
   file "#{conf_dir}/zookeeper-env.sh" do
     owner   user
-    content exports_config(env_vars)
-    not_if  { env_vars.empty? }
+    content exports_config(env_vars_hash)
   end
 end
 

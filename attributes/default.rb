@@ -27,13 +27,8 @@ default['zookeeper']['config'] = {
   'syncLimit'  => 2
 }
 
-default['zookeeper']['env_vars'] = {
-  'ZOOCFGDIR'   => node['zookeeper']['config_dir'] % { zookeeper_version: node['zookeeper']['version'] },
-  'ZOOCFG'      => node['zookeeper']['conf_file'],
-  'ZOO_LOG_DIR' => node['zookeeper']['log_dir']
-}
+default['zookeeper']['env_vars'] = {}
 
-# Examples of additional environment vars
+# Examples of an additional environment var
 # See the zookeeper config files (conf/zkEnv.sh, etc.) for more options
 # set['zookeeper']['env_vars']['ZOO_LOG4J_PROP'] = 'INFO,ROLLINGFILE'
-# set['zookeeper']['env_vars']['ZOO_LOG_DIR'] = '/mnt/var/log/zookeeper'

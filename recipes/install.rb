@@ -36,10 +36,3 @@ zookeeper node['zookeeper']['version'] do
   log_dir     node['zookeeper']['log_dir']
   data_dir    node['zookeeper']['config']['dataDir']
 end
-
-file "#{node['zookeeper']['config_dir'] % { zookeeper_version: node['zookeeper']['version'] }}/" \
-     'zookeeper-env.sh' do
-  owner node['zookeeper']['user']
-  content lazy { exports_config(node['zookeeper']['env_vars']) }
-  not_if { node['zookeeper']['env_vars'].empty? }
-end
