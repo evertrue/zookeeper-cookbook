@@ -16,8 +16,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-include Zk::Config
-
 default_action :render
 
 property :conf_dir,  String, name_attribute: true
@@ -31,7 +29,7 @@ action :render do
   file "#{conf_dir}/#{conf_file}" do
     owner   user
     group   user
-    content zookeeper_config_resource(config)
+    content properties_config(config)
   end
 
   # Ensure that, even if an attribute is passed in, we can
