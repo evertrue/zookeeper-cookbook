@@ -28,7 +28,7 @@ default['zookeeper']['config'] = {
 }
 
 # Set a default value to avoid Ruby errors
-default['zookeeper']['env_vars'] = false
+default['zookeeper']['env_vars'] = {}
 
 # Examples of optional environment vars
 # See the zookeeper config files (conf/zkEnv.sh, etc.) for more examples

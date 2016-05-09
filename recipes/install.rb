@@ -41,5 +41,5 @@ end
 file "#{node['zookeeper']['config_dir']}/zookeeper-env.sh" do
   owner node['zookeeper']['user']
   content exports_config(node['zookeeper']['env_vars'])
-  only_if { node['zookeeper']['env_vars'] }
+  not_if { node['zookeeper']['env_vars'].empty? }
 end
