@@ -5,7 +5,7 @@ ZOOCFGDIR="$ZOODIR/conf"
 CLASSPATH="$ZOODIR/build/classes:$ZOODIR/bin/build/lib/*.jar:$ZOODIR/lib/slf4j-log4j12-1.6.1.jar:$ZOODIR/lib/slf4j-api-1.6.1.jar:$ZOODIR/lib/netty-3.7.0.Final.jar:$ZOODIR/lib/log4j-1.2.16.jar:$ZOODIR/lib/jline-0.9.94.jar:$ZOODIR/zookeeper-<%= node['zookeeper']['version'] %>.jar:$ZOODIR/src/java/lib/*.jar:$ZOOCFGDIR"
 
 ZOOCFG="$ZOOCFGDIR/<%= node['zookeeper']['conf_file'] %>"
-ZOO_LOG_DIR="<%= node['zookeeper']['log_dir'] %>"
+export ZOO_LOG_DIR="<%= node['zookeeper']['log_dir'] %>"
 USER="<%= node['zookeeper']['user'] %>"
 GROUP="<%= node['zookeeper']['user'] %>"
 PIDDIR="/var/run/$NAME"
@@ -13,7 +13,7 @@ PIDFILE="$PIDDIR/$NAME.pid"
 SCRIPTNAME="/etc/init.d/$NAME"
 JAVA="/usr/bin/java"
 ZOOMAIN="org.apache.zookeeper.server.quorum.QuorumPeerMain"
-ZOO_LOG4J_PROP="INFO,ROLLINGFILE"
+export ZOO_LOG4J_PROP="INFO,ROLLINGFILE"
 JMXLOCALONLY=<%= node['zookeeper']['jmx_local'] %>
 JAVA_OPTS="<%= node['zookeeper']['java_opts'] %>"
 if [ -z "$JMXDISABLE" ]; then
