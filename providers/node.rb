@@ -47,17 +47,17 @@ action :create do
   if @current_resource.nil?
     converge_by "Creating #{new_resource.path} node" do
       result = zookeeper.create(path: new_resource.path, data: new_resource.data, acl: compile_acls)[:rc]
-      fail "Failed with error code '#{result}' => (#{::Zk.error_message result})" unless result.zero?
+      raise "Failed with error code '#{result}' => (#{::Zk.error_message result})" unless result.zero?
     end
   else
     converge_by "Updating #{new_resource.path} node" do
       result = zookeeper.set(path: new_resource.path, data: new_resource.data)[:rc]
-      fail "Failed with error code '#{result}' => (#{::Zk.error_message result})" unless result.zero?
+      raise "Failed with error code '#{result}' => (#{::Zk.error_message result})" unless result.zero?
     end if @current_resource.data != new_resource.data
 
     converge_by "Setting #{new_resource.path} acls" do
       result = zookeeper.set_acl(path: new_resource.path, acl: compile_acls)[:rc]
-      fail "Failed with error code '#{result}' => (#{::Zk.error_message result})" unless result.zero?
+      raise "Failed with error code '#{result}' => (#{::Zk.error_message result})" unless result.zero?
     end if [:acl_world, :acl_digest, :acl_ip, :acl_sasl].any? { |s| @current_resource.send(s) != new_resource.send(s) }
   end
 end

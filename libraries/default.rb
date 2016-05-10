@@ -49,11 +49,11 @@ module Zk
       config.each_pair do |k, v|
         rendered << "#{lead}." if lead
 
-        if v.is_a?(Hash)
-          rendered << render_zk_config(v, k)
-        else
-          rendered << "#{k}=#{v}\n"
-        end
+        rendered << if v.is_a?(Hash)
+                      render_zk_config(v, k)
+                    else
+                      "#{k}=#{v}\n"
+                    end
       end
 
       rendered
