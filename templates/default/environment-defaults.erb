@@ -11,7 +11,7 @@ GROUP="<%= node['zookeeper']['user'] %>"
 PIDDIR="/var/run/$NAME"
 PIDFILE="$PIDDIR/$NAME.pid"
 SCRIPTNAME="/etc/init.d/$NAME"
-JAVA="/usr/bin/java"
+JAVA="$JAVA_HOME/bin/java"
 ZOOMAIN="org.apache.zookeeper.server.quorum.QuorumPeerMain"
 export ZOO_LOG4J_PROP="INFO,ROLLINGFILE"
 JMXLOCALONLY=<%= node['zookeeper']['jmx_local'] %>
