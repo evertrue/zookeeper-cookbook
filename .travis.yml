@@ -27,8 +27,15 @@ script:
 - rubocop
 - foodcritic .
 - chef exec rspec
-- kitchen test -d always -c
+- kitchen test ${KITCHEN_SUITE} -d always
 env:
+  matrix:
+  - KITCHEN_SUITE=default-ubuntu-1404
+  - KITCHEN_SUITE=default-centos-65
+  - KITCHEN_SUITE=zookeeper-env-ubuntu-1404
+  - KITCHEN_SUITE=zookeeper-env-centos-65
+  - KITCHEN_SUITE=sysv-centos-65
+  - KITCHEN_SUITE=upstart-ubuntu-1404
   global:
   - secure: QyvtDzZ5RJ82o9MvzfuP70FCtGoRALeQbuUA0KyB65fgJVS4Do656P4GvupSzhXb1EHaOYtNM7ISCY2aKGJHt+WlY9hDNYwXQWbpSOcjsuW+CdFyFHEzNQB1XF3W6NFJEJGmKphUpvFUfhZu7tUJZs0/F9hYW25/je1SOYtvOyc=
   - secure: ObAJLc5NlM4vEdR8rDCEynUfRQztbg2RUTDwRvTjPACzx0ia/6XT8B59zssQ8EWdeQa/NkuH2vy/9TK69eyQEX8DbqF+ZAQE7eXzZjYr6UL1M/bzdik1qUDx4QmdKgztJIlJSJCzXy0wDz7DgYWrSX+EVR+CgPXSVndC8aHicVg=
