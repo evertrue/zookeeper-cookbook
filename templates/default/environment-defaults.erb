@@ -21,3 +21,7 @@ if [ -z "$JMXDISABLE" ]; then
       -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.port="<%= node['zookeeper']['jmx_local'] %>" \
       -Dcom.sun.management.jmxremote.local.only=$JMXLOCALONLY"
 fi
+
+
+export ZOO_LOG_DIR=${ZOO_LOG_DIR}
+export ZOO_LOG4J_PROP=${ZOO_LOG4J_PROP}
