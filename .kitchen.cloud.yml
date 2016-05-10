@@ -19,6 +19,7 @@ transport:
   ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
 
 platforms:
+  - name: ubuntu-12.04
   - name: ubuntu-14.04
   - name: centos-6.5
 

@@ -30,6 +30,7 @@ script:
 - kitchen test ${KITCHEN_SUITE} -d always
 env:
   matrix:
+  - KITCHEN_SUITE=default-ubuntu-1204
   - KITCHEN_SUITE=default-ubuntu-1404
   - KITCHEN_SUITE=default-centos-65
   - KITCHEN_SUITE=zookeeper-env-ubuntu-1404
