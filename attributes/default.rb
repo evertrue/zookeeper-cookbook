@@ -36,3 +36,8 @@ default['zookeeper']['env_vars'] = {}
 #   ZOO_LOG4J_PROP: 'INFO,ROLLINGFILE',
 #   ZOO_LOG_DIR: '/var/log/zookeeper'
 # }
+
+# Restart zookeeper service on config file changes
+# This can be dangerous and you should know what you
+# are doing if you enable this.
+default[:zookeeper][:allow_dangerous_restarts] = false
