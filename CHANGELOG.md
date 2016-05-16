@@ -2,6 +2,28 @@
 
 This file is used to list changes made in each version of zookeeper.
 
+## v3.1.0
+
+### Backport of non-breaking changes from v3.0.6...v5.0.0
+
+#### v5.0.0
+
+##### Fixes
+
+* Ensure `zookeeper-env.sh` gets the correct values:
+    - Properly set `node[zookeeper][config_dir]` with lazy interpolation of the `node[zookeeper][version]` attribute
+    - Use lazy evaluation for `exports_config`
+* Export some env vars for subshelled SysV-run services
+
+##### Other changes
+
+* Add proper testing suite using RuboCop, Foodcritic, ChefSpec, and Test Kitchen, automated w/ Travis CI
+* Pin dependency versions to avoid breaking changes being introduced from upstream
+
+#### v4.1.0 
+
+* Add ability to configure JMX port & local only settings via attributes (#172 @felka) 
+
 ## v3.0.6
 
 * Add `initLimit` and `syncLimit` to ZooKeeper config (#171)

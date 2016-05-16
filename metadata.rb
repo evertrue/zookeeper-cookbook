@@ -3,7 +3,7 @@ maintainer       'Simple Finance Technology Corp.'
 maintainer_email 'ops@simple.com'
 license          'Apache v2.0'
 description      'Installs/Configures zookeeper'
-version          '3.0.6'
+version          '3.1.0'
 
 issues_url 'https://github.com/evertrue/zookeeper-cookbook/issues' if respond_to?(:issues_url)
 source_url 'https://github.com/evertrue/zookeeper-cookbook/' if respond_to?(:source_url)
