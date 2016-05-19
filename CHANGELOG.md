@@ -2,6 +2,12 @@
 
 This file is used to list changes made in each version of zookeeper.
 
+## v3.1.1
+
+### Fixes
+
+* Drop pinning of `apt` cookbook to avoid transitive depsolving pain
+
 ## v3.1.0
 
 ### Backport of non-breaking changes from v3.0.6...v5.0.0
