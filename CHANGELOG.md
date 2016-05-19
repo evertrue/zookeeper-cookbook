@@ -2,6 +2,12 @@
 
 This file is used to list changes made in each version of zookeeper.
 
+## v5.0.1
+
+### Fixes
+
+* Drop pinning of apt cookbook to avoid transitive depsolving pain
+
 ## v5.0.0
 
 ### Breaking
