@@ -2,6 +2,12 @@
 
 This file is used to list changes made in each version of zookeeper.
 
+## v5.0.2
+
+### Fixes
+
+* Update to working Apache mirror (#170 #178)
+
 ## v5.0.1
 
 ### Fixes
