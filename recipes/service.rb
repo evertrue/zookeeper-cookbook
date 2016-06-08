@@ -84,7 +84,7 @@ when 'sysv'
   service 'zookeeper' do
     provider service_provider
     supports status: true, restart: true, reload: true
-    action :enable
+    action [:enable, :start]
   end
 when 'exhibitor'
   Chef::Log.info('Assuming Exhibitor will start up Zookeeper.')
