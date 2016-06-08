@@ -42,7 +42,7 @@ when 'upstart'
   service 'zookeeper' do
     provider Chef::Provider::Service::Upstart
     supports status: true, restart: true, reload: true
-    action :enable
+    action [:enable, :start]
   end
 when 'runit'
   # runit_service does not install runit itself
