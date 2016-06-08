@@ -1,5 +1,7 @@
 # zookeeper cookbook
 
+[![Build Status](https://travis-ci.org/evertrue/zookeeper-cookbook.svg?branch=master)](https://travis-ci.org/evertrue/zookeeper-cookbook)
+
 **Table of Contents**
 
 * [Zookeeper](#zookeeper)
