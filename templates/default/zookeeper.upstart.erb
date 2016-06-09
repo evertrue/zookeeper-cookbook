@@ -10,7 +10,6 @@ limit nofile 8192 8192
 console log
 
 script
-    . /etc/default/zookeeper
     [ -r /etc/default/zookeeper ] && . /etc/default/zookeeper
     [ -d $ZOO_LOG_DIR ] || mkdir -p $ZOO_LOG_DIR
     chown $USER:$GROUP $ZOO_LOG_DIR
