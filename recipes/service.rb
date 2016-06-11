@@ -21,15 +21,6 @@ executable_path = ::File.join(node['zookeeper']['install_dir'],
 
 case node['zookeeper']['service_style']
 when 'upstart'
-  template '/etc/default/zookeeper' do
-    source 'environment-defaults.erb'
-    owner node['zookeeper']['user']
-    group node['zookeeper']['user']
-    action :create
-    mode '0644'
-    notifies :restart, 'service[zookeeper]', :delayed
-  end
-
   template '/etc/init/zookeeper.conf' do
     source 'zookeeper.upstart.erb'
     owner 'root'
@@ -58,15 +49,6 @@ when 'runit'
     action [:enable, :start]
   end
 when 'sysv'
-  template '/etc/default/zookeeper' do
-    source 'environment-defaults.erb'
-    owner node['zookeeper']['user']
-    group node['zookeeper']['user']
-    action :create
-    mode '0644'
-    notifies :restart, 'service[zookeeper]', :delayed
-  end
-
   template '/etc/init.d/zookeeper' do
     source 'zookeeper.sysv.erb'
     owner 'root'

@@ -5,11 +5,7 @@
 # chkconfig: 2345 90 10
 # description: zookeeper
 
-[ -r /etc/default/zookeeper ] && . /etc/default/zookeeper
-
-[ -d $ZOO_LOG_DIR ] || mkdir -p $ZOO_LOG_DIR
-chown $USER:$GROUP $ZOO_LOG_DIR
-
+USER="<%= node['zookeeper']['user'] %>"
 DIR="<%= node['zookeeper']['install_dir'] %>/zookeeper-<%= node['zookeeper']['version'] %>/bin/"
 START="zkServer.sh start"
 STOP="zkServer.sh stop"

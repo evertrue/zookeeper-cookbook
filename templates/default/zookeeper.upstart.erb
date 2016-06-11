@@ -9,12 +9,17 @@ limit nofile 8192 8192
 
 console log
 
-script
-    [ -r /etc/default/zookeeper ] && . /etc/default/zookeeper
-    [ -d $ZOO_LOG_DIR ] || mkdir -p $ZOO_LOG_DIR
-    chown $USER:$GROUP $ZOO_LOG_DIR
+USER="<%= node['zookeeper']['user'] %>"
+ZOODIR="<%= node['zookeeper']['install_dir'] %>/zookeeper-<%= node['zookeeper']['version'] %>"
+ZOOCFGDIR="$ZOODIR/conf"
+ZOOCFG="$ZOOCFGDIR/<%= node['zookeeper']['conf_file'] %>"
+CLASSPATH="$ZOODIR/build/classes:$ZOODIR/bin/build/lib/*.jar:$ZOODIR/lib/slf4j-log4j12-1.6.1.jar:$ZOODIR/lib/slf4j-api-1.6.1.jar:$ZOODIR/lib/netty-3.7.0.Final.jar:$ZOODIR/lib/log4j-1.2.16.jar:$ZOODIR/lib/jline-0.9.94.jar:$ZOODIR/zookeeper-<%= node['zookeeper']['version'] %>.jar:$ZOODIR/src/java/lib/*.jar:$ZOOCFGDIR"
+ZOO_LOG_DIR="<%= node['zookeeper']['log_dir'] %>"
+ZOOMAIN="org.apache.zookeeper.server.quorum.QuorumPeerMain"
+ZOO_LOG4J_PROP="INFO,ROLLINGFILE"
 
-    exec start-stop-daemon --start -c $USER --exec $JAVA --name zookeeper \
-        -- -cp $CLASSPATH $JAVA_OPTS -Dzookeeper.log.dir=${ZOO_LOG_DIR} \
+script
+    exec start-stop-daemon --start -c $USER --exec $JAVA_HOME/bin/java --name zookeeper \
+        -- -cp $CLASSPATH <%= node['zookeeper']['java_opts'] %> -Dzookeeper.log.dir=${ZOO_LOG_DIR} \
         -Dzookeeper.root.logger=${ZOO_LOG4J_PROP} $ZOOMAIN $ZOOCFG
 end script
