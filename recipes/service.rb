@@ -23,16 +23,13 @@ case node['zookeeper']['service_style']
 when 'upstart'
   template '/etc/init/zookeeper.conf' do
     source 'zookeeper.upstart.erb'
-    owner 'root'
-    group 'root'
-    action :create
     mode '0644'
     notifies :restart, 'service[zookeeper]', :delayed
   end
 
   service 'zookeeper' do
     provider Chef::Provider::Service::Upstart
-    supports status: true, restart: true, reload: true
+    supports status: true, restart: true
     action [:enable, :start]
   end
 when 'runit'
@@ -51,11 +48,8 @@ when 'runit'
 when 'sysv'
   template '/etc/init.d/zookeeper' do
     source 'zookeeper.sysv.erb'
-    owner 'root'
-    group 'root'
-    action :create
     mode '0755'
-    notifies :restart, 'service[zookeeper]', :delayed
+    notifies :restart, 'service[zookeeper]'
   end
 
   service_provider = value_for_platform_family(
@@ -65,7 +59,7 @@ when 'sysv'
 
   service 'zookeeper' do
     provider service_provider
-    supports status: true, restart: true, reload: true
+    supports status: true, restart: true
     action [:enable, :start]
   end
 when 'exhibitor'
