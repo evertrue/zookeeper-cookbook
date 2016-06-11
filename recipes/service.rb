@@ -53,6 +53,10 @@ when 'sysv'
   template '/etc/init.d/zookeeper' do
     source 'zookeeper.sysv.erb'
     mode '0755'
+    variables(
+      exec: executable_path,
+      user: node['zookeeper']['user']
+    )
     notifies :restart, 'service[zookeeper]'
   end
 

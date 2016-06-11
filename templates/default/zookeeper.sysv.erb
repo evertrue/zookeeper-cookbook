@@ -5,11 +5,9 @@
 # chkconfig: 2345 90 10
 # description: zookeeper
 
-USER="<%= node['zookeeper']['user'] %>"
-DIR="<%= node['zookeeper']['install_dir'] %>/zookeeper-<%= node['zookeeper']['version'] %>/bin/"
-START="zkServer.sh start"
-STOP="zkServer.sh stop"
-STATUS="zkServer.sh status"
+USER="<%= @user %>"
+CMD="<%= @exec %>"
+BIN_DIR="$(dirname "${CMD}")"
 CURRENT_USER="$(/usr/bin/whoami)"
 SHUTDOWN_WAIT=30
 RETVAL="0"
@@ -23,12 +21,12 @@ start() {
 
     echo -e "\nStarting $NAME KEY $KEY ..."
     if [[ $CURRENT_USER == $USER ]]; then
-        cd $DIR
-        ./$START
+        cd $BIN_DIR
+        $CMD start
     else
         echo "Starting $NAME with $USER..."
-        cd $DIR
-        su $USER ./$START
+        cd $BIN_DIR
+        su $USER -c "$CMD start"
     fi
 }
 
@@ -41,19 +39,18 @@ stop() {
 
     echo -e "\nStopping $NAME KEY $KEY ..."
     if [[ $CURRENT_USER == $USER ]]; then
-        cd $DIR
-        ./$STOP
+        cd $BIN_DIR
+        $CMD stop
     else
         echo "Stopping $NAME with $USER..."
-        cd $DIR
-        su $USER ./$STOP
+        cd $BIN_DIR
+        su $USER -c "$CMD stop"
     fi
 
 }
 
 status() {
-    cd $DIR
-    ./$STATUS
+    $CMD status
 }
 
 case "$1" in
