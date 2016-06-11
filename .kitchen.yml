@@ -6,7 +6,7 @@ driver:
 platforms:
   - name: ubuntu-12.04
   - name: ubuntu-14.04
-  - name: centos-6.5
+  - name: centos-6.7
 
 suites:
   - name: default
@@ -29,7 +29,7 @@ suites:
       zookeeper:
         service_style: sysv
     includes:
-      - centos-6.5
+      - centos-6.7
 
   - name: upstart
     run_list:
