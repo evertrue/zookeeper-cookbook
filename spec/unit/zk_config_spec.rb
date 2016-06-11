@@ -1,6 +1,11 @@
-# test/unit/config_spec.rb
+#
+# Cookbook Name:: zookeeper
+# Spec:: default
+#
+# Copyright (c) 2016 The Authors, All Rights Reserved.
 
-require_relative '../spec/spec_helper'
+require 'spec_helper'
+require_relative '../../libraries/default.rb'
 
 describe Zk::Config do
   include Zk::Config
@@ -24,18 +29,16 @@ describe Zk::Config do
   end
 
   it 'should render a flat hash correctly' do
-    output = render_zk_config(@flat_config)
     expected = "clientPort=2181\ntickTime=2000\ndataDir=/opt/zookeeper/mydatadir\n"
 
-    assert_equal(expected, output)
+    expect(render_zk_config(@flat_config)).to eq expected
   end
 
   it 'should render a multi-level hash correctly' do
-    output = render_zk_config(@embedded_config)
     expected = "clientPort=2181\
 \ntickTime=2000\ndataDir=/opt/zookeeper/mydatadir\n\
 autopurge.snapRetainCount=3\nautopurge.purgeInterval=1\n"
 
-    assert_equal(expected, output)
+    expect(render_zk_config(@embedded_config)).to eq expected
   end
 end
