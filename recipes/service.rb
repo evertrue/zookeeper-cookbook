@@ -24,6 +24,10 @@ when 'upstart'
   template '/etc/init/zookeeper.conf' do
     source 'zookeeper.upstart.erb'
     mode '0644'
+    variables(
+      exec: executable_path,
+      user: node['zookeeper']['user']
+    )
     notifies :restart, 'service[zookeeper]', :delayed
   end
 
