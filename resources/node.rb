@@ -1,6 +1,7 @@
 # resources/node.rb
 #
 # Copyright 2013, Simple Finance Technology Corp.
+# Copyright 2016, EverTrue, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

@@ -1,6 +1,6 @@
 name             'zookeeper'
-maintainer       'Simple Finance Technology Corp.'
-maintainer_email 'ops@simple.com'
+maintainer       'EverTrue'
+maintainer_email 'devops@evertrue.com'
 license          'Apache v2.0'
 description      'Installs/Configures zookeeper'
 version          '5.0.2'
