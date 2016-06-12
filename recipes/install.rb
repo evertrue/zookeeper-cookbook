@@ -38,7 +38,6 @@ zookeeper node['zookeeper']['version'] do
   action      :install
 end
 
-# Add optional Zookeeper environment vars
 file "#{node['zookeeper']['config_dir'] % { zookeeper_version: node['zookeeper']['version'] }}/" \
      'zookeeper-env.sh' do
   owner node['zookeeper']['user']

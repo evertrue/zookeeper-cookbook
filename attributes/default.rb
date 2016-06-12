@@ -27,12 +27,13 @@ default['zookeeper']['config'] = {
   syncLimit: 2
 }
 
-# Set a default value to avoid Ruby errors
-default['zookeeper']['env_vars'] = {}
+default['zookeeper']['env_vars'] = {
+  ZOOCFGDIR:      node['zookeeper']['config_dir'] % { zookeeper_version: node['zookeeper']['version'] },
+  ZOOCFG:         node['zookeeper']['conf_file'],
+  ZOO_LOG_DIR:    node['zookeeper']['log_dir']
+}
 
-# Examples of optional environment vars
-# See the zookeeper config files (conf/zkEnv.sh, etc.) for more examples
-# set['zookeeper']['env_vars'] = {
-#   ZOO_LOG4J_PROP: 'INFO,ROLLINGFILE',
-#   ZOO_LOG_DIR: '/var/log/zookeeper'
-# }
+# Examples of additional environment vars
+# See the zookeeper config files (conf/zkEnv.sh, etc.) for more options
+# set['zookeeper']['env_vars']['ZOO_LOG4J_PROP'] = 'INFO,ROLLINGFILE'
+# set['zookeeper']['env_vars']['ZOO_LOG_DIR'] = '/mnt/var/log/zookeeper'

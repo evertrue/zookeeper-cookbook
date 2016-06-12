@@ -25,6 +25,16 @@ context 'when all attributes are default' do
     end
   end
 
+  describe file '/opt/zookeeper/zookeeper-3.4.8/conf/zookeeper-env.sh' do
+    it { should be_file }
+    describe '#content' do
+      subject { super().content }
+      it { should include 'ZOOCFGDIR=/opt/zookeeper/zookeeper-3.4.8/conf' }
+      it { should include 'ZOOCFG=zoo.cfg' }
+      it { should include 'ZOO_LOG_DIR=/var/log/zookeeper' }
+    end
+  end
+
   describe 'zookeeper_node' do
     it 'should create /testing' do
       zookeeper = Zookeeper.new 'localhost:2181'

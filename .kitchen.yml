@@ -20,7 +20,6 @@ suites:
       zookeeper:
         env_vars:
           ZOO_LOG4J_PROP: 'INFO,ROLLINGFILE'
-          ZOO_LOG_DIR: /var/log/zookeeper
 
   - name: sysv
     run_list:
