@@ -18,6 +18,9 @@ transport:
   name: sftp
   ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
 
+provisioner:
+  name: chef_zero
+
 platforms:
   - name: ubuntu-12.04
   - name: ubuntu-14.04
