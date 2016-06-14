@@ -20,17 +20,17 @@ default['zookeeper']['log_dir']     = '/var/log/zookeeper'
 default['zookeeper']['service_style'] = 'runit'
 
 default['zookeeper']['config'] = {
-  clientPort: 2181,
-  dataDir: '/var/lib/zookeeper',
-  tickTime: 2000,
-  initLimit: 5,
-  syncLimit: 2
+  'clientPort' => 2181,
+  'dataDir'    => '/var/lib/zookeeper',
+  'tickTime'   => 2000,
+  'initLimit'  => 5,
+  'syncLimit'  => 2
 }
 
 default['zookeeper']['env_vars'] = {
-  ZOOCFGDIR:      node['zookeeper']['config_dir'] % { zookeeper_version: node['zookeeper']['version'] },
-  ZOOCFG:         node['zookeeper']['conf_file'],
-  ZOO_LOG_DIR:    node['zookeeper']['log_dir']
+  'ZOOCFGDIR'   => node['zookeeper']['config_dir'] % { zookeeper_version: node['zookeeper']['version'] },
+  'ZOOCFG'      => node['zookeeper']['conf_file'],
+  'ZOO_LOG_DIR' => node['zookeeper']['log_dir']
 }
 
 # Examples of additional environment vars
