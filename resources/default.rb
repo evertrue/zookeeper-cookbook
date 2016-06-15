@@ -30,13 +30,8 @@ property :data_dir,            default: '/var/lib/zookeeper'
 
 # Install Zookeeper
 action :install do
-  %w(
-    zookeeper
-    json
-  ).each do |gem|
-    chef_gem gem do
-      compile_time false
-    end
+  chef_gem 'zookeeper' do
+    compile_time false
   end
 
   group username
