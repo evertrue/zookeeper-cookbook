@@ -6,10 +6,9 @@ default['zookeeper']['checksum']    =
 default['zookeeper']['mirror']      = 'http://apache.mirrors.tds.net/zookeeper/'
 default['zookeeper']['user']        = 'zookeeper'
 default['zookeeper']['user_home']   = '/home/zookeeper'
-default['zookeeper']['install_dir'] = '/opt/zookeeper'
+default['zookeeper']['install_dir'] = '/opt'
 default['zookeeper']['use_java_cookbook'] = true
-default['zookeeper']['config_dir']  = "#{node['zookeeper']['install_dir']}/" \
-                                    'zookeeper-%{zookeeper_version}/conf'
+default['zookeeper']['config_dir']  = "#{node['zookeeper']['install_dir']}/zookeeper/conf"
 default['zookeeper']['conf_file']   = 'zoo.cfg'
 default['zookeeper']['java_opts']   = '-Xms128M -Xmx512M'
 default['zookeeper']['log_dir']     = '/var/log/zookeeper'

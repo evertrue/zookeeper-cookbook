@@ -18,7 +18,7 @@
 # set the config path based on default attributes
 # render out our config
 zookeeper_config 'zookeeper config' do
-  conf_dir  node['zookeeper']['config_dir'] % { zookeeper_version: node['zookeeper']['version'] }
+  conf_dir  node['zookeeper']['config_dir']
   conf_file node['zookeeper']['conf_file']
   config    node['zookeeper']['config']
   log_dir   node['zookeeper']['log_dir']

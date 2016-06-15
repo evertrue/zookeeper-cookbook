@@ -24,7 +24,7 @@ property :mirror,              default: 'http://apache.mirrors.tds.net/zookeeper
 property :checksum,            String
 property :username,            default: 'zookeeper'
 property :user_home,           default: '/home/zookeeper'
-property :install_dir,         default: '/opt/zookeeper'
+property :install_dir,         default: '/opt'
 property :log_dir,             default: '/var/log/zookeeper'
 property :data_dir,            default: '/var/lib/zookeeper'
 property :use_java_cookbook,   default: true
@@ -62,24 +62,15 @@ action :install do
     system      true
   end
 
-  remote_file "#{file_cache_path}/zookeeper-#{version}.tar.gz" do
-    owner    'root'
-    group    'root'
-    mode     '0644'
-    source   "#{mirror}/zookeeper-#{version}/zookeeper-#{version}.tar.gz"
-    checksum new_resource.checksum if property_is_set? :checksum
+  directory install_dir do
+    recursive true
   end
 
-  [
-    install_dir,
-    log_dir
-  ].each do |d|
-    directory d do
-      owner     username
-      group     username
-      mode      '0755'
-      recursive true
-    end
+  directory log_dir do
+    owner     username
+    group     username
+    mode      '0755'
+    recursive true
   end
 
   directory data_dir do
@@ -89,16 +80,12 @@ action :install do
     recursive true
   end
 
-  unless ::File.exist? ::File.join(install_dir, "zookeeper-#{version}", "zookeeper-#{version}.jar")
-    Chef::Log.info "Zookeeper version #{version} not installed. Installing now!"
-
-    execute 'install zookeeper' do
-      cwd     file_cache_path
-      command <<-eos
-tar -C #{install_dir} -zxf zookeeper-#{version}.tar.gz
-chown -R #{user}:#{user} #{install_dir}
-      eos
-    end
+  ark 'zookeeper' do
+    url         "#{mirror}/zookeeper-#{new_resource.version}/zookeeper-#{new_resource.version}.tar.gz"
+    version     new_resource.version
+    prefix_root install_dir
+    prefix_home install_dir
+    checksum    new_resource.checksum if property_is_set? :checksum
   end
 end
 
