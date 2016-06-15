@@ -2,6 +2,26 @@
 
 This file is used to list changes made in each version of zookeeper.
 
+## v6.0.0
+
+### Potentially Breaking
+
+* Drop separate `environment-defaults` file for Upstart/SysV in favor of using same env vars as Runit
+    - Consistency is key
+* Use `zkServer.sh` for all service scripts
+* Drop pinning for `build-essential`
+* Rewire how env vars are used to correctly set the config & log locations
+    - Default values added to set the config & log paths properly
+
+### Fixes
+
+* Set Upstart & SysV services to `action: [:enable, :start]` to match the Runit service
+
+### Changes
+
+* Pass values into Upstart & SysV init scripts, rather than directly using attributes
+* Drop any Minitest unit tests in favor of ChefSpec
+
 ## v5.0.2
 
 ### Fixes
