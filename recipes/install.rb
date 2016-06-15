@@ -15,14 +15,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-if Chef::VersionConstraint.new('< 12.10.0').include? Chef::VERSION
-  raise 'This recipe requires Chef version 12.10 or greater'
-end
-
-apt_update 'zookeeper' do
-  action :nothing
-end.run_action :periodic
-
 zookeeper node['zookeeper']['version'] do
   username          node['zookeeper']['user']
   user_home         node['zookeeper']['user_home']
