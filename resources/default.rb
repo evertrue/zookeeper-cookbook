@@ -30,6 +30,10 @@ property :data_dir,            default: '/var/lib/zookeeper'
 
 # Install Zookeeper
 action :install do
+  # build-essential is required to build the zookeeper gem
+  node.override['build-essential']['compile_time'] = true
+  include_recipe 'build-essential::default'
+
   chef_gem 'zookeeper' do
     compile_time false
   end
