@@ -1,7 +1,5 @@
 # attributes/default.rb
 
-default['apt']['compile_time_update'] = true
-
 default['zookeeper']['version']     = '3.4.8'
 default['zookeeper']['checksum']    =
   'f10a0b51f45c4f64c1fe69ef713abf9eb9571bc7385a82da892e83bb6c965e90'

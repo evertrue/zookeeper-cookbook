@@ -15,13 +15,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+if Chef::VersionConstraint.new('< 12.10.0').include? Chef::VERSION
+  raise 'This recipe requires Chef version 12.10 or greater'
+end
+
+apt_update 'zookeeper' do
+  action :nothing
+end.run_action :periodic
+
 if node['zookeeper']['use_java_cookbook'] == true
   include_recipe 'java::default'
 else
   Chef::Log.info("Assuming you've provided your own Java")
 end
-
-include_recipe 'apt::default' if node['platform_family'] == 'debian'
 
 # build-essential is required to build the zookeeper and json gems
 node.override['build-essential']['compile_time'] = true
