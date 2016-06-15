@@ -27,9 +27,16 @@ property :user_home,           default: '/home/zookeeper'
 property :install_dir,         default: '/opt/zookeeper'
 property :log_dir,             default: '/var/log/zookeeper'
 property :data_dir,            default: '/var/lib/zookeeper'
+property :use_java_cookbook,   default: true
 
 # Install Zookeeper
 action :install do
+  if use_java_cookbook
+    include_recipe 'java::default'
+  else
+    Chef::Log.info "Assuming you've provided your own Java"
+  end
+
   # build-essential is required to build the zookeeper gem
   node.override['build-essential']['compile_time'] = true
   include_recipe 'build-essential::default'

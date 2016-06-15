@@ -23,18 +23,13 @@ apt_update 'zookeeper' do
   action :nothing
 end.run_action :periodic
 
-if node['zookeeper']['use_java_cookbook'] == true
-  include_recipe 'java::default'
-else
-  Chef::Log.info("Assuming you've provided your own Java")
-end
-
 zookeeper node['zookeeper']['version'] do
-  username    node['zookeeper']['user']
-  user_home   node['zookeeper']['user_home']
-  mirror      node['zookeeper']['mirror']
-  checksum    node['zookeeper']['checksum']
-  install_dir node['zookeeper']['install_dir']
-  log_dir     node['zookeeper']['log_dir']
-  data_dir    node['zookeeper']['config']['dataDir']
+  username          node['zookeeper']['user']
+  user_home         node['zookeeper']['user_home']
+  mirror            node['zookeeper']['mirror']
+  checksum          node['zookeeper']['checksum']
+  install_dir       node['zookeeper']['install_dir']
+  log_dir           node['zookeeper']['log_dir']
+  data_dir          node['zookeeper']['config']['dataDir']
+  use_java_cookbook node['zookeeper']['use_java_cookbook']
 end
