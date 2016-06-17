@@ -18,9 +18,13 @@
 
 default_action :render
 
-property :conf_dir,  String, name_attribute: true
-property :conf_file, String,                      required: true
-property :config,    Hash,                        required: true
+property :conf_file,         name_attribute: true
+property :conf_dir,          default: '/opt/zookeeper/conf'
+property :config,            default: { 'clientPort' => 2181,
+                                        'dataDir'    => '/var/lib/zookeeper',
+                                        'tickTime'   => 2000,
+                                        'initLimit'  => 5,
+                                        'syncLimit'  => 2 }
 property :log_dir,           default: '/var/log/zookeeper'
 property :env_vars,          default: {}
 property :user,              default: 'zookeeper'
