@@ -39,4 +39,28 @@ module Zk
     else 'Unknown'
     end
   end
+
+  module Gem
+    def zookeeper
+      require 'zookeeper'
+
+      @zookeeper ||= ::Zookeeper.new(new_resource.connect_str).tap do |zk|
+        zk.add_auth scheme: new_resource.auth_scheme, cert: new_resource.auth_cert unless new_resource.auth_cert.nil?
+      end
+    end
+
+    def compile_acls
+      require 'zookeeper'
+
+      @compiled_acls ||= [].tap do |acls|
+        acls << ::Zookeeper::ACLs::ACL.new(id: { id: 'anyone', scheme: 'world' }, perms: new_resource.acl_world)
+
+        %w(digest ip sasl).each do |scheme|
+          new_resource.send("acl_#{scheme}".to_sym).each do |id, perms|
+            acls << ::Zookeeper::ACLs::ACL.new(id: { scheme: scheme, id: id }, perms: perms)
+          end
+        end
+      end
+    end
+  end
 end
