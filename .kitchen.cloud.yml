@@ -34,27 +34,23 @@ suites:
     run_list:
       - recipe[zookeeper_tester]
 
-  - name: zookeeper_env
+  - name: attributes
     driver:
       tags:
-        Name: zookeeper-env
+        Name: zookeeper-attributes
     run_list:
-      - recipe[zookeeper_tester]
+      - recipe[zookeeper_tester::attributes]
     attributes:
       zookeeper:
         env_vars:
           ZOO_LOG4J_PROP: 'INFO,ROLLINGFILE'
-          ZOO_LOG_DIR: /var/log/zookeeper
 
   - name: sysv
     driver:
       tags:
         Name: zookeeper-sysv
     run_list:
-      - recipe[zookeeper_tester]
-    attributes:
-      zookeeper:
-        service_style: sysv
+      - recipe[zookeeper_tester::sysv]
     includes:
       - centos-6.5
 
@@ -63,9 +59,6 @@ suites:
       tags:
         Name: zookeeper-upstart
     run_list:
-      - recipe[zookeeper_tester]
-    attributes:
-      zookeeper:
-        service_style: upstart
+      - recipe[zookeeper_tester::upstart]
     includes:
       - ubuntu-14.04

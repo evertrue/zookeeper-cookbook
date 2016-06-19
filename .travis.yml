@@ -33,8 +33,8 @@ env:
   - KITCHEN_SUITE=default-ubuntu-1204
   - KITCHEN_SUITE=default-ubuntu-1404
   - KITCHEN_SUITE=default-centos-65
-  - KITCHEN_SUITE=zookeeper-env-ubuntu-1404
-  - KITCHEN_SUITE=zookeeper-env-centos-65
+  - KITCHEN_SUITE=attributes-ubuntu-1404
+  - KITCHEN_SUITE=attributes-centos-65
   - KITCHEN_SUITE=sysv-centos-65
   - KITCHEN_SUITE=upstart-ubuntu-1404
   global:
