@@ -12,3 +12,15 @@ zookeeper_node '/secure' do
   acl_ip       '127.0.0.1' => Zk::PERM_READ | Zk::PERM_WRITE
   acl_world    Zk::PERM_NONE
 end
+
+zookeeper_node 'create-znode-to-test-delete' do
+  node_path '/delete'
+  connect_str 'localhost:2181'
+  data 'some data'
+end
+
+zookeeper_node 'delete-znode-to-test-delete' do
+  node_path '/delete'
+  connect_str 'localhost:2181'
+  action :delete
+end

@@ -55,5 +55,11 @@ context 'when all attributes are default' do
       expect(result[:stat].exists?).to eq true
       expect(result[:acl]).to match_array expected_acls
     end
+
+    it 'should delete /delete' do
+      zookeeper = Zookeeper.new 'localhost:2181'
+      result = zookeeper.get_acl path: '/delete'
+      expect(result[:stat].exists?).to eq false
+    end
   end
 end
