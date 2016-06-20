@@ -26,7 +26,13 @@ script:
 - rubocop
 - foodcritic .
 - chef exec rspec
-- kitchen test ${KITCHEN_SUITE} -d always
+- if [[ $KITCHEN_SUITE == "sysv-centos-65" ]]; then
+  kitchen converge ${KITCHEN_SUITE} &&
+  kitchen converge ${KITCHEN_SUITE};
+  fi
+- kitchen verify ${KITCHEN_SUITE};
+after_script:
+- kitchen destroy ${KITCHEN_SUITE};
 env:
   matrix:
   - KITCHEN_SUITE=default-ubuntu-1204
