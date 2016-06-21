@@ -2,6 +2,26 @@
 
 This file is used to list changes made in each version of zookeeper.
 
+## v7.0.0
+
+### Potentially Breaking
+
+* Completely refactor existing LWRPs into Chef 12.5 Custom Resources
+* Refactor `zookeeper::service` into a Custom Resource (#86)
+* Drop `apt` cookbook in favor of built-in resources in Chef >= 12.11
+* Migrate all logic inside resources
+* Use `ark` to download & install ZooKeeper, rather than handling every resource directly
+    - This is almost _certainly_ a breaking change, as it moves where ZooKeeper is installed by default
+    - Advantage: a symlink is created at `/#{install_dir}/zookeeper`, pointing to `/#{install_dir}/zookeeper-#{version}`, so handling paths to the current install is far easier
+    - Caution: `/#{install_dir}/zookeeper` has been, until now, a container directory for any installations of ZooKeeper (e.g., `/#{install_dir}/zookeeper/zookeeper-#{version}`)
+* Refactor recipes to wrap resources
+    - An attempt at backwards compatibility has been made, using the previous attribute-driven style
+    - These attributes & recipes will be dropped in future, as per a deprecation notice added to `zookeeper::default`
+
+### Changes
+
+* Add more tests in an attempt at being comprehensive of various ways this cookbook can be used
+
 ## v6.0.0
 
 ### Potentially Breaking
