@@ -12,8 +12,10 @@ supports         'ubuntu', '= 12.04'
 supports         'ubuntu', '= 14.04'
 supports         'centos', '= 6.5'
 
+chef_version     '~> 12.10'
+
 depends          'build-essential'
 depends          'java', '~> 1.39'
 depends          'runit', '~> 1.7'
-depends          'apt'
 depends          'magic', '~> 1.1'
+depends          'ark', '~> 1.0'

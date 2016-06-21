@@ -15,6 +15,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+Chef::Log.warn 'Recipes included with this cookbook are deprecated, ' \
+               'and will be removed in a future release.'
+
 # download and install base package
 include_recipe 'zookeeper::install'
 

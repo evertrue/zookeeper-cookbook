@@ -40,23 +40,27 @@ module Zk
     end
   end
 
-  module Config
-    # Zookeeper uses a Java properties file style of configuration. This helper
-    # method will render a hash in that style.
-    def render_zk_config(config, lead = nil)
-      rendered = ''
+  module Gem
+    def zk
+      require 'zookeeper'
 
-      config.each_pair do |k, v|
-        rendered << "#{lead}." if lead
-
-        rendered << if v.is_a?(Hash)
-                      render_zk_config(v, k)
-                    else
-                      "#{k}=#{v}\n"
-                    end
+      @zk ||= ::Zookeeper.new(connect_str).tap do |zk|
+        zk.add_auth scheme: auth_scheme, cert: auth_cert unless auth_cert.nil?
       end
+    end
 
-      rendered
+    def compile_acls
+      require 'zookeeper'
+
+      @compiled_acls ||= [].tap do |acls|
+        acls << ::Zookeeper::ACLs::ACL.new(id: { id: 'anyone', scheme: 'world' }, perms: acl_world)
+
+        %w(digest ip sasl).each do |scheme|
+          send("acl_#{scheme}".to_sym).each do |id, perms|
+            acls << ::Zookeeper::ACLs::ACL.new(id: { scheme: scheme, id: id }, perms: perms)
+          end
+        end
+      end
     end
   end
 end

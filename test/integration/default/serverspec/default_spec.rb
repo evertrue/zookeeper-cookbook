@@ -12,7 +12,7 @@ context 'when all attributes are default' do
   end
 
   describe 'zookeeper_config' do
-    describe file '/opt/zookeeper/zookeeper-3.4.8/conf/zoo.cfg' do
+    describe file '/opt/zookeeper/conf/zoo.cfg' do
       it { should be_file }
       describe '#content' do
         subject { super().content }
@@ -25,11 +25,11 @@ context 'when all attributes are default' do
     end
   end
 
-  describe file '/opt/zookeeper/zookeeper-3.4.8/conf/zookeeper-env.sh' do
+  describe file '/opt/zookeeper/conf/zookeeper-env.sh' do
     it { should be_file }
     describe '#content' do
       subject { super().content }
-      it { should include 'ZOOCFGDIR=/opt/zookeeper/zookeeper-3.4.8/conf' }
+      it { should include 'ZOOCFGDIR=/opt/zookeeper/conf' }
       it { should include 'ZOOCFG=zoo.cfg' }
       it { should include 'ZOO_LOG_DIR=/var/log/zookeeper' }
     end
@@ -54,6 +54,12 @@ context 'when all attributes are default' do
       result = zookeeper.get_acl path: '/secure'
       expect(result[:stat].exists?).to eq true
       expect(result[:acl]).to match_array expected_acls
+    end
+
+    it 'should delete /delete' do
+      zookeeper = Zookeeper.new 'localhost:2181'
+      result = zookeeper.get_acl path: '/delete'
+      expect(result[:stat].exists?).to eq false
     end
   end
 end

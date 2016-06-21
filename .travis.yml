@@ -1,8 +1,7 @@
 language: ruby
 rvm:
 - 2.2
-sudo: required
-dist: trusty
+sudo: false
 cache:
   directories:
   - "$HOME/.berkshelf"
@@ -27,14 +26,20 @@ script:
 - rubocop
 - foodcritic .
 - chef exec rspec
-- kitchen test ${KITCHEN_SUITE} -d always
+- if [[ $KITCHEN_SUITE == "sysv-centos-65" ]]; then
+  kitchen converge ${KITCHEN_SUITE} &&
+  kitchen converge ${KITCHEN_SUITE};
+  fi
+- kitchen verify ${KITCHEN_SUITE};
+after_script:
+- kitchen destroy ${KITCHEN_SUITE};
 env:
   matrix:
   - KITCHEN_SUITE=default-ubuntu-1204
   - KITCHEN_SUITE=default-ubuntu-1404
   - KITCHEN_SUITE=default-centos-65
-  - KITCHEN_SUITE=zookeeper-env-ubuntu-1404
-  - KITCHEN_SUITE=zookeeper-env-centos-65
+  - KITCHEN_SUITE=attributes-ubuntu-1404
+  - KITCHEN_SUITE=attributes-centos-65
   - KITCHEN_SUITE=sysv-centos-65
   - KITCHEN_SUITE=upstart-ubuntu-1404
   global:

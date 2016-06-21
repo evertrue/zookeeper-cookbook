@@ -18,9 +18,10 @@
 # set the config path based on default attributes
 # render out our config
 zookeeper_config 'zookeeper config' do
-  path   "#{node['zookeeper']['config_dir'] % { zookeeper_version: node['zookeeper']['version'] }}/" +
-         node['zookeeper']['conf_file']
-  config node['zookeeper']['config']
-  user   node['zookeeper']['user']
-  action :render
+  conf_dir  node['zookeeper']['config_dir']
+  conf_file node['zookeeper']['conf_file']
+  config    node['zookeeper']['config']
+  log_dir   node['zookeeper']['log_dir']
+  user      node['zookeeper']['user']
+  env_vars  node['zookeeper']['env_vars']
 end

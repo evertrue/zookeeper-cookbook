@@ -15,64 +15,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-executable_path = ::File.join(node['zookeeper']['install_dir'],
-                              "zookeeper-#{node['zookeeper']['version']}",
-                              'bin',
-                              'zkServer.sh')
-
-case node['zookeeper']['service_style']
-when 'upstart'
-  template '/etc/init/zookeeper.conf' do
-    source 'zookeeper.upstart.erb'
-    mode '0644'
-    variables(
-      exec: executable_path,
-      user: node['zookeeper']['user']
-    )
-    notifies :restart, 'service[zookeeper]', :delayed
-  end
-
-  service 'zookeeper' do
-    provider Chef::Provider::Service::Upstart
-    supports status: true, restart: true
-    action [:enable, :start]
-  end
-when 'runit'
-  # runit_service does not install runit itself
-  include_recipe 'runit'
-
-  runit_service 'zookeeper' do
-    default_logger true
-    owner node['zookeeper']['user']
-    group node['zookeeper']['user']
-    options(
-      exec: executable_path
-    )
-    action [:enable, :start]
-  end
-when 'sysv'
-  template '/etc/init.d/zookeeper' do
-    source 'zookeeper.sysv.erb'
-    mode '0755'
-    variables(
-      exec: executable_path,
-      user: node['zookeeper']['user']
-    )
-    notifies :restart, 'service[zookeeper]'
-  end
-
-  service_provider = value_for_platform_family(
-    'rhel'    => Chef::Provider::Service::Init::Redhat,
-    'default' => Chef::Provider::Service::Init::Debian
-  )
-
-  service 'zookeeper' do
-    provider service_provider
-    supports status: true, restart: true
-    action [:enable, :start]
-  end
-when 'exhibitor'
-  Chef::Log.info('Assuming Exhibitor will start up Zookeeper.')
-else
-  Chef::Log.error('You specified an invalid service style for Zookeeper, but I am continuing.')
+zookeeper_service 'zookeeper' do
+  service_style node['zookeeper']['service_style']
+  install_dir   "#{node['zookeeper']['install_dir']}/zookeeper"
+  username      node['zookeeper']['user']
 end
