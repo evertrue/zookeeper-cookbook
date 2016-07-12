@@ -24,7 +24,7 @@ property :service_style,
          default: 'runit',
          callbacks: {
            'Must be a valid service style' =>
-             -> (service_style) { %w(runit upstart sysv exhibitor).include? service_style }
+             -> (service_style) { %w(runit upstart sysv systemd exhibitor).include? service_style }
          }
 property :install_dir,       default: '/opt/zookeeper'
 property :username,          default: 'zookeeper'
@@ -89,6 +89,30 @@ action :create do
       supports status: true, restart: true
       action   service_actions
     end
+  when 'systemd'
+    template '/etc/systemd/system/zookeeper.service' do
+      source 'zookeeper.systemd.erb'
+      mode   '0644'
+      variables(
+        exec:     executable_path,
+        username: username
+      )
+      cookbook template_cookbook
+      notifies :run, 'execute[systemctl daemon-reload]'
+    end
+
+    execute 'systemctl daemon-reload' do
+      action :nothing
+      command '/bin/systemctl daemon-reload'
+      notifies :restart,'service[zookeeper]'
+    end
+
+    service 'zookeeper' do
+      provider Chef::Provider::Service::Systemd
+      supports status: true, restart: true
+      action   service_actions
+    end
+
   when 'exhibitor'
     Chef::Log.info 'Assuming Exhibitor will start up Zookeeper.'
   end
