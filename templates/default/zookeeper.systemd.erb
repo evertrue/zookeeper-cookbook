@@ -1,0 +1,18 @@
+# zookeeper - Apache ZooKeeper coordination service
+#
+
+[Unit]
+Description=ZooKeeper coordination service
+After=network.target
+
+[Service]
+User=<%= @username %>
+Group=<%= @username %>
+SyslogIdentifier=zookeeper
+Restart=on-failure
+ExecStart=<%= @exec %> start-foreground
+LimitNOFILE=8192
+
+[Install]
+WantedBy=multi-user.target
+
