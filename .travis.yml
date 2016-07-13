@@ -20,10 +20,10 @@ install:
 before_script:
 - berks
 - chef --version
-- rubocop --version
+- cookstyle --version
 - foodcritic --version
 script:
-- rubocop
+- cookstyle
 - foodcritic .
 - chef exec rspec
 - if [[ $KITCHEN_SUITE == "sysv-centos-65" ]]; then
