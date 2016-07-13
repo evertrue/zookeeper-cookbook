@@ -104,7 +104,7 @@ action :create do
     execute 'systemctl daemon-reload' do
       action :nothing
       command '/bin/systemctl daemon-reload'
-      notifies :restart,'service[zookeeper]'
+      notifies :restart, 'service[zookeeper]'
     end
 
     service 'zookeeper' do
