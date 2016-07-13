@@ -10,6 +10,7 @@ platforms:
   - name: ubuntu-12.04
   - name: ubuntu-14.04
   - name: centos-6.7
+  - name: centos-7.2
 
 suites:
   - name: default
@@ -29,6 +30,12 @@ suites:
       - recipe[zookeeper_tester::sysv]
     includes:
       - centos-6.7
+
+  - name: systemd
+    run_list:
+      - recipe[zookeeper_tester::systemd]
+    includes:
+      - centos-7.2
 
   - name: upstart
     run_list:
