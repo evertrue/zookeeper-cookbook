@@ -42,6 +42,7 @@ env:
   - KITCHEN_SUITE=attributes-centos-65
   - KITCHEN_SUITE=sysv-centos-65
   - KITCHEN_SUITE=upstart-ubuntu-1404
+  - KITCHEN_SUITE=systemd-centos-7
   global:
   - KITCHEN_YAML=.kitchen.cloud.yml
   - secure: QyvtDzZ5RJ82o9MvzfuP70FCtGoRALeQbuUA0KyB65fgJVS4Do656P4GvupSzhXb1EHaOYtNM7ISCY2aKGJHt+WlY9hDNYwXQWbpSOcjsuW+CdFyFHEzNQB1XF3W6NFJEJGmKphUpvFUfhZu7tUJZs0/F9hYW25/je1SOYtvOyc=
