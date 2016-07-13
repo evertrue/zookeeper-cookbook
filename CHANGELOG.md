@@ -2,6 +2,12 @@
 
 This file is used to list changes made in each version of zookeeper.
 
+## v7.1.0
+
+### Changes
+
+* Add SystemD support
+
 ## v7.0.0
 
 ### Potentially Breaking
