@@ -62,6 +62,10 @@ action :install do
     system      true
   end
 
+  directory install_dir do
+    recursive true
+  end
+ 
   ark 'zookeeper' do
     url         "#{mirror}/zookeeper-#{new_resource.version}/zookeeper-#{new_resource.version}.tar.gz"
     version     new_resource.version
