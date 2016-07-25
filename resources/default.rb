@@ -69,10 +69,6 @@ action :install do
     prefix_home install_dir
     checksum    new_resource.checksum if property_is_set? :checksum
   end
-  
-  #directory install_dir do
-  #  recursive true
-  #end
 
   directory log_dir do
     owner     username
