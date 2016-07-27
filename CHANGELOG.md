@@ -2,6 +2,12 @@
 
 This file is used to list changes made in each version of zookeeper.
 
+## v7.1.1
+
+### Fixes
+
+* Fix order of operations re: `link[/opt/zookeeper]` (a sub-unit of the `ark[zookeeper]` resource) (#183, @Stromweld)
+
 ## v7.1.0
 
 ### Changes
