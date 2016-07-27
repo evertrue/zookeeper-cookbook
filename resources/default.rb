@@ -65,6 +65,14 @@ action :install do
   directory install_dir do
     recursive true
   end
+ 
+  ark 'zookeeper' do
+    url         "#{mirror}/zookeeper-#{new_resource.version}/zookeeper-#{new_resource.version}.tar.gz"
+    version     new_resource.version
+    prefix_root install_dir
+    prefix_home install_dir
+    checksum    new_resource.checksum if property_is_set? :checksum
+  end
 
   directory log_dir do
     owner     username
@@ -78,14 +86,6 @@ action :install do
     group     username
     mode      '0700'
     recursive true
-  end
-
-  ark 'zookeeper' do
-    url         "#{mirror}/zookeeper-#{new_resource.version}/zookeeper-#{new_resource.version}.tar.gz"
-    version     new_resource.version
-    prefix_root install_dir
-    prefix_home install_dir
-    checksum    new_resource.checksum if property_is_set? :checksum
   end
 end
 
