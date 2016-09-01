@@ -16,85 +16,47 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-default_action :create
+actions :enable, :disable, :start, :stop, :restart, :reload
 
-property :service_style,
-         default: 'runit',
-         callbacks: {
-           'Must be a valid service style' =>
-             -> (service_style) { %w(runit upstart systemd exhibitor).include? service_style },
-         }
-property :install_dir,         default: '/opt/zookeeper'
-property :conf_dir,            default: '/opt/zookeeper/conf'
-property :username,            default: 'zookeeper'
-property :service_actions,     default: [:enable, :start]
-property :template_cookbook,   default: 'zookeeper'
-property :restart_on_reconfig, default: false
+default_action :enable
 
-action :create do
-  executable_path = "#{new_resource.install_dir}/bin/zkServer.sh"
-  env_path = "#{new_resource.conf_dir}/zookeeper-env.sh"
+property :service_provider,  default: :runit
+property :install_dir,       default: '/opt/zookeeper'
+property :conf_dir,          default: '/opt/zookeeper/conf'
+property :username,          default: 'zookeeper'
 
-  case new_resource.service_style
-  when 'runit'
-    # runit_service does not install runit itself
-    include_recipe 'runit'
+def service_resource(service_actions)
+  # TODO: Figure out how to get zookeeper-env.sh passed in to service
 
-    runit_service 'zookeeper' do
-      default_logger true
-      owner          new_resource.username
-      group          new_resource.username
-      options(
-        zk_env:   env_path,
-        exec:     executable_path,
-        username: new_resource.username
-      )
-      cookbook       new_resource.template_cookbook
-      action         new_resource.service_actions
-    end
-  when 'upstart'
-    template '/etc/init/zookeeper.conf' do
-      source 'zookeeper.upstart.erb'
-      mode   '0644'
-      variables(
-        zk_env:   env_path,
-        exec:     executable_path,
-        username: new_resource.username
-      )
-      cookbook new_resource.template_cookbook
-      notifies :restart, 'service[zookeeper]' if new_resource.restart_on_reconfig
-    end
-
-    service 'zookeeper' do
-      provider Chef::Provider::Service::Upstart
-      supports status: true, restart: true, nothing: true
-      action   new_resource.service_actions
-    end
-  when 'systemd'
-    template '/etc/systemd/system/zookeeper.service' do
-      source 'zookeeper.systemd.erb'
-      mode   '0644'
-      variables(
-        zk_env:   env_path,
-        exec:     executable_path,
-        username: new_resource.username
-      )
-      cookbook new_resource.template_cookbook
-      notifies :run, 'execute[systemctl daemon-reload]'
-    end
-
-    execute 'systemctl daemon-reload' do
-      action :nothing
-      command '/bin/systemctl daemon-reload'
-      notifies :restart, 'service[zookeeper]' if new_resource.restart_on_reconfig
-    end
-
-    service 'zookeeper' do
-      provider Chef::Provider::Service::Systemd
-      supports status: true, restart: true, nothing: true
-      action   new_resource.service_actions
-    end
-  when 'exhibitor'
-    Chef::Log.info 'Assuming Exhibitor will start up Zookeeper.'
+  poise_service 'zookeeper' do
+    command   "#{install_dir}/bin/zkServer.sh"
+    user      username
+    directory install_dir
+    provider  service_provider
+    action    service_actions
   end
+end
+
+action :enable do
+  service_resource :enable
+end
+
+action :disable do
+  service_resource :disable
+end
+
+action :start do
+  service_resource :start
+end
+
+action :stop do
+  service_resource :stop
+end
+
+action :restart do
+  service_resource :restart
+end
+
+action :reload do
+  service_resource :reload
 end

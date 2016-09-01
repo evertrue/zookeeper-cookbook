@@ -16,8 +16,8 @@
 # limitations under the License.
 
 zookeeper_service 'zookeeper' do
-  service_style node['zookeeper']['service_style']
-  install_dir   "#{node['zookeeper']['install_dir']}/zookeeper"
-  conf_dir      node['zookeeper']['conf_dir']
-  username      node['zookeeper']['user']
+  service_provider node['zookeeper']['service_style']
+  install_dir      "#{node['zookeeper']['install_dir']}/zookeeper"
+  conf_dir         node['zookeeper']['conf_dir']
+  username         node['zookeeper']['user']
 end
