@@ -2,6 +2,12 @@
 
 This file is used to list changes made in each version of zookeeper.
 
+## v8.0.0
+
+### Potentially Breaking
+
+* Loosen dependencies’ pins to all be `>=`, (#187 #188 h/t @Stromweld)
+
 ## v7.1.1
 
 ### Fixes
