@@ -12,9 +12,9 @@ limit nofile 8192 8192
 
 console log
 
-setuid <%= @username %>
-setgid <%= @username %>
+setuid <%= @user %>
+setgid <%= @user %>
 
 script
-    exec <%= @exec %> start-foreground
+    exec <%= @command %> start-foreground
 end script

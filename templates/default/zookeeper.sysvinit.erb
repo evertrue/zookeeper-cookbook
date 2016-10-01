@@ -5,8 +5,8 @@
 # chkconfig: 2345 90 10
 # description: zookeeper
 
-USER="<%= @username %>"
-CMD="<%= @exec %>"
+USER="<%= @user %>"
+CMD="<%= @command %>"
 BIN_DIR="$(dirname "${CMD}")"
 CURRENT_USER="$(/usr/bin/whoami)"
 SHUTDOWN_WAIT=30

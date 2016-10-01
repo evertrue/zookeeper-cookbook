@@ -6,13 +6,12 @@ Description=ZooKeeper coordination service
 After=network.target
 
 [Service]
-User=<%= @username %>
-Group=<%= @username %>
+User=<%= @user %>
+Group=<%= @user %>
 SyslogIdentifier=zookeeper
 Restart=on-failure
-ExecStart=<%= @exec %> start-foreground
+ExecStart=<%= @command %> start-foreground
 LimitNOFILE=8192
 
 [Install]
 WantedBy=multi-user.target
-
