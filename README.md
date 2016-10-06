@@ -78,9 +78,22 @@ Actions: `:render`, `:delete`
 
 Parameters:
 
-* `user`: The user to give ownership of the file to (default: `zookeeper`)
+* `conf_file` (name attribute): Base name of the config file
+* `conf_path`: Path to write the configuration file to (defaults to `/opt/zookeeper/conf`)
 * `config`: Hash of configuration parameters to add to the file
-* `path`: Path to write the configuration file to.
+  - Defaults to:
+```ruby
+{
+  'clientPort' => 2181,
+  'dataDir'    => '/var/lib/zookeeper',
+  'tickTime'   => 2000,
+  'initLimit'  => 5,
+  'syncLimit'  => 2
+}
+```
+* `env_vars`: Hash of startup environment variables (defaults to `{}`)
+* `log_dir`: Log directory (defaults to `/var/log/zookeeper`)
+* `user`: The user to give ownership of the file to (default: `zookeeper`)
 
 Example:
 
@@ -95,7 +108,7 @@ config_hash = {
   }
 }
 
-zookeeper_config '/opt/zookeeper/zookeeper-3.4.8/conf/zoo.cfg' do
+zookeeper_config 'zoo.cfg' do
   config config_hash
   user   'zookeeper'
   action :render
