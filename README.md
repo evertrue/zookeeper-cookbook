@@ -70,9 +70,7 @@ end
 
 #### zookeeper_config
 
-This resource renders a ZooKeeper configuration file. Period-delimited
-parameters can be specified either as a flat hash, or by embeddeding each
-sub-section within a separate hash. See the example below for an example.
+This resource renders a ZooKeeper configuration file.
 
 Actions: `:render`, `:delete`
 
@@ -102,9 +100,8 @@ config_hash = {
   clientPort: 2181, 
   dataDir: '/mnt/zk', 
   tickTime: 2000,
-  autopurge: {
-    snapRetainCount: 1,
-    purgeInterval: 1
+  'autopurge.snapRetainCount' => 1,
+  'autopurge.purgeInterval' => 1
   }
 }
 
