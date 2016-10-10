@@ -1,5 +1,5 @@
 
-zookeeper '3.4.8'
+zookeeper node['zookeeper']['version']
 zookeeper_config 'zoo.cfg'
 zookeeper_service 'zookeeper' do
   service_style 'systemd'

@@ -1,6 +1,6 @@
 # attributes/default.rb
 
-default['zookeeper']['version']     = '3.4.8'
+default['zookeeper']['version']     = '3.4.9'
 default['zookeeper']['checksum']    =
   'f10a0b51f45c4f64c1fe69ef713abf9eb9571bc7385a82da892e83bb6c965e90'
 default['zookeeper']['mirror']      = 'http://apache.mirrors.tds.net/zookeeper/'
