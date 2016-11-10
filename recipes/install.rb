@@ -16,12 +16,15 @@
 # limitations under the License.
 
 zookeeper node['zookeeper']['version'] do
-  username          node['zookeeper']['user']
-  user_home         node['zookeeper']['user_home']
-  mirror            node['zookeeper']['mirror']
-  checksum          node['zookeeper']['checksum']
-  install_dir       node['zookeeper']['install_dir']
-  log_dir           node['zookeeper']['log_dir']
-  data_dir          node['zookeeper']['config']['dataDir']
-  use_java_cookbook node['zookeeper']['use_java_cookbook']
+  username node['zookeeper']['user']
+  data_dir node['zookeeper']['config']['dataDir']
+
+  %w(
+    user_home
+    mirror
+    checksum
+    install_dir
+    log_dir
+    use_java_cookbook
+  ).each { |key| send(key, node['zookeeper'][key]) }
 end
