@@ -1,5 +1,7 @@
 # attributes/default.rb
 
+allocated_memory = "#{(node['memory']['total'].to_i * 0.8).floor / 1024}m"
+
 default['zookeeper']['version']     = '3.4.9'
 default['zookeeper']['checksum']    =
   'f10a0b51f45c4f64c1fe69ef713abf9eb9571bc7385a82da892e83bb6c965e90'
@@ -10,7 +12,7 @@ default['zookeeper']['install_dir'] = '/opt'
 default['zookeeper']['use_java_cookbook'] = true
 default['zookeeper']['config_dir']  = "#{node['zookeeper']['install_dir']}/zookeeper/conf"
 default['zookeeper']['conf_file']   = 'zoo.cfg'
-default['zookeeper']['java_opts']   = '-Xms128M -Xmx512M'
+default['zookeeper']['java_opts']   = "-Xmx#{allocated_memory}"
 default['zookeeper']['log_dir']     = '/var/log/zookeeper'
 
 # One of: 'upstart', 'runit', 'exhibitor', 'sysv', 'systemd'

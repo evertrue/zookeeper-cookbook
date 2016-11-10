@@ -28,6 +28,7 @@ property :config,            default: { 'clientPort' => 2181,
 property :log_dir,           default: '/var/log/zookeeper'
 property :env_vars,          default: {}
 property :user,              default: 'zookeeper'
+property :java_opts
 
 action :render do
   file "#{conf_dir}/#{conf_file}" do
@@ -42,6 +43,7 @@ action :render do
   env_vars_hash['ZOOCFGDIR']   = conf_dir
   env_vars_hash['ZOOCFG']      = conf_file
   env_vars_hash['ZOO_LOG_DIR'] = log_dir
+  env_vars_hash['JVMFLAGS']    = java_opts if java_opts
 
   file "#{conf_dir}/zookeeper-env.sh" do
     owner   user

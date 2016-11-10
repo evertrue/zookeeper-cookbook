@@ -25,5 +25,6 @@ zookeeper_config 'zookeeper config' do
     log_dir
     user
     env_vars
+    java_opts
   ).each { |key| send(key, node['zookeeper'][key]) if node['zookeeper'][key] }
 end
