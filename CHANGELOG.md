@@ -2,6 +2,16 @@
 
 This file is used to list changes made in each version of zookeeper.
 
+## v8.1.0
+
+### Changes
+
+* **NOTICE** Install zookeeper 3.4.9
+
+### Fixes
+
+* Make sure java_opts is actually rendered in the ZK env config
+
 ## v8.0.1
 
 ### Fixes
