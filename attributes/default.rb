@@ -2,17 +2,18 @@
 
 allocated_memory = "#{(node['memory']['total'].to_i * 0.8).floor / 1024}m"
 
-default['zookeeper']['version']     = '3.4.14'
-default['zookeeper']['checksum']    =
-  'b14f7a0fece8bd34c7fffa46039e563ac5367607c612517aa7bd37306afbd1cd'
-default['zookeeper']['mirror']      = 'http://apache.mirrors.tds.net/zookeeper/'
+default['zookeeper']['version']     = '3.5.6'
+default['zookeeper']['checksum']    = nil
+default['zookeeper']['mirror']      = 'http://apache.mirrors.tds.net/zookeeper'
 default['zookeeper']['user']        = 'zookeeper'
 default['zookeeper']['user_home']   = '/home/zookeeper'
 default['zookeeper']['install_dir'] = '/opt'
 default['zookeeper']['use_java_cookbook'] = true
 default['zookeeper']['conf_dir']    = "#{node['zookeeper']['install_dir']}/zookeeper/conf"
 default['zookeeper']['conf_file']   = 'zoo.cfg'
-default['zookeeper']['java_opts']   = "-Xmx#{allocated_memory}"
+default['zookeeper']['java_opts']   =
+  "-Xmx#{allocated_memory} " \
+  '-Dzookeeper.serverCnxnFactory=org.apache.zookeeper.server.NettyServerCnxnFactory'
 default['zookeeper']['log_dir']     = '/var/log/zookeeper'
 
 # One of: 'upstart', 'runit', 'exhibitor', systemd'
@@ -20,6 +21,7 @@ default['zookeeper']['service_style'] = 'runit'
 
 default['zookeeper']['config'] = {
   'clientPort' => 2181,
+  'secureClientPort' => 2182,
   'dataDir' => '/var/lib/zookeeper',
   'tickTime' => 2000,
   'initLimit' => 5,
