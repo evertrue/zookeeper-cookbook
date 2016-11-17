@@ -31,3 +31,5 @@ default['zookeeper']['env_vars'] = {}
 # Examples of an additional environment var
 # See the zookeeper config files (conf/zkEnv.sh, etc.) for more options
 # set['zookeeper']['env_vars']['ZOO_LOG4J_PROP'] = 'INFO,ROLLINGFILE'
+
+default['java']['jdk_version'] = '8'
