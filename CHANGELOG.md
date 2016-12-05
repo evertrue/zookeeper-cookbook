@@ -2,6 +2,14 @@
 
 This file is used to list changes made in each version of zookeeper.
 
+## v8.1.1
+
+### Fixes
+
+* Update checksum to match that of version 3.4.9 (fixes #194)
+* Actually test sending checksum in attributes to `zookeeper` resource when setting up test instance (Relates to #194)
+* In `zookeeper` resource, `if property_is_set? new_resource.checksum` always returns false. Use `if new_resource.checksum` instead.
+
 ## v8.1.0
 
 ### Changes
