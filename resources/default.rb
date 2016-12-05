@@ -71,7 +71,7 @@ action :install do
     version     new_resource.version
     prefix_root install_dir
     prefix_home install_dir
-    checksum    new_resource.checksum if property_is_set? :checksum
+    checksum    new_resource.checksum if new_resource.checksum
   end
 
   directory log_dir do
