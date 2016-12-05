@@ -4,7 +4,7 @@ allocated_memory = "#{(node['memory']['total'].to_i * 0.8).floor / 1024}m"
 
 default['zookeeper']['version']     = '3.4.9'
 default['zookeeper']['checksum']    =
-  'f10a0b51f45c4f64c1fe69ef713abf9eb9571bc7385a82da892e83bb6c965e90'
+  'e7f340412a61c7934b5143faef8d13529b29242ebfba2eba48169f4a8392f535'
 default['zookeeper']['mirror']      = 'http://apache.mirrors.tds.net/zookeeper/'
 default['zookeeper']['user']        = 'zookeeper'
 default['zookeeper']['user_home']   = '/home/zookeeper'
