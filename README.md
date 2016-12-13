@@ -51,7 +51,7 @@ Actions: `:install`, `:uninstall`
 Parameters:
 
 * `version`: Version of ZooKeeper to install (name attribute)
-* `user`: The user who will eventually run Zookeeper (default: `'zookeeper'`)
+* `username`: The user who will eventually run Zookeeper (default: `'zookeeper'`)
 * `user_home`: Path to the home folder for the Zookeeper user (default: `/home/zookeeper`)
 * `mirror`: The mirror to obtain ZooKeeper from (required)
 * `checksum`: Checksum for the ZooKeeper download file
@@ -61,7 +61,7 @@ Example:
 
 ``` ruby
 zookeeper '3.4.8' do
-  user     'zookeeper'
+  username 'zookeeper'
   mirror   'http://www.poolsaboveground.com/apache/zookeeper'
   checksum 'f10a0b51f45c4f64c1fe69ef713abf9eb9571bc7385a82da892e83bb6c965e90'
   action   :install
@@ -77,7 +77,7 @@ Actions: `:render`, `:delete`
 Parameters:
 
 * `conf_file` (name attribute): Base name of the config file
-* `conf_path`: Path to write the configuration file to (defaults to `/opt/zookeeper/conf`)
+* `conf_dir`: Path to write the configuration file to (defaults to `/opt/zookeeper/conf`)
 * `config`: Hash of configuration parameters to add to the file
   - Defaults to:
 ```ruby
