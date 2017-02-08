@@ -2,6 +2,19 @@
 
 This file is used to list changes made in each version of zookeeper.
 
+## v8.1.3
+
+### Fixes
+
+* Fix misnamed attribute
+    - Lost in the shuffle long ago!
+
+## v8.1.2
+
+### Fixes
+
+* Ensure the /opt/zookeeper-$version directory is owned by zookeeper:zookeeper (#196)
+
 ## v8.1.1
 
 ### Fixes
