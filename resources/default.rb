@@ -72,6 +72,8 @@ action :install do
     prefix_root install_dir
     prefix_home install_dir
     checksum    new_resource.checksum if new_resource.checksum
+    owner       username
+    group       username
   end
 
   directory log_dir do
