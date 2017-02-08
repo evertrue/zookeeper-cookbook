@@ -47,6 +47,7 @@ action :render do
 
   file "#{conf_dir}/zookeeper-env.sh" do
     owner   user
+    group   user
     content exports_config(env_vars_hash) + "\n"
   end
 end
