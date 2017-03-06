@@ -9,9 +9,8 @@ After=network.target
 User=<%= @username %>
 Group=<%= @username %>
 SyslogIdentifier=zookeeper
-EnvironmentFile=<%= @zk_env %>
 Restart=on-failure
-ExecStart=<%= @exec %> start-foreground
+ExecStart=/bin/bash -a -c 'source <%= @zk_env %> && <%= @exec %> start-foreground'
 LimitNOFILE=8192
 
 [Install]
