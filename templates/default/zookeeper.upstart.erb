@@ -17,6 +17,6 @@ setgid <%= @username %>
 
 script
     set -a
-    source <%= @zk_env %>
+    . <%= @zk_env %>
     exec <%= @exec %> start-foreground
 end script
