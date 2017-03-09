@@ -66,7 +66,7 @@ action :create do
 
     service 'zookeeper' do
       provider Chef::Provider::Service::Upstart
-      supports status: true, restart: true
+      supports status: true, restart: true, nothing: true
       action   service_actions
     end
   when 'sysv'
@@ -88,7 +88,7 @@ action :create do
 
     service 'zookeeper' do
       provider service_provider
-      supports status: true, restart: true
+      supports status: true, restart: true, nothing: true
       action   service_actions
     end
   when 'systemd'
@@ -111,7 +111,7 @@ action :create do
 
     service 'zookeeper' do
       provider Chef::Provider::Service::Systemd
-      supports status: true, restart: true
+      supports status: true, restart: true, nothing: true
       action   service_actions
     end
 
