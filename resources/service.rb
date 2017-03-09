@@ -26,13 +26,15 @@ property :service_style,
            'Must be a valid service style' =>
              -> (service_style) { %w(runit upstart sysv systemd exhibitor).include? service_style }
          }
-property :install_dir,       default: '/opt/zookeeper'
-property :username,          default: 'zookeeper'
-property :service_actions,   default: [:enable, :start]
-property :template_cookbook, default: 'zookeeper'
+property :install_dir,         default: '/opt/zookeeper'
+property :username,            default: 'zookeeper'
+property :service_actions,     default: [:enable, :start]
+property :template_cookbook,   default: 'zookeeper'
+property :restart_on_reconfig, default: true
 
 action :create do
   executable_path = "#{install_dir}/bin/zkServer.sh"
+  notify_action = restart_on_reconfig ? :restart : :nothing
 
   case service_style
   when 'runit'
@@ -59,7 +61,7 @@ action :create do
         username: username
       )
       cookbook template_cookbook
-      notifies :restart, 'service[zookeeper]'
+      notifies notify_action, 'service[zookeeper]'
     end
 
     service 'zookeeper' do
@@ -76,7 +78,7 @@ action :create do
         username: username
       )
       cookbook template_cookbook
-      notifies :restart, 'service[zookeeper]'
+      notifies notify_action, 'service[zookeeper]'
     end
 
     service_provider = value_for_platform_family(
@@ -104,7 +106,7 @@ action :create do
     execute 'systemctl daemon-reload' do
       action :nothing
       command '/bin/systemctl daemon-reload'
-      notifies :restart, 'service[zookeeper]'
+      notifies notify_action, 'service[zookeeper]'
     end
 
     service 'zookeeper' do
