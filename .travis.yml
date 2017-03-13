@@ -24,7 +24,7 @@ before_script:
 - foodcritic --version
 script:
 - cookstyle
-- foodcritic .
+- foodcritic . -t ~FC023
 - chef exec rspec
 - if [[ $KITCHEN_SUITE == "sysv-centos-65" ]]; then
   kitchen converge ${KITCHEN_SUITE} &&
