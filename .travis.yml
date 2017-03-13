@@ -22,27 +22,23 @@ before_script:
 - chef --version
 - cookstyle --version
 - foodcritic --version
-script:
-- cookstyle
-- foodcritic . -t ~FC023
-- chef exec rspec
-- if [[ $KITCHEN_SUITE == "sysv-centos-65" ]]; then
-  kitchen converge ${KITCHEN_SUITE} &&
-  kitchen converge ${KITCHEN_SUITE};
-  fi
-- kitchen verify ${KITCHEN_SUITE};
-after_script:
-- kitchen destroy ${KITCHEN_SUITE};
+script: $TEST
 env:
   matrix:
-  - KITCHEN_SUITE=default-ubuntu-1204
-  - KITCHEN_SUITE=default-ubuntu-1404
-  - KITCHEN_SUITE=default-centos-65
-  - KITCHEN_SUITE=attributes-ubuntu-1404
-  - KITCHEN_SUITE=attributes-centos-65
-  - KITCHEN_SUITE=sysv-centos-65
-  - KITCHEN_SUITE=upstart-ubuntu-1404
-  - KITCHEN_SUITE=systemd-centos-7
+  - TEST=cookstyle
+  - TEST=foodcritic . -t ~FC023
+  - TEST=chef exec rspec
+  - TEST=kitchen test default-ubuntu-1204
+  - TEST=kitchen test default-ubuntu-1404
+  - TEST=kitchen test default-centos-65
+  - TEST=kitchen test attributes-ubuntu-1404
+  - TEST=kitchen test attributes-centos-65
+  - TEST=kitchen converge sysv-centos-65 &&
+    kitchen converge sysv-centos-65 &&
+    kitchen verify sysv-centos-65 &&
+    kitchen destroy
+  - TEST=kitchen test upstart-ubuntu-1404
+  - TEST=kitchen test systemd-centos-7
   global:
   - KITCHEN_YAML=.kitchen.cloud.yml
   - secure: QyvtDzZ5RJ82o9MvzfuP70FCtGoRALeQbuUA0KyB65fgJVS4Do656P4GvupSzhXb1EHaOYtNM7ISCY2aKGJHt+WlY9hDNYwXQWbpSOcjsuW+CdFyFHEzNQB1XF3W6NFJEJGmKphUpvFUfhZu7tUJZs0/F9hYW25/je1SOYtvOyc=
