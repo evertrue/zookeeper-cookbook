@@ -29,7 +29,7 @@ property :auth_scheme,                default: 'digest', desired_state: false
 property :acl_digest,  Hash,   default: {}
 property :acl_ip,      Hash,   default: {}
 property :acl_sasl,    Hash,   default: {}
-property :acl_world,   Fixnum, default: Zk::PERM_ALL
+property :acl_world,   Integer, default: Zk::PERM_ALL
 
 include Zk::Gem
 
