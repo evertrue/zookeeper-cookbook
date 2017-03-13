@@ -2,6 +2,12 @@
 
 This file is used to list changes made in each version of zookeeper.
 
+## v8.2.0
+
+### Changes
+
+* Add new property to `zookeeper_service` to restart on changes to its config (h/t @jaybocc2 #200)
+
 ## v8.1.3
 
 ### Fixes
