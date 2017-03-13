@@ -24,7 +24,7 @@ property :service_style,
          default: 'runit',
          callbacks: {
            'Must be a valid service style' =>
-             -> (service_style) { %w(runit upstart sysv systemd exhibitor).include? service_style }
+             -> (service_style) { %w(runit upstart sysv systemd exhibitor).include? service_style },
          }
 property :install_dir,         default: '/opt/zookeeper'
 property :username,            default: 'zookeeper'

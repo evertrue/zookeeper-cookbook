@@ -47,7 +47,7 @@ context 'when all attributes are default' do
       expected_acls = [
         { perms: 31, id: { scheme: 'digest', id: 'user1:a9l5yfb9zl8WCXjVmi5/XOC0Ep4=' } },
         { perms: 3, id: { scheme: 'ip', id: '127.0.0.1' } },
-        { perms: 0, id: { scheme: 'world', id: 'anyone' } }
+        { perms: 0, id: { scheme: 'world', id: 'anyone' } },
       ]
 
       zookeeper = Zookeeper.new 'localhost:2181'

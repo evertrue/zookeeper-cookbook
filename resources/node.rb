@@ -68,7 +68,7 @@ action :create do
         :acl_world,
         :acl_digest,
         :acl_ip,
-        :acl_sasl
+        :acl_sasl,
       ].any? { |s| current_value.send(s) != send(s) }
         converge_by "Setting #{node_path} acls" do
           result = zk.set_acl(path: node_path, acl: compile_acls)[:rc]

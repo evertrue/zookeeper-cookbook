@@ -57,7 +57,7 @@ action :delete do
 
   [
     conf_file,
-    'zookeeper-env.sh'
+    'zookeeper-env.sh',
   ].each do |f|
     file "#{conf_dir}/#{f}" do
       action :delete
