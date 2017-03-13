@@ -30,7 +30,7 @@ property :install_dir,         default: '/opt/zookeeper'
 property :username,            default: 'zookeeper'
 property :service_actions,     default: [:enable, :start]
 property :template_cookbook,   default: 'zookeeper'
-property :restart_on_reconfig, default: true
+property :restart_on_reconfig, default: false
 
 action :create do
   executable_path = "#{install_dir}/bin/zkServer.sh"
