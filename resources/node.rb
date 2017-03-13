@@ -60,7 +60,7 @@ action :create do
         converge_by "Updating #{node_path} node" do
           result = zk.set(path: node_path, data: data)[:rc]
 
-          raise "Failed with error code '#{result}' => (#{::Zk.error_message result})" unless result.zero?
+          raise "Failed with error code '#{result}' => (#{::Zk.error_message result})" unless result == 0
         end
       end
 
@@ -73,14 +73,14 @@ action :create do
         converge_by "Setting #{node_path} acls" do
           result = zk.set_acl(path: node_path, acl: compile_acls)[:rc]
 
-          raise "Failed with error code '#{result}' => (#{::Zk.error_message result})" unless result.zero?
+          raise "Failed with error code '#{result}' => (#{::Zk.error_message result})" unless result == 0
         end
       end
     else
       converge_by "Creating #{node_path} node" do
         result = zk.create(path: node_path, data: data, acl: compile_acls)[:rc]
 
-        raise "Failed with error code '#{result}' => (#{::Zk.error_message result})" unless result.zero?
+        raise "Failed with error code '#{result}' => (#{::Zk.error_message result})" unless result == 0
       end
     end
   end
