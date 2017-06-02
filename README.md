@@ -150,6 +150,8 @@ end
 
 * Version 1.4.7 on the community site is in fact version 1.4.8.
 
+Ubuntu users should set `node['apt']['compile_time_update'] = true` in your role/wrapper cookbook, since some packages are installed very early in the chef run, before apt would normally have time to update. 
+
 ## Author and License
 
 EverTrue <devops@evertrue.com>  
