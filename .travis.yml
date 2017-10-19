@@ -19,7 +19,6 @@ install:
 - chef gem install kitchen-ec2 kitchen-sync
 - eval "$(chef shell-init bash)"
 before_script:
-- berks
 - chef --version
 script: $TEST
 env:
