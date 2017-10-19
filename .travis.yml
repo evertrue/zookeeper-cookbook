@@ -26,7 +26,7 @@ script: $TEST
 env:
   matrix:
   - TEST=cookstyle
-  - TEST=foodcritic . -t ~FC023
+  - TEST='foodcritic .'
   - TEST=chef exec rspec
   - TEST=kitchen test default-ubuntu-1204
   - TEST=kitchen test default-ubuntu-1404
