@@ -21,8 +21,6 @@ install:
 before_script:
 - berks
 - chef --version
-- cookstyle --version
-- foodcritic --version
 script: $TEST
 env:
   matrix:
