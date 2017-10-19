@@ -43,8 +43,8 @@ module Zk
   module Gem
     def zk
       require 'zookeeper'
-
-      @zk ||= ::Zookeeper.new(connect_str).tap do |zk|
+      # use class variable otherwise new connection is created for each resource
+      @@zk ||= ::Zookeeper.new(connect_str).tap do |zk|
         zk.add_auth scheme: auth_scheme, cert: auth_cert unless auth_cert.nil?
       end
     end
