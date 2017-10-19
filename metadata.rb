@@ -1,7 +1,7 @@
 name             'zookeeper'
 maintainer       'EverTrue'
 maintainer_email 'devops@evertrue.com'
-license          'Apache v2.0'
+license          'Apache-2.0'
 description      'Installs/Configures zookeeper'
 version          '8.2.1'
 
