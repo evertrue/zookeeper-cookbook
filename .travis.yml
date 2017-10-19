@@ -30,14 +30,17 @@ env:
   - TEST=chef exec rspec
   - TEST=kitchen test default-ubuntu-1204
   - TEST=kitchen test default-ubuntu-1404
+  - TEST=kitchen test default-ubuntu-1604
   - TEST=kitchen test default-centos-65
   - TEST=kitchen test attributes-ubuntu-1404
+  - TEST=kitchen test attributes-ubuntu-1604
   - TEST=kitchen test attributes-centos-65
   - TEST=kitchen converge sysv-centos-65 &&
     kitchen converge sysv-centos-65 &&
     kitchen verify sysv-centos-65 &&
     kitchen destroy
   - TEST=kitchen test upstart-ubuntu-1404
+  - TEST=kitchen test systemd-ubuntu-1604
   - TEST=kitchen test systemd-centos-7
   global:
   - KITCHEN_YAML=.kitchen.cloud.yml
