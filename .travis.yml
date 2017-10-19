@@ -1,6 +1,7 @@
 language: ruby
 rvm:
 - 2.2
+dist: trusty
 sudo: false
 cache:
   directories:
@@ -8,7 +9,7 @@ cache:
 addons:
   apt:
     sources:
-    - chef-stable-precise
+    - chef-stable-trusty
     packages:
     - chefdk
 before_install:
