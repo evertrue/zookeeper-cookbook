@@ -2,6 +2,12 @@
 
 This file is used to list changes made in each version of zookeeper.
 
+## v8.3.0
+
+### Fixes
+
+* Use class variable to avoid creating new connection for each resource (#205 h/t @GolubevV)
+
 ## v8.2.0
 
 ### Changes
