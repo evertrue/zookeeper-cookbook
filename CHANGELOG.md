@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of zookeeper.
 
+## v9.0.1
+
+* Clarify changelog w/r/t v8.3.0/v8.3.1
+
 ## v9.0.0
 
 ### Changes
