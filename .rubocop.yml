@@ -6,11 +6,6 @@ Style/SpaceBeforeFirstArg:
 Style/Documentation:
   Enabled: false
 
-# Offense count: 1
-Style/ClassVars:
-  Exclude:
-    - 'libraries/default.rb'
-
 # The default 79 character limit is sometimes unproductive.
 Metrics/LineLength:
   Max: 120
