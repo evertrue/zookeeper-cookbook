@@ -2,6 +2,12 @@
 
 This file is used to list changes made in each version of zookeeper.
 
+## v8.3.1
+
+### Fixes
+
+* Roll back v8.3.0 to avoid potentially breaking changes
+
 ## v8.3.0
 
 ### Fixes
