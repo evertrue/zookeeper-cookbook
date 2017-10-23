@@ -9,7 +9,13 @@ This file is used to list changes made in each version of zookeeper.
 * Bump to major-level, owing to possibility of someone managing multiple ZooKeepers with this cookbook, and thus depending on the connection-per-`zookeeper_node`-resource that was the behavior previous to v8.3.0
     - h/t to @GolubevV for [mentioning this](https://github.com/evertrue/zookeeper-cookbook/pull/205#issuecomment-338639001)
 
-## v8.3.0 (yanked)
+## v8.3.1
+
+### Fixes
+
+* Roll back v8.3.0 to avoid potentially breaking changes
+
+## v8.3.0
 
 ### Fixes
 
