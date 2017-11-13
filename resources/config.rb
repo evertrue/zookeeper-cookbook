@@ -39,7 +39,7 @@ action :render do
 
   # Ensure that, even if an attribute is passed in, we can
   # operate on it without running into read-only issues
-  env_vars_hash = env_vars.to_hash
+  env_vars_hash = env_vars.to_hash.dup
   env_vars_hash['ZOOCFGDIR']   = conf_dir
   env_vars_hash['ZOOCFG']      = conf_file
   env_vars_hash['ZOO_LOG_DIR'] = log_dir
