@@ -22,6 +22,10 @@ service maintained by the Apache Software Foundation.
 
 This cookbook focuses on deploying ZooKeeper via Chef.
 
+It should be noted that ZooKeeper’s configuration and startup systems are complicated. To elaborate, the service scripts supplied by this cookbook use `bin/zkServer.sh` inside the ZooKeeper directory, which sources a variety of shell scripts as part of its initialization process.
+
+Please be mindful if you decide to install ZooKeeper to a different location that the path to the config directory should remain pointed to the one within the install directory, unless you instead to completely rewire how ZooKeeper runs in your wrapper cookbook.
+
 ### Usage
 
 This cookbook is primarily a library cookbook. It implements a `zookeeper` and `zookeeper_config` 
