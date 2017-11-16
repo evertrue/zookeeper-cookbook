@@ -10,6 +10,7 @@
         + [Resources](#resources)
             * [zookeeper](#zookeeper)
             * [zookeeper_config](#zookeeper_config)
+            * [zookeeper_node](#zookeeper_node)
     - [Errata](#errata)
     - [Author and License](#author-and-license)
 
@@ -41,7 +42,7 @@ Testing is handled using Test Kitchen, with the expectation that you have it ins
 This cookbook ships with two resources, with future plans for one more covering
 service management.
 
-#### zookeeper
+#### `zookeeper`
 
 The `zookeeper` resource is responsible for installing and (eventually)
 uninstalling Zookeeper from a node.
@@ -68,7 +69,7 @@ zookeeper '3.4.8' do
 end
 ```
 
-#### zookeeper_config
+#### `zookeeper_config`
 
 This resource renders a ZooKeeper configuration file.
 
@@ -112,7 +113,7 @@ zookeeper_config 'zoo.cfg' do
 end
 ```
 
-#### zookeeper_node
+#### `zookeeper_node`
 
 This resource can create nodes in a running instance of ZooKeeper.
 
