@@ -1,20 +1,36 @@
 ---
 driver:
-  name: vagrant
-  require_chef_omnibus: 12.11
+  name: dokken
+  chef_version: latest
+  privileged: true # because Docker and SystemD/Upstart
+
+transport:
+  name: dokken
 
 provisioner:
-  name: chef_zero
+  name: dokken
+  deprecations_as_errors: true
+
+verifier:
+  name: inspec
 
 platforms:
-  - name: ubuntu-12.04
   - name: ubuntu-14.04
+    driver:
+      image: dokken/ubuntu-14.04
+      pid_one_command: /sbin/init
   - name: ubuntu-16.04
+    driver:
+      image: dokken/ubuntu-16.04
+      pid_one_command: /bin/systemd
     attributes:
       java:
         jdk_version: 7
-  - name: centos-6.7
-  - name: centos-7.2
+  - name: centos-7
+    driver:
+      image: dokken/centos-7
+      platform: rhel
+      pid_one_command: /usr/lib/systemd/systemd
 
 suites:
   - name: default
@@ -29,18 +45,12 @@ suites:
         env_vars:
           ZOO_LOG4J_PROP: 'INFO,ROLLINGFILE'
 
-  - name: sysv
-    run_list:
-      - recipe[zookeeper_tester::sysv]
-    includes:
-      - centos-6.7
-
   - name: systemd
     run_list:
       - recipe[zookeeper_tester::systemd]
     includes:
       - ubuntu-16.04
-      - centos-7.2
+      - centos-7
 
   - name: upstart
     run_list:

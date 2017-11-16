@@ -39,7 +39,7 @@ action :install do
     action :nothing
   end.run_action :periodic if node['platform_family'] == 'debian'
 
-  if use_java_cookbook
+  if new_resource.use_java_cookbook
     include_recipe 'java::default'
   else
     Chef::Log.info "Assuming you've provided your own Java"
@@ -53,39 +53,39 @@ action :install do
     compile_time false
   end
 
-  group username
+  group new_resource.username
 
-  user username do
-    group       username
-    home        user_home
+  user new_resource.username do
+    group       new_resource.username
+    home        new_resource.user_home
     manage_home true
     system      true
   end
 
-  directory install_dir do
+  directory new_resource.install_dir do
     recursive true
   end
 
   ark 'zookeeper' do
-    url         "#{mirror}/zookeeper-#{new_resource.version}/zookeeper-#{new_resource.version}.tar.gz"
+    url         "#{new_resource.mirror}/zookeeper-#{new_resource.version}/zookeeper-#{new_resource.version}.tar.gz"
     version     new_resource.version
-    prefix_root install_dir
-    prefix_home install_dir
+    prefix_root new_resource.install_dir
+    prefix_home new_resource.install_dir
     checksum    new_resource.checksum if new_resource.checksum
-    owner       username
-    group       username
+    owner       new_resource.username
+    group       new_resource.username
   end
 
-  directory log_dir do
-    owner     username
-    group     username
+  directory new_resource.log_dir do
+    owner     new_resource.username
+    group     new_resource.username
     mode      '0755'
     recursive true
   end
 
-  directory data_dir do
-    owner     username
-    group     username
+  directory new_resource.data_dir do
+    owner     new_resource.username
+    group     new_resource.username
     mode      '0700'
     recursive true
   end

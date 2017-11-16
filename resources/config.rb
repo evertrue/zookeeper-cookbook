@@ -31,21 +31,21 @@ property :user,              default: 'zookeeper'
 property :java_opts
 
 action :render do
-  file "#{conf_dir}/#{conf_file}" do
+  file "#{new_resource.conf_dir}/#{new_resource.conf_file}" do
     owner   new_resource.user
     group   new_resource.user
-    content properties_config(config)
+    content properties_config(new_resource.config)
   end
 
   # Ensure that, even if an attribute is passed in, we can
   # operate on it without running into read-only issues
-  env_vars_hash = env_vars.to_hash.dup
-  env_vars_hash['ZOOCFGDIR']   = conf_dir
-  env_vars_hash['ZOOCFG']      = conf_file
-  env_vars_hash['ZOO_LOG_DIR'] = log_dir
-  env_vars_hash['JVMFLAGS']    = java_opts if java_opts
+  env_vars_hash = new_resource.env_vars.to_hash.dup
+  env_vars_hash['ZOOCFGDIR']   = new_resource.conf_dir
+  env_vars_hash['ZOOCFG']      = new_resource.conf_file
+  env_vars_hash['ZOO_LOG_DIR'] = new_resource.log_dir
+  env_vars_hash['JVMFLAGS']    = new_resource.java_opts if new_resource.java_opts
 
-  file "#{conf_dir}/zookeeper-env.sh" do
+  file "#{new_resource.conf_dir}/zookeeper-env.sh" do
     owner   new_resource.user
     group   new_resource.user
     content exports_config(env_vars_hash) + "\n"
@@ -56,10 +56,10 @@ action :delete do
   Chef::Log.info "Deleting Zookeeper config at #{path}"
 
   [
-    conf_file,
+    new_resource.conf_file,
     'zookeeper-env.sh',
   ].each do |f|
-    file "#{conf_dir}/#{f}" do
+    file "#{new_resource.conf_dir}/#{f}" do
       action :delete
     end
   end
