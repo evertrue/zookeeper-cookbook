@@ -14,6 +14,8 @@ context 'when all attributes are default' do
   describe 'zookeeper_config' do
     describe file '/opt/zookeeper/conf/zoo.cfg' do
       it { should be_file }
+      it { should be_owned_by 'zookeeper' }
+      it { should be_grouped_into 'zookeeper' }
       describe '#content' do
         subject { super().content }
         it { should include 'clientPort=2181' }
@@ -27,6 +29,8 @@ context 'when all attributes are default' do
 
   describe file '/opt/zookeeper/conf/zookeeper-env.sh' do
     it { should be_file }
+    it { should be_owned_by 'zookeeper' }
+    it { should be_grouped_into 'zookeeper' }
     describe '#content' do
       subject { super().content }
       it { should include 'ZOOCFGDIR=/opt/zookeeper/conf' }
