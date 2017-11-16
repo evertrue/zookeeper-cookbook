@@ -8,7 +8,6 @@ version          '9.0.1'
 issues_url 'https://github.com/evertrue/zookeeper-cookbook/issues' if respond_to?(:issues_url)
 source_url 'https://github.com/evertrue/zookeeper-cookbook/' if respond_to?(:source_url)
 
-supports         'ubuntu', '= 12.04'
 supports         'ubuntu', '= 14.04'
 supports         'centos', '= 6.5'
 

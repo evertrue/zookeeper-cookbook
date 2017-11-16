@@ -26,7 +26,6 @@ env:
   - TEST=cookstyle
   - TEST='foodcritic .'
   - TEST=chef exec rspec
-  - TEST='kitchen test default-ubuntu-1204'
   - TEST='kitchen test default-ubuntu-1404'
   - TEST='kitchen test default-ubuntu-1604'
   - TEST='kitchen test default-centos-65'
