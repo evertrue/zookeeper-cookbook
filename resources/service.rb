@@ -31,23 +31,23 @@ property :template_cookbook,   default: 'zookeeper'
 property :restart_on_reconfig, default: false
 
 action :create do
-  executable_path = "#{install_dir}/bin/zkServer.sh"
+  executable_path = "#{new_resource.install_dir}/bin/zkServer.sh"
 
-  case service_style
+  case new_resource.service_style
   when 'runit'
     # runit_service does not install runit itself
     include_recipe 'runit'
 
     runit_service 'zookeeper' do
       default_logger true
-      owner          username
-      group          username
+      owner          new_resource.username
+      group          new_resource.username
       options(
         exec:     executable_path,
-        username: username
+        username: new_resource.username
       )
-      cookbook       template_cookbook
-      action         service_actions
+      cookbook       new_resource.template_cookbook
+      action         new_resource.service_actions
     end
   when 'upstart'
     template '/etc/init/zookeeper.conf' do
@@ -55,16 +55,16 @@ action :create do
       mode   '0644'
       variables(
         exec:     executable_path,
-        username: username
+        username: new_resource.username
       )
-      cookbook template_cookbook
-      notifies :restart, 'service[zookeeper]' if restart_on_reconfig
+      cookbook new_resource.template_cookbook
+      notifies :restart, 'service[zookeeper]' if new_resource.restart_on_reconfig
     end
 
     service 'zookeeper' do
       provider Chef::Provider::Service::Upstart
       supports status: true, restart: true, nothing: true
-      action   service_actions
+      action   new_resource.service_actions
     end
   when 'sysv'
     template '/etc/init.d/zookeeper' do
@@ -72,10 +72,10 @@ action :create do
       mode   '0755'
       variables(
         exec:     executable_path,
-        username: username
+        username: new_resource.username
       )
-      cookbook template_cookbook
-      notifies :restart, 'service[zookeeper]' if restart_on_reconfig
+      cookbook new_resource.template_cookbook
+      notifies :restart, 'service[zookeeper]' if new_resource.restart_on_reconfig
     end
 
     service_provider = value_for_platform_family(
@@ -86,7 +86,7 @@ action :create do
     service 'zookeeper' do
       provider service_provider
       supports status: true, restart: true, nothing: true
-      action   service_actions
+      action   new_resource.service_actions
     end
   when 'systemd'
     template '/etc/systemd/system/zookeeper.service' do
@@ -94,22 +94,22 @@ action :create do
       mode   '0644'
       variables(
         exec:     executable_path,
-        username: username
+        username: new_resource.username
       )
-      cookbook template_cookbook
+      cookbook new_resource.template_cookbook
       notifies :run, 'execute[systemctl daemon-reload]'
     end
 
     execute 'systemctl daemon-reload' do
       action :nothing
       command '/bin/systemctl daemon-reload'
-      notifies :restart, 'service[zookeeper]' if restart_on_reconfig
+      notifies :restart, 'service[zookeeper]' if new_resource.restart_on_reconfig
     end
 
     service 'zookeeper' do
       provider Chef::Provider::Service::Systemd
       supports status: true, restart: true, nothing: true
-      action   service_actions
+      action   new_resource.service_actions
     end
 
   when 'exhibitor'

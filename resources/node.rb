@@ -56,9 +56,9 @@ end
 action :create do
   converge_if_changed do
     if current_value
-      if current_value.data != data
-        converge_by "Updating #{node_path} node" do
-          result = zk.set(path: node_path, data: data)[:rc]
+      if current_value.data != new_resource.data
+        converge_by "Updating #{new_resource.node_path} node" do
+          result = zk.set(path: new_resource.node_path, data: new_resource.data)[:rc]
 
           raise "Failed with error code '#{result}' => (#{::Zk.error_message result})" unless result == 0
         end
@@ -69,16 +69,16 @@ action :create do
         :acl_digest,
         :acl_ip,
         :acl_sasl,
-      ].any? { |s| current_value.send(s) != send(s) }
-        converge_by "Setting #{node_path} acls" do
-          result = zk.set_acl(path: node_path, acl: compile_acls)[:rc]
+      ].any? { |s| current_value.send(s) != new_resource.send(s) }
+        converge_by "Setting #{new_resource.node_path} acls" do
+          result = zk.set_acl(path: new_resource.node_path, acl: compile_acls)[:rc]
 
           raise "Failed with error code '#{result}' => (#{::Zk.error_message result})" unless result == 0
         end
       end
     else
-      converge_by "Creating #{node_path} node" do
-        result = zk.create(path: node_path, data: data, acl: compile_acls)[:rc]
+      converge_by "Creating #{new_resource.node_path} node" do
+        result = zk.create(path: new_resource.node_path, data: new_resource.data, acl: compile_acls)[:rc]
 
         raise "Failed with error code '#{result}' => (#{::Zk.error_message result})" unless result == 0
       end
@@ -87,7 +87,7 @@ action :create do
 end
 
 action :delete do
-  converge_by "Removing #{node_path} node" do
-    zk.delete path: node_path
+  converge_by "Removing #{new_resource.node_path} node" do
+    zk.delete path: new_resource.node_path
   end
 end
