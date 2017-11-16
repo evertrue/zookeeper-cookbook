@@ -32,8 +32,8 @@ property :java_opts
 
 action :render do
   file "#{conf_dir}/#{conf_file}" do
-    owner   user
-    group   user
+    owner   new_resource.user
+    group   new_resource.user
     content properties_config(config)
   end
 
@@ -46,8 +46,8 @@ action :render do
   env_vars_hash['JVMFLAGS']    = java_opts if java_opts
 
   file "#{conf_dir}/zookeeper-env.sh" do
-    owner   user
-    group   user
+    owner   new_resource.user
+    group   new_resource.user
     content exports_config(env_vars_hash) + "\n"
   end
 end
