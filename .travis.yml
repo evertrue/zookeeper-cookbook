@@ -12,9 +12,12 @@ addons:
     - chef-stable-trusty
     packages:
     - chefdk
+services: docker
 install:
 - eval "$(chef shell-init bash)"
 before_script:
+- sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables
+  -N DOCKER )
 - chef --version
 script: $TEST
 env:
