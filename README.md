@@ -10,6 +10,7 @@
         + [Resources](#resources)
             * [zookeeper](#zookeeper)
             * [zookeeper_config](#zookeeper_config)
+            * [zookeeper_service](#zookeeper_service)
             * [zookeeper_node](#zookeeper_node)
     - [Errata](#errata)
     - [Author and License](#author-and-license)
@@ -38,9 +39,6 @@ Testing is handled using Test Kitchen, with the expectation that you have it ins
 * `zookeeper::service` : Starts and manages the ZooKeeper service. Requires ZooKeeper to be installed/configured.
 
 ### Resources
-
-This cookbook ships with two resources, with future plans for one more covering
-service management.
 
 #### `zookeeper`
 
@@ -110,6 +108,38 @@ zookeeper_config 'zoo.cfg' do
   config config_hash
   user   'zookeeper'
   action :render
+end
+```
+
+#### `zookeeper_service`
+
+This resource manages a system service for ZooKeeper. Confusingly, it has only one action, and the resources within are controlled via a property.
+
+This will change in a future release, but is “good enough” for now.
+
+Actions: `:create`
+
+Properties:
+
+* `service_style`: The type of service provider you wish to use. Defaults to `runit`, and only allows one of the following:
+    - `runit`
+    - `upstart`
+    - `sysv`
+    - `systemd`
+    - `exhibitor`
+* `install_dir`: Where you’ve installed ZooKeeper (defaults to `/opt/zookeeper`)
+* `username`: The user to run ZooKeeper under (defaults to `zookeeper`)
+* `service_actions`: The actions to pass in to the service resource within this custom resource (defaults to `[:enable, :start]`)
+* `template_cookbook`: The name of the cookbook to use for the service templates. Allows you to override the service script created & used (defaults to `zookeeper`, i.e., this cookbook)
+* `restart_on_reconfig`: Whether or not to restart this service on changes to the service script (defaults to `false`)
+
+Example:
+
+```ruby
+zookeeper_service 'zookeeper' do
+  service_style 'systemd'
+  install_dir   '/opt/zookeeper'
+  username      'zookeeper'
 end
 ```
 
