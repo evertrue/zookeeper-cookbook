@@ -15,7 +15,7 @@ default['zookeeper']['conf_file']   = 'zoo.cfg'
 default['zookeeper']['java_opts']   = "-Xmx#{allocated_memory}"
 default['zookeeper']['log_dir']     = '/var/log/zookeeper'
 
-# One of: 'upstart', 'runit', 'exhibitor', 'sysv', 'systemd'
+# One of: 'upstart', 'runit', 'exhibitor', systemd'
 default['zookeeper']['service_style'] = 'runit'
 
 default['zookeeper']['config'] = {

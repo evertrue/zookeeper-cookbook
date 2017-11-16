@@ -22,7 +22,7 @@ property :service_style,
          default: 'runit',
          callbacks: {
            'Must be a valid service style' =>
-             -> (service_style) { %w(runit upstart sysv systemd exhibitor).include? service_style },
+             -> (service_style) { %w(runit upstart systemd exhibitor).include? service_style },
          }
 property :install_dir,         default: '/opt/zookeeper'
 property :username,            default: 'zookeeper'
@@ -63,28 +63,6 @@ action :create do
 
     service 'zookeeper' do
       provider Chef::Provider::Service::Upstart
-      supports status: true, restart: true, nothing: true
-      action   new_resource.service_actions
-    end
-  when 'sysv'
-    template '/etc/init.d/zookeeper' do
-      source 'zookeeper.sysv.erb'
-      mode   '0755'
-      variables(
-        exec:     executable_path,
-        username: new_resource.username
-      )
-      cookbook new_resource.template_cookbook
-      notifies :restart, 'service[zookeeper]' if new_resource.restart_on_reconfig
-    end
-
-    service_provider = value_for_platform_family(
-      'rhel'    => Chef::Provider::Service::Init::Redhat,
-      'default' => Chef::Provider::Service::Init::Debian
-    )
-
-    service 'zookeeper' do
-      provider service_provider
       supports status: true, restart: true, nothing: true
       action   new_resource.service_actions
     end
