@@ -19,6 +19,8 @@ start() {
         exit 2
     fi
 
+    source  <%= @zk_env %>
+
     echo -e "\nStarting $NAME KEY $KEY ..."
     if [[ $CURRENT_USER == $USER ]]; then
         cd $BIN_DIR

@@ -25,6 +25,7 @@ property :service_style,
              -> (service_style) { %w(runit upstart sysv systemd exhibitor).include? service_style },
          }
 property :install_dir,         default: '/opt/zookeeper'
+property :conf_dir,            default: '/opt/zookeeper/conf'
 property :username,            default: 'zookeeper'
 property :service_actions,     default: [:enable, :start]
 property :template_cookbook,   default: 'zookeeper'
@@ -32,6 +33,7 @@ property :restart_on_reconfig, default: false
 
 action :create do
   executable_path = "#{install_dir}/bin/zkServer.sh"
+  env_path = "#{conf_dir}/zookeeper-env.sh"
 
   case service_style
   when 'runit'
@@ -43,6 +45,7 @@ action :create do
       owner          username
       group          username
       options(
+        zk_env:   env_path,
         exec:     executable_path,
         username: username
       )
@@ -54,6 +57,7 @@ action :create do
       source 'zookeeper.upstart.erb'
       mode   '0644'
       variables(
+        zk_env:   env_path,
         exec:     executable_path,
         username: username
       )
@@ -71,6 +75,7 @@ action :create do
       source 'zookeeper.sysv.erb'
       mode   '0755'
       variables(
+        zk_env:   env_path,
         exec:     executable_path,
         username: username
       )
@@ -93,6 +98,7 @@ action :create do
       source 'zookeeper.systemd.erb'
       mode   '0644'
       variables(
+        zk_env:   env_path,
         exec:     executable_path,
         username: username
       )
