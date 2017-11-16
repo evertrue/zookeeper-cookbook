@@ -11,7 +11,6 @@ platforms:
     attributes:
       java:
         jdk_version: 7
-  - name: centos-6.7
   - name: centos-7.2
 
 suites:
@@ -26,12 +25,6 @@ suites:
       zookeeper:
         env_vars:
           ZOO_LOG4J_PROP: 'INFO,ROLLINGFILE'
-
-  - name: sysv
-    run_list:
-      - recipe[zookeeper_tester::sysv]
-    includes:
-      - centos-6.7
 
   - name: systemd
     run_list:

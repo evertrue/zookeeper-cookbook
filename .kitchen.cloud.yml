@@ -23,7 +23,6 @@ provisioner:
 platforms:
   - name: ubuntu-14.04
   - name: ubuntu-16.04
-  - name: centos-6.5
   - name: centos-7
 
 suites:
@@ -44,15 +43,6 @@ suites:
       zookeeper:
         env_vars:
           ZOO_LOG4J_PROP: 'INFO,ROLLINGFILE'
-
-  - name: sysv
-    driver:
-      tags:
-        Name: zookeeper-sysv
-    run_list:
-      - recipe[zookeeper_tester::sysv]
-    includes:
-      - centos-6.5
 
   - name: systemd
     driver:
