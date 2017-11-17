@@ -31,6 +31,12 @@ property :user,              default: 'zookeeper'
 property :java_opts
 
 action :render do
+  directory new_resource.conf_dir do
+    owner     new_resource.user
+    group     new_resource.user
+    recursive true
+  end
+
   file "#{new_resource.conf_dir}/#{new_resource.conf_file}" do
     owner   new_resource.user
     group   new_resource.user
