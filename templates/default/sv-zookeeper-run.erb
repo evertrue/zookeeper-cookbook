@@ -1,4 +1,4 @@
 #!/bin/sh
 
-source <%= @options[:zk_env] %>
+. <%= @options[:zk_env] %>
 exec chpst -u<%= @options[:username] %> <%= @options[:exec] %> start-foreground
