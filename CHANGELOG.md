@@ -2,6 +2,33 @@
 
 This file is used to list changes made in each version of zookeeper.
 
+## v10.0.0
+
+### Potentially Breaking
+
+* Set default version to ZooKeeper 3.4.11 (#208)
+    - This may upgrade you if you are using `zookeeper::default` and have not set `node['zookeeper']['version']` in your wrapper cookbook
+* Drop support for:
+    - Ubuntu 12.04
+    - CentOS 6
+    - SysV as a service provider
+* Source `zookeeper-env.sh` when running ZooKeeper (#210)
+    - This allows for placing all of the configs somewhere other than the default
+
+### Fixes
+
+* Duplicate an immutable property in Chef 13 (#207)
+* Fix file ownership (#209)
+* Ensure config directory exists (for cases where using non-default)
+* Make resources Chef 13 compatible
+
+### Changes
+
+* Refactor Test Kitchen setup to use `kitchen-dokken` for simpler, more consistent testing across local & CI
+* Switch to testing on Chef 13
+* Clean up unit tests & metadata
+* Add & update docs in README
+
 ## v9.0.1
 
 * Clarify changelog w/r/t v8.3.0/v8.3.1
