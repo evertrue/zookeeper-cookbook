@@ -10,7 +10,7 @@ source_url 'https://github.com/evertrue/zookeeper-cookbook/' if respond_to?(:sou
 
 supports         'ubuntu', '= 14.04'
 supports         'ubuntu', '= 16.04'
-supports         'centos', '~> 7'
+supports         'centos', '~> 7.0'
 
 chef_version     '>= 12.10'
 
