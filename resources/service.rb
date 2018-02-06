@@ -25,6 +25,7 @@ property :service_style,
              -> (service_style) { %w(runit upstart systemd exhibitor).include? service_style },
          }
 property :install_dir,         default: '/opt/zookeeper'
+property :conf_dir,            default: '/opt/zookeeper/conf'
 property :username,            default: 'zookeeper'
 property :service_actions,     default: [:enable, :start]
 property :template_cookbook,   default: 'zookeeper'
@@ -32,6 +33,7 @@ property :restart_on_reconfig, default: false
 
 action :create do
   executable_path = "#{new_resource.install_dir}/bin/zkServer.sh"
+  env_path = "#{new_resource.conf_dir}/zookeeper-env.sh"
 
   case new_resource.service_style
   when 'runit'
@@ -43,6 +45,7 @@ action :create do
       owner          new_resource.username
       group          new_resource.username
       options(
+        zk_env:   env_path,
         exec:     executable_path,
         username: new_resource.username
       )
@@ -54,6 +57,7 @@ action :create do
       source 'zookeeper.upstart.erb'
       mode   '0644'
       variables(
+        zk_env:   env_path,
         exec:     executable_path,
         username: new_resource.username
       )
@@ -71,6 +75,7 @@ action :create do
       source 'zookeeper.systemd.erb'
       mode   '0644'
       variables(
+        zk_env:   env_path,
         exec:     executable_path,
         username: new_resource.username
       )
@@ -89,7 +94,6 @@ action :create do
       supports status: true, restart: true, nothing: true
       action   new_resource.service_actions
     end
-
   when 'exhibitor'
     Chef::Log.info 'Assuming Exhibitor will start up Zookeeper.'
   end

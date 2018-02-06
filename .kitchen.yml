@@ -42,6 +42,7 @@ suites:
       - recipe[zookeeper_tester::attributes]
     attributes:
       zookeeper:
+        conf_dir: /etc/zookeeper/conf
         env_vars:
           ZOO_LOG4J_PROP: 'INFO,ROLLINGFILE'
 
@@ -51,6 +52,9 @@ suites:
     includes:
       - ubuntu-16.04
       - centos-7
+    attributes:
+      zookeeper:
+        conf_dir: /etc/zookeeper/conf
 
   - name: upstart
     run_list:
