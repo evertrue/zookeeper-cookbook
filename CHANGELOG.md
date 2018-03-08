@@ -2,6 +2,12 @@
 
 This file is used to list changes made in each version of zookeeper.
 
+## v10.0.1
+
+### Fixes
+
+* Update README to reflect lack of SysV support (#214)
+
 ## v10.0.0
 
 ### Potentially Breaking
