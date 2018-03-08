@@ -28,7 +28,7 @@ Please be mindful if you decide to install ZooKeeper to a different location tha
 
 ### Usage
 
-This cookbook is primarily a library cookbook. It implements a `zookeeper` and `zookeeper_config` 
+This cookbook is primarily a library cookbook. It implements a `zookeeper` and `zookeeper_config`
 resource to handle the installation and configuration of ZooKeeper. It ships
 with a default recipe for backwards compatibility pre-LWRP which will work
 fine, but is really just an example.
@@ -100,8 +100,8 @@ Example:
 
 ``` ruby
 config_hash = {
-  clientPort: 2181, 
-  dataDir: '/mnt/zk', 
+  clientPort: 2181,
+  dataDir: '/mnt/zk',
   tickTime: 2000,
   'autopurge.snapRetainCount' => 1,
   'autopurge.purgeInterval' => 1
@@ -128,7 +128,6 @@ Properties:
 * `service_style`: The type of service provider you wish to use. Defaults to `runit`, and only allows one of the following:
     - `runit`
     - `upstart`
-    - `sysv`
     - `systemd`
     - `exhibitor`
 * `install_dir`: Where you’ve installed ZooKeeper (defaults to `/opt/zookeeper`)
