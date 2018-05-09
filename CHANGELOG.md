@@ -2,6 +2,13 @@
 
 This file is used to list changes made in each version of zookeeper.
 
+## v11.0.0
+
+### Potentially Breaking
+
+* Set default version to ZooKeeper 3.4.12 (#216)
+    - This may upgrade you if you are using `zookeeper::default` and have not set `node['zookeeper']['version']` in your wrapper cookbook
+
 ## v10.0.1
 
 ### Fixes
