@@ -17,8 +17,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-default_action :create
-
 property :node_path,   String, name_attribute: true
 property :connect_str, String, required: true, desired_state: false
 property :data,        String
@@ -47,10 +45,6 @@ load_current_value do
       send("acl_#{acl[:id][:scheme]}")[acl[:id][:id]] = acl[:perms]
     end
   end
-end
-
-action :create_if_missing do
-  run_action :create unless current_value
 end
 
 action :create do
@@ -84,6 +78,10 @@ action :create do
       end
     end
   end
+end
+
+action :create_if_missing do
+  run_action :create unless current_value
 end
 
 action :delete do

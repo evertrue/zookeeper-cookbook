@@ -17,8 +17,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-default_action :install
-
 property :version,             name_attribute: true
 property :mirror,              default: 'http://apache.mirrors.tds.net/zookeeper/'
 property :checksum,            String

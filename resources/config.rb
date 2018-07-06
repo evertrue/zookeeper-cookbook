@@ -16,8 +16,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-default_action :render
-
 property :conf_file,         name_attribute: true
 property :conf_dir,          default: '/opt/zookeeper/conf'
 property :config,            default: { 'clientPort' => 2181,

@@ -16,8 +16,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-default_action :create
-
 property :service_style,
          default: 'runit',
          callbacks: {
