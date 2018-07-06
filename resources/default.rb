@@ -17,15 +17,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-property :version,             name_attribute: true
-property :mirror,              default: 'http://apache.mirrors.tds.net/zookeeper/'
+property :version,             String, name_property: true
+property :mirror,              String, default: 'http://apache.mirrors.tds.net/zookeeper/'
 property :checksum,            String
-property :username,            default: 'zookeeper'
-property :user_home,           default: '/home/zookeeper'
-property :install_dir,         default: '/opt'
-property :log_dir,             default: '/var/log/zookeeper'
-property :data_dir,            default: '/var/lib/zookeeper'
-property :use_java_cookbook,   default: true
+property :username,            String, default: 'zookeeper'
+property :user_home,           String, default: '/home/zookeeper'
+property :install_dir,         String, default: '/opt'
+property :log_dir,             String, default: '/var/log/zookeeper'
+property :data_dir,            String, default: '/var/lib/zookeeper'
+property :use_java_cookbook,   [true, false], default: true
 
 # Install Zookeeper
 action :install do

@@ -17,17 +17,18 @@
 # limitations under the License.
 
 property :service_style,
+         String,
          default: 'runit',
          callbacks: {
            'Must be a valid service style' =>
              -> (service_style) { %w(runit upstart systemd exhibitor).include? service_style },
          }
-property :install_dir,         default: '/opt/zookeeper'
-property :conf_dir,            default: '/opt/zookeeper/conf'
-property :username,            default: 'zookeeper'
-property :service_actions,     default: [:enable, :start]
-property :template_cookbook,   default: 'zookeeper'
-property :restart_on_reconfig, default: false
+property :install_dir,         String, default: '/opt/zookeeper'
+property :conf_dir,            String, default: '/opt/zookeeper/conf'
+property :username,            String, default: 'zookeeper'
+property :service_actions,     Array, default: [:enable, :start]
+property :template_cookbook,   String, default: 'zookeeper'
+property :restart_on_reconfig, [true, false], default: false
 
 action :create do
   executable_path = "#{new_resource.install_dir}/bin/zkServer.sh"
