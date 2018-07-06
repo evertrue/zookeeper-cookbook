@@ -49,8 +49,8 @@ end
 
 action :create do
   converge_if_changed do
-    if current_value
-      if current_value.data != new_resource.data
+    if current_resource
+      if current_resource.data != new_resource.data
         converge_by "Updating #{new_resource.node_path} node" do
           result = zk.set(path: new_resource.node_path, data: new_resource.data)[:rc]
 
@@ -63,7 +63,7 @@ action :create do
         :acl_digest,
         :acl_ip,
         :acl_sasl,
-      ].any? { |s| current_value.send(s) != new_resource.send(s) }
+      ].any? { |s| current_resource.send(s) != new_resource.send(s) }
         converge_by "Setting #{new_resource.node_path} acls" do
           result = zk.set_acl(path: new_resource.node_path, acl: compile_acls)[:rc]
 
