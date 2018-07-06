@@ -5,8 +5,8 @@ license          'Apache-2.0'
 description      'Installs/Configures zookeeper'
 version          '11.0.0'
 
-issues_url 'https://github.com/evertrue/zookeeper-cookbook/issues' if respond_to?(:issues_url)
-source_url 'https://github.com/evertrue/zookeeper-cookbook/' if respond_to?(:source_url)
+issues_url 'https://github.com/evertrue/zookeeper-cookbook/issues'
+source_url 'https://github.com/evertrue/zookeeper-cookbook/'
 
 supports         'ubuntu', '>= 14.04'
 supports         'centos', '~> 7.0'
