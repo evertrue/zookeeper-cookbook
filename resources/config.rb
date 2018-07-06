@@ -1,4 +1,4 @@
-# ~FC016
+#
 # Cookbook Name:: zookeeper
 # Resource:: config
 #
@@ -19,14 +19,14 @@
 property :conf_file,         String, name_property: true
 property :conf_dir,          String, default: '/opt/zookeeper/conf'
 property :config,            Hash, default: { 'clientPort' => 2181,
-                                        'dataDir'    => '/var/lib/zookeeper',
-                                        'tickTime'   => 2000,
-                                        'initLimit'  => 5,
-                                        'syncLimit'  => 2 }
+                                              'dataDir'    => '/var/lib/zookeeper',
+                                              'tickTime'   => 2000,
+                                              'initLimit'  => 5,
+                                              'syncLimit'  => 2 }
 property :log_dir,           String, default: '/var/log/zookeeper'
 property :env_vars,          Hash, default: {}
 property :user,              String, default: 'zookeeper'
-property :java_opts          String
+property :java_opts,         String
 
 action :render do
   directory new_resource.conf_dir do
