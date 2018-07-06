@@ -43,9 +43,9 @@ action :install do
     Chef::Log.info "Assuming you've provided your own Java"
   end
 
-  # build-essential is required to build the zookeeper gem
-  node.override['build-essential']['compile_time'] = true
-  include_recipe 'build-essential::default'
+  build_essential 'install compilation tools' do
+    compile_time true
+  end
 
   chef_gem 'zookeeper' do
     compile_time false

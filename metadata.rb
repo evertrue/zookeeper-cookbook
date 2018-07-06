@@ -14,7 +14,7 @@ supports         'centos', '~> 7.0'
 
 chef_version     '>= 12.10'
 
-depends          'build-essential'
+depends          'build-essential', '>= 5.0'
 depends          'java', '>= 1.39'
 depends          'runit', '>= 1.7'
 depends          'magic', '>= 1.1'
