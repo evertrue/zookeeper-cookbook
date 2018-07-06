@@ -81,7 +81,7 @@ action :create do
 end
 
 action :create_if_missing do
-  run_action :create unless current_value
+  run_action :create unless current_resource
 end
 
 action :delete do
