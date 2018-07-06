@@ -29,10 +29,6 @@ property :use_java_cookbook,   [true, false], default: true
 
 # Install Zookeeper
 action :install do
-  if Chef::VersionConstraint.new('< 12.10.0').include? Chef::VERSION
-    raise 'This recipe requires Chef version 12.10 or greater'
-  end
-
   apt_update 'zookeeper' do
     action :nothing
   end.run_action :periodic if node['platform_family'] == 'debian'
