@@ -39,6 +39,7 @@ action :install do
     Chef::Log.info "Assuming you've provided your own Java"
   end
 
+  # build-essential is required to build the zookeeper gem
   build_essential 'install compilation tools' do
     compile_time true
   end
