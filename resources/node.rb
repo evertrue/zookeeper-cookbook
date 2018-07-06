@@ -17,7 +17,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-property :node_path,   String, name_attribute: true
+property :node_path,   String, name_property: true
 property :connect_str, String, required: true, desired_state: false
 property :data,        String
 
