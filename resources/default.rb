@@ -17,24 +17,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-default_action :install
-
-property :version,             name_attribute: true
-property :mirror,              default: 'http://apache.mirrors.tds.net/zookeeper/'
+property :version,             String, name_property: true
+property :mirror,              String, default: 'http://apache.mirrors.tds.net/zookeeper/'
 property :checksum,            String
-property :username,            default: 'zookeeper'
-property :user_home,           default: '/home/zookeeper'
-property :install_dir,         default: '/opt'
-property :log_dir,             default: '/var/log/zookeeper'
-property :data_dir,            default: '/var/lib/zookeeper'
-property :use_java_cookbook,   default: true
+property :username,            String, default: 'zookeeper'
+property :user_home,           String, default: '/home/zookeeper'
+property :install_dir,         String, default: '/opt'
+property :log_dir,             String, default: '/var/log/zookeeper'
+property :data_dir,            String, default: '/var/lib/zookeeper'
+property :use_java_cookbook,   [true, false], default: true
 
 # Install Zookeeper
 action :install do
-  if Chef::VersionConstraint.new('< 12.10.0').include? Chef::VERSION
-    raise 'This recipe requires Chef version 12.10 or greater'
-  end
-
   apt_update 'zookeeper' do
     action :nothing
   end.run_action :periodic if node['platform_family'] == 'debian'
@@ -46,8 +40,9 @@ action :install do
   end
 
   # build-essential is required to build the zookeeper gem
-  node.override['build-essential']['compile_time'] = true
-  include_recipe 'build-essential::default'
+  build_essential 'install compilation tools' do
+    compile_time true
+  end
 
   chef_gem 'zookeeper' do
     compile_time false

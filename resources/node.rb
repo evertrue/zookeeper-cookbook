@@ -17,9 +17,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-default_action :create
-
-property :node_path,   String, name_attribute: true
+property :node_path,   String, name_property: true
 property :connect_str, String, required: true, desired_state: false
 property :data,        String
 
@@ -49,14 +47,10 @@ load_current_value do
   end
 end
 
-action :create_if_missing do
-  run_action :create unless current_value
-end
-
 action :create do
   converge_if_changed do
-    if current_value
-      if current_value.data != new_resource.data
+    if current_resource
+      if current_resource.data != new_resource.data
         converge_by "Updating #{new_resource.node_path} node" do
           result = zk.set(path: new_resource.node_path, data: new_resource.data)[:rc]
 
@@ -69,7 +63,7 @@ action :create do
         :acl_digest,
         :acl_ip,
         :acl_sasl,
-      ].any? { |s| current_value.send(s) != new_resource.send(s) }
+      ].any? { |s| current_resource.send(s) != new_resource.send(s) }
         converge_by "Setting #{new_resource.node_path} acls" do
           result = zk.set_acl(path: new_resource.node_path, acl: compile_acls)[:rc]
 
@@ -84,6 +78,10 @@ action :create do
       end
     end
   end
+end
+
+action :create_if_missing do
+  run_action :create unless current_resource
 end
 
 action :delete do

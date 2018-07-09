@@ -1,9 +1,7 @@
 /cookbooks
 /.vagrant
 /.kitchen
-/.librarian
 /tmp
-Cheffile.lock
 Berksfile.lock
 chef-zookeeper*.tgz
 metadata.json
