@@ -39,9 +39,9 @@ describe 'zookeeper::default' do
     end
   end
 
-  context 'When all attributes are default, on CentOS 7.0' do
+  context 'When all attributes are default, on CentOS 7' do
     let(:chef_run) do
-      ChefSpec::ServerRunner.new(platform: 'centos', version: '7.0').converge described_recipe
+      ChefSpec::ServerRunner.new(platform: 'centos', version: '7.5.1804').converge described_recipe
     end
 
     it 'converges successfully' do
