@@ -1,6 +1,4 @@
 language: ruby
-rvm:
-- 2.4
 dist: trusty
 sudo: false
 if: (type = pull_request) OR (tag IS present) OR (branch = master)
