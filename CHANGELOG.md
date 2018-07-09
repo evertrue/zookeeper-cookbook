@@ -2,6 +2,11 @@
 
 This file is used to list changes made in each version of zookeeper.
 
+## v11.1.0
+
+* Fix compile failure in node resource (#217 h/t @tas50)
+* Update/fix for Chef 13/14 (#217 h/t @tas50)
+
 ## v11.0.0
 
 ### Potentially Breaking
