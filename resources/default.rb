@@ -20,7 +20,7 @@
 default_action :install
 
 property :version,             name_attribute: true
-property :mirror,              default: 'http://apache.mirrors.tds.net/zookeeper/'
+property :mirror,              default: 'https://archive.apache.org/dist/zookeeper/'
 property :checksum,            String
 property :username,            default: 'zookeeper'
 property :user_home,           default: '/home/zookeeper'
