@@ -51,24 +51,6 @@ action :create do
       cookbook       new_resource.template_cookbook
       action         new_resource.service_actions
     end
-  when 'upstart'
-    template '/etc/init/zookeeper.conf' do
-      source 'zookeeper.upstart.erb'
-      mode   '0644'
-      variables(
-        zk_env:   env_path,
-        exec:     executable_path,
-        username: new_resource.username
-      )
-      cookbook new_resource.template_cookbook
-      notifies :restart, 'service[zookeeper]' if new_resource.restart_on_reconfig
-    end
-
-    service 'zookeeper' do
-      provider Chef::Provider::Service::Upstart
-      supports status: true, restart: true, nothing: true
-      action   new_resource.service_actions
-    end
   when 'systemd'
     template '/etc/systemd/system/zookeeper.service' do
       source 'zookeeper.systemd.erb'
