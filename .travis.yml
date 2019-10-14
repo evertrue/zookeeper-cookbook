@@ -1,5 +1,5 @@
 language: ruby
-dist: trusty
+dist: xenial
 sudo: false
 if: (type = pull_request) OR (tag IS present) OR (branch = master)
 cache:
@@ -8,7 +8,7 @@ cache:
 addons:
   apt:
     sources:
-    - chef-stable-trusty
+    - chef-stable-xenial
     packages:
     - chefdk
 services: docker
@@ -24,15 +24,12 @@ env:
   - CHEF_LICENSE='accept'
   matrix:
   - TEST='delivery local verify'
-  - TEST='kitchen test default-ubuntu-1404'
   - TEST='kitchen test default-ubuntu-1604'
   - TEST='kitchen test default-ubuntu-1804'
   - TEST='kitchen test default-centos-7'
-  - TEST='kitchen test attributes-ubuntu-1404'
   - TEST='kitchen test attributes-ubuntu-1604'
   - TEST='kitchen test attributes-ubuntu-1804'
   - TEST='kitchen test attributes-centos-7'
-  - TEST='kitchen test upstart-ubuntu-1404'
   - TEST='kitchen test systemd-ubuntu-1604'
   - TEST='kitchen test systemd-ubuntu-1804'
   - TEST='kitchen test systemd-centos-7'

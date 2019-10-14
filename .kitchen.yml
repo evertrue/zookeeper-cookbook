@@ -16,13 +16,6 @@ verifier:
   chef_license: accept
 
 platforms:
-  - name: ubuntu-14.04
-    driver:
-      image: dokken/ubuntu-14.04
-      pid_one_command: /sbin/init
-    attributes:
-      java:
-        jdk_version: '7'
   - name: ubuntu-16.04
     driver:
       image: dokken/ubuntu-16.04
@@ -63,16 +56,6 @@ suites:
   - name: systemd
     run_list:
       - recipe[zookeeper_tester::systemd]
-    includes:
-      - ubuntu-16.04
-      - ubuntu-18.04
-      - centos-7
     attributes:
       zookeeper:
         conf_dir: /etc/zookeeper/conf
-
-  - name: upstart
-    run_list:
-      - recipe[zookeeper_tester::upstart]
-    includes:
-      - ubuntu-14.04

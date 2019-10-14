@@ -8,7 +8,7 @@ version          '11.1.0'
 issues_url 'https://github.com/evertrue/zookeeper-cookbook/issues'
 source_url 'https://github.com/evertrue/zookeeper-cookbook/'
 
-supports         'ubuntu', '>= 14.04'
+supports         'ubuntu', '>= 16.04'
 supports         'centos', '~> 7.0'
 supports         'oracle', '~> 7.0'
 supports         'redhat', '~> 7.0'
