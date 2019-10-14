@@ -22,7 +22,7 @@ platforms:
       pid_one_command: /bin/systemd
     attributes:
       java:
-        jdk_version: '7'
+        jdk_version: '8'
   - name: ubuntu-18.04
     driver:
       image: dokken/ubuntu-18.04
@@ -37,7 +37,7 @@ platforms:
       pid_one_command: /usr/lib/systemd/systemd
     attributes:
       java:
-        jdk_version: '7'
+        jdk_version: '8'
 
 suites:
   - name: default
