@@ -5,14 +5,9 @@ if: (type = pull_request) OR (tag IS present) OR (branch = master)
 cache:
   directories:
   - "$HOME/.berkshelf"
-addons:
-  apt:
-    sources:
-    - chef-stable-xenial
-    packages:
-    - chefdk
 services: docker
 install:
+- curl https://omnitruck.chef.io/install.sh | sudo bash -s -- -c current -P chefdk -v 3
 - eval "$(chef shell-init bash)"
 before_script:
 - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables
