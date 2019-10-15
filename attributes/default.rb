@@ -20,10 +20,10 @@ default['zookeeper']['service_style'] = 'runit'
 
 default['zookeeper']['config'] = {
   'clientPort' => 2181,
-  'dataDir'    => '/var/lib/zookeeper',
-  'tickTime'   => 2000,
-  'initLimit'  => 5,
-  'syncLimit'  => 2,
+  'dataDir' => '/var/lib/zookeeper',
+  'tickTime' => 2000,
+  'initLimit' => 5,
+  'syncLimit' => 2,
 }
 
 default['zookeeper']['env_vars'] = {}

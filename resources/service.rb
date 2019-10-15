@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: zookeeper
+# Cookbook:: zookeeper
 # Resource:: service
 
-# Copyright 2016, EverTrue, Inc.
+# Copyright:: 2016, EverTrue, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -44,8 +44,8 @@ action :create do
       owner          new_resource.username
       group          new_resource.username
       options(
-        zk_env:   env_path,
-        exec:     executable_path,
+        zk_env: env_path,
+        exec: executable_path,
         username: new_resource.username
       )
       cookbook       new_resource.template_cookbook
@@ -56,8 +56,8 @@ action :create do
       source 'zookeeper.upstart.erb'
       mode   '0644'
       variables(
-        zk_env:   env_path,
-        exec:     executable_path,
+        zk_env: env_path,
+        exec: executable_path,
         username: new_resource.username
       )
       cookbook new_resource.template_cookbook
@@ -74,8 +74,8 @@ action :create do
       source 'zookeeper.systemd.erb'
       mode   '0644'
       variables(
-        zk_env:   env_path,
-        exec:     executable_path,
+        zk_env: env_path,
+        exec: executable_path,
         username: new_resource.username
       )
       cookbook new_resource.template_cookbook

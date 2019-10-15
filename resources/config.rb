@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: zookeeper
+# Cookbook:: zookeeper
 # Resource:: config
 #
-# Copyright 2014, Simple Finance Technology Corp.
+# Copyright:: 2014, Simple Finance Technology Corp.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,10 +19,10 @@
 property :conf_file,         String, name_property: true
 property :conf_dir,          String, default: '/opt/zookeeper/conf'
 property :config,            Hash, default: { 'clientPort' => 2181,
-                                              'dataDir'    => '/var/lib/zookeeper',
-                                              'tickTime'   => 2000,
-                                              'initLimit'  => 5,
-                                              'syncLimit'  => 2 }
+                                              'dataDir' => '/var/lib/zookeeper',
+                                              'tickTime' => 2000,
+                                              'initLimit' => 5,
+                                              'syncLimit' => 2 }
 property :log_dir,           String, default: '/var/log/zookeeper'
 property :env_vars,          Hash, default: {}
 property :user,              String, default: 'zookeeper'
