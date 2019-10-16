@@ -1,4 +1,3 @@
-
 zookeeper node['zookeeper']['version']
 zookeeper_config 'zoo.cfg'
 zookeeper_service 'zookeeper' do
