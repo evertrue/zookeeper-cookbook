@@ -13,6 +13,7 @@ provisioner:
 
 verifier:
   name: inspec
+  chef_license: accept
 
 platforms:
   - name: ubuntu-16.04
