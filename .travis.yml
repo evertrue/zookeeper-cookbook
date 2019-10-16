@@ -1,33 +1,34 @@
+---
 language: ruby
 dist: xenial
 sudo: false
 if: (type = pull_request) OR (tag IS present) OR (branch = master)
 cache:
   directories:
-  - "$HOME/.berkshelf"
+    - "$HOME/.berkshelf"
 services: docker
 install:
-- curl https://omnitruck.chef.io/install.sh | sudo bash -s -- -c current -P chefdk -v 3
-- eval "$(chef shell-init bash)"
+  - curl https://omnitruck.chef.io/install.sh | sudo bash -s -- -c current -P chefdk -v 3
+  - eval "$(chef shell-init bash)"
 before_script:
-- sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables
-  -N DOCKER )
-- chef --version
+  - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables
+    -N DOCKER )
+  - chef --version
 script: $TEST
 env:
   global:
-  - CHEF_LICENSE='accept'
+    - CHEF_LICENSE='accept'
   matrix:
-  - TEST='delivery local verify'
-  - TEST='kitchen test default-ubuntu-1604'
-  - TEST='kitchen test default-ubuntu-1804'
-  - TEST='kitchen test default-centos-7'
-  - TEST='kitchen test attributes-ubuntu-1604'
-  - TEST='kitchen test attributes-ubuntu-1804'
-  - TEST='kitchen test attributes-centos-7'
-  - TEST='kitchen test systemd-ubuntu-1604'
-  - TEST='kitchen test systemd-ubuntu-1804'
-  - TEST='kitchen test systemd-centos-7'
+    - TEST='delivery local verify'
+    - TEST='kitchen test default-ubuntu-1604'
+    - TEST='kitchen test default-ubuntu-1804'
+    - TEST='kitchen test default-centos-7'
+    - TEST='kitchen test attributes-ubuntu-1604'
+    - TEST='kitchen test attributes-ubuntu-1804'
+    - TEST='kitchen test attributes-centos-7'
+    - TEST='kitchen test systemd-ubuntu-1604'
+    - TEST='kitchen test systemd-ubuntu-1804'
+    - TEST='kitchen test systemd-centos-7'
 notifications:
   slack:
     secure: Bh2Lb596AhPXzFOviP+pVhQaZxXN1ry3swomyXELNvKRbQPcdHNn4slgZXhWplRo1XQUsSGSBmrdwoNAWpvNGQnLTyz8hAI1wmUnc0KEF/4RGaKbzsuuhvctFbiSaO1u/Y9yZ1hT9RW6fbM4TepJ5+DoI0q9PxDRuXPnGd2RnWg=
