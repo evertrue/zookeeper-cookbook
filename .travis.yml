@@ -14,21 +14,101 @@ before_script:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables
     -N DOCKER )
   - chef --version
-script: $TEST
 env:
   global:
     - CHEF_LICENSE='accept'
-  matrix:
-    - TEST='delivery local verify'
-    - TEST='kitchen test default-ubuntu-1604'
-    - TEST='kitchen test default-ubuntu-1804'
-    - TEST='kitchen test default-centos-7'
-    - TEST='kitchen test attributes-ubuntu-1604'
-    - TEST='kitchen test attributes-ubuntu-1804'
-    - TEST='kitchen test attributes-centos-7'
-    - TEST='kitchen test systemd-ubuntu-1604'
-    - TEST='kitchen test systemd-ubuntu-1804'
-    - TEST='kitchen test systemd-centos-7'
+jobs:
+  include:
+    - stage: Verify
+      script: delivery local verify
+      env:
+        - CHEF_VERSION=14
+    - stage: Verify
+      script: delivery local verify
+      env:
+        - CHEF_VERSION=15
+
+    - stage: 'Acceptance: default-ubuntu-1604'
+      script: kitchen test default-ubuntu-1604
+      env:
+        - CHEF_VERSION=14
+    - stage: 'Acceptance: default-ubuntu-1604'
+      script: kitchen test default-ubuntu-1604
+      env:
+        - CHEF_VERSION=15
+
+    - stage: 'Acceptance: default-ubuntu-1804'
+      script: kitchen test default-ubuntu-1804
+      env:
+        - CHEF_VERSION=14
+    - stage: 'Acceptance: default-ubuntu-1804'
+      script: kitchen test default-ubuntu-1804
+      env:
+        - CHEF_VERSION=15
+
+    - stage: 'Acceptance: default-centos-7'
+      script: kitchen test default-centos-7
+      env:
+        - CHEF_VERSION=14
+    - stage: 'Acceptance: default-centos-7'
+      script: kitchen test default-centos-7
+      env:
+        - CHEF_VERSION=15
+
+    - stage: 'Acceptance: attributes-ubuntu-1604'
+      script: kitchen test attributes-ubuntu-1604
+      env:
+        - CHEF_VERSION=14
+    - stage: 'Acceptance: attributes-ubuntu-1604'
+      script: kitchen test attributes-ubuntu-1604
+      env:
+        - CHEF_VERSION=15
+
+    - stage: 'Acceptance: attributes-ubuntu-1804'
+      script: kitchen test attributes-ubuntu-1804
+      env:
+        - CHEF_VERSION=14
+    - stage: 'Acceptance: attributes-ubuntu-1804'
+      script: kitchen test attributes-ubuntu-1804
+      env:
+        - CHEF_VERSION=15
+
+    - stage: 'Acceptance: attributes-centos-7'
+      script: kitchen test attributes-centos-7
+      env:
+        - CHEF_VERSION=14
+    - stage: 'Acceptance: attributes-centos-7'
+      script: kitchen test attributes-centos-7
+      env:
+        - CHEF_VERSION=15
+
+    - stage: 'Acceptance: systemd-ubuntu-1604'
+      script: kitchen test systemd-ubuntu-1604
+      env:
+        - CHEF_VERSION=14
+    - stage: 'Acceptance: systemd-ubuntu-1604'
+      script: kitchen test systemd-ubuntu-1604
+      env:
+        - CHEF_VERSION=15
+
+    - stage: 'Acceptance: systemd-ubuntu-1804'
+      script: kitchen test systemd-ubuntu-1804
+      env:
+        - CHEF_VERSION=14
+    - stage: 'Acceptance: systemd-ubuntu-1804'
+      script: kitchen test systemd-ubuntu-1804
+      env:
+        - CHEF_VERSION=15
+
+    - stage: 'Acceptance: systemd-centos-7'
+      script: kitchen test systemd-centos-7
+      env:
+        - CHEF_VERSION=14
+    - stage: 'Acceptance: systemd-centos-7'
+      script: kitchen test systemd-centos-7
+      env:
+        - CHEF_VERSION=15
+
 notifications:
   slack:
     secure: Bh2Lb596AhPXzFOviP+pVhQaZxXN1ry3swomyXELNvKRbQPcdHNn4slgZXhWplRo1XQUsSGSBmrdwoNAWpvNGQnLTyz8hAI1wmUnc0KEF/4RGaKbzsuuhvctFbiSaO1u/Y9yZ1hT9RW6fbM4TepJ5+DoI0q9PxDRuXPnGd2RnWg=
