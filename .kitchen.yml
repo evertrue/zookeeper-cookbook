@@ -26,7 +26,7 @@ platforms:
   - name: ubuntu-18.04
     driver:
       image: dokken/ubuntu-18.04
-      pid_one_command: /sbin/init
+      pid_one_command: /bin/systemd
     attributes:
       java:
         jdk_version: '8'
