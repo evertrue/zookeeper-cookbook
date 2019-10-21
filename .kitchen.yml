@@ -1,7 +1,7 @@
 ---
 driver:
   name: dokken
-  chef_version: latest
+  chef_version: <%= ENV['CHEF_VERSION'] || 'latest' %>
   privileged: true # because Docker and SystemD/Upstart
 
 transport:
@@ -9,27 +9,20 @@ transport:
 
 provisioner:
   name: dokken
-  deprecations_as_errors: true
+  deprecations_as_errors: false
 
 verifier:
   name: inspec
   chef_license: accept
 
 platforms:
-  - name: ubuntu-14.04
-    driver:
-      image: dokken/ubuntu-14.04
-      pid_one_command: /sbin/init
-    attributes:
-      java:
-        jdk_version: '7'
   - name: ubuntu-16.04
     driver:
       image: dokken/ubuntu-16.04
       pid_one_command: /bin/systemd
     attributes:
       java:
-        jdk_version: '7'
+        jdk_version: '8'
   - name: ubuntu-18.04
     driver:
       image: dokken/ubuntu-18.04
@@ -44,7 +37,7 @@ platforms:
       pid_one_command: /usr/lib/systemd/systemd
     attributes:
       java:
-        jdk_version: '7'
+        jdk_version: '8'
 
 suites:
   - name: default
@@ -63,16 +56,6 @@ suites:
   - name: systemd
     run_list:
       - recipe[zookeeper_tester::systemd]
-    includes:
-      - ubuntu-16.04
-      - ubuntu-18.04
-      - centos-7
     attributes:
       zookeeper:
         conf_dir: /etc/zookeeper/conf
-
-  - name: upstart
-    run_list:
-      - recipe[zookeeper_tester::upstart]
-    includes:
-      - ubuntu-14.04

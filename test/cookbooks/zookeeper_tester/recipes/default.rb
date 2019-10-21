@@ -1,4 +1,3 @@
-
 zookeeper node['zookeeper']['version'] do
   checksum node['zookeeper']['checksum']
 end
