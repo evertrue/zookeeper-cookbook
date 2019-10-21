@@ -2,8 +2,6 @@
 driver:
   name: dokken
   chef_version: <%= ENV['CHEF_VERSION'] || 'latest' %>
-  name: vagrant
-  customize:
   privileged: true # because Docker and SystemD/Upstart
 
 transport:
