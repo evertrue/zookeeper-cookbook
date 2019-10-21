@@ -19,12 +19,14 @@ platforms:
   - name: ubuntu-16.04
     driver:
       image: dokken/ubuntu-16.04
+      pid_one_command: /bin/systemd
     attributes:
       java:
         jdk_version: '8'
   - name: ubuntu-18.04
     driver:
       image: dokken/ubuntu-18.04
+      pid_one_command: /sbin/init
     attributes:
       java:
         jdk_version: '8'
@@ -32,6 +34,7 @@ platforms:
     driver:
       image: dokken/centos-7
       platform: rhel
+      pid_one_command: /usr/lib/systemd/systemd
     attributes:
       java:
         jdk_version: '8'
