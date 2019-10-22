@@ -2,6 +2,13 @@
 
 This file is used to list changes made in each version of zookeeper.
 
+## v12.0.0
+
+* Upgrade to ZooKeeper v3.4.14
+* Clean up unit testing to work with current Chef tools
+* Run Test Kitchen using Chef 14 & 15
+* Drop EOL Ubuntu 14.04 support
+
 ## v11.1.0
 
 * Fix compile failure in node resource (#217 h/t @tas50)
