@@ -42,6 +42,8 @@ load_current_value do
     when 'world'
       acl_world acl[:perms]
     else
+      # default value for acl_digest is frozen by default in chef 14+
+      send("acl_#{acl[:id][:scheme]}=", send("acl_#{acl[:id][:scheme]}").dup)
       send("acl_#{acl[:id][:scheme]}")[acl[:id][:id]] = acl[:perms]
     end
   end
