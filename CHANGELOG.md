@@ -2,6 +2,13 @@
 
 This file is used to list changes made in each version of zookeeper.
 
+## 12.0.1
+
+* Duplicate `acl_#{scheme}` for Chef 14+ compatibility (#222 h/t @kamaradclimber)
+* Drop deprecated key `sudo` from Travic CI test config
+* Fix metadata to reflect that Chef 12 support has been missing for some time, as it has been EOL for over a year
+* Bring back testing on Chef 13 until we officially drop support
+
 ## v12.0.0
 
 * Upgrade to ZooKeeper v3.4.14
