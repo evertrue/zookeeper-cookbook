@@ -22,6 +22,10 @@ jobs:
     - stage: Verify
       script: delivery local verify
       env:
+        - CHEF_VERSION=13
+    - stage: Verify
+      script: delivery local verify
+      env:
         - CHEF_VERSION=14
     - stage: Verify
       script: delivery local verify
@@ -31,6 +35,10 @@ jobs:
     - stage: 'Acceptance: default-ubuntu-1604'
       script: kitchen test default-ubuntu-1604
       env:
+        - CHEF_VERSION=13
+    - stage: 'Acceptance: default-ubuntu-1604'
+      script: kitchen test default-ubuntu-1604
+      env:
         - CHEF_VERSION=14
     - stage: 'Acceptance: default-ubuntu-1604'
       script: kitchen test default-ubuntu-1604
@@ -40,6 +48,10 @@ jobs:
     - stage: 'Acceptance: default-ubuntu-1804'
       script: kitchen test default-ubuntu-1804
       env:
+        - CHEF_VERSION=13
+    - stage: 'Acceptance: default-ubuntu-1804'
+      script: kitchen test default-ubuntu-1804
+      env:
         - CHEF_VERSION=14
     - stage: 'Acceptance: default-ubuntu-1804'
       script: kitchen test default-ubuntu-1804
@@ -49,6 +61,10 @@ jobs:
     - stage: 'Acceptance: default-centos-7'
       script: kitchen test default-centos-7
       env:
+        - CHEF_VERSION=13
+    - stage: 'Acceptance: default-centos-7'
+      script: kitchen test default-centos-7
+      env:
         - CHEF_VERSION=14
     - stage: 'Acceptance: default-centos-7'
       script: kitchen test default-centos-7
@@ -58,6 +74,10 @@ jobs:
     - stage: 'Acceptance: attributes-ubuntu-1604'
       script: kitchen test attributes-ubuntu-1604
       env:
+        - CHEF_VERSION=13
+    - stage: 'Acceptance: attributes-ubuntu-1604'
+      script: kitchen test attributes-ubuntu-1604
+      env:
         - CHEF_VERSION=14
     - stage: 'Acceptance: attributes-ubuntu-1604'
       script: kitchen test attributes-ubuntu-1604
@@ -67,6 +87,10 @@ jobs:
     - stage: 'Acceptance: attributes-ubuntu-1804'
       script: kitchen test attributes-ubuntu-1804
       env:
+        - CHEF_VERSION=13
+    - stage: 'Acceptance: attributes-ubuntu-1804'
+      script: kitchen test attributes-ubuntu-1804
+      env:
         - CHEF_VERSION=14
     - stage: 'Acceptance: attributes-ubuntu-1804'
       script: kitchen test attributes-ubuntu-1804
@@ -76,6 +100,10 @@ jobs:
     - stage: 'Acceptance: attributes-centos-7'
       script: kitchen test attributes-centos-7
       env:
+        - CHEF_VERSION=13
+    - stage: 'Acceptance: attributes-centos-7'
+      script: kitchen test attributes-centos-7
+      env:
         - CHEF_VERSION=14
     - stage: 'Acceptance: attributes-centos-7'
       script: kitchen test attributes-centos-7
@@ -85,6 +113,10 @@ jobs:
     - stage: 'Acceptance: systemd-ubuntu-1604'
       script: kitchen test systemd-ubuntu-1604
       env:
+        - CHEF_VERSION=13
+    - stage: 'Acceptance: systemd-ubuntu-1604'
+      script: kitchen test systemd-ubuntu-1604
+      env:
         - CHEF_VERSION=14
     - stage: 'Acceptance: systemd-ubuntu-1604'
       script: kitchen test systemd-ubuntu-1604
@@ -94,12 +126,20 @@ jobs:
     - stage: 'Acceptance: systemd-ubuntu-1804'
       script: kitchen test systemd-ubuntu-1804
       env:
+        - CHEF_VERSION=13
+    - stage: 'Acceptance: systemd-ubuntu-1804'
+      script: kitchen test systemd-ubuntu-1804
+      env:
         - CHEF_VERSION=14
     - stage: 'Acceptance: systemd-ubuntu-1804'
       script: kitchen test systemd-ubuntu-1804
       env:
         - CHEF_VERSION=15
 
+    - stage: 'Acceptance: systemd-centos-7'
+      script: kitchen test systemd-centos-7
+      env:
+        - CHEF_VERSION=13
     - stage: 'Acceptance: systemd-centos-7'
       script: kitchen test systemd-centos-7
       env:
