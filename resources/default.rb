@@ -18,7 +18,7 @@
 # limitations under the License.
 
 property :version,             String, name_property: true
-property :mirror,              String, default: 'http://apache.mirrors.tds.net/zookeeper/'
+property :mirror,              String, default: 'http://archive.apache.org/dist/zookeeper/'
 property :checksum,            String
 property :username,            String, default: 'zookeeper'
 property :user_home,           String, default: '/home/zookeeper'
@@ -62,7 +62,7 @@ action :install do
   end
 
   ark 'zookeeper' do
-    url         "#{new_resource.mirror}/zookeeper-#{new_resource.version}/zookeeper-#{new_resource.version}.tar.gz"
+    url         "#{new_resource.mirror}/zookeeper-#{new_resource.version}/apache-zookeeper-#{new_resource.version}-bin.tar.gz"
     version     new_resource.version
     prefix_root new_resource.install_dir
     prefix_home new_resource.install_dir

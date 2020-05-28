@@ -2,6 +2,13 @@
 
 This file is used to list changes made in each version of zookeeper.
 
+## 13.0.0
+
+* Upgrade to ZooKeeper v3.6.1
+* Update the mirror URL and the bianry file name to apache-zookeeper-3.X.X-bin.tar.gz
+  Example : apache-zookeeper-3.6.1-bin.tar.gz
+            http://archive.apache.org/dist/zookeeper/zookeeper-3.6.1/
+
 ## 12.0.1
 
 * Duplicate `acl_#{scheme}` for Chef 14+ compatibility (#222 h/t @kamaradclimber)
