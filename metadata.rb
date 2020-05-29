@@ -1,6 +1,6 @@
 name             'zookeeper'
-maintainer       'EverTrue'
-maintainer_email 'devops@evertrue.com'
+maintainer       'Jeff Byrnes'
+maintainer_email 'thejeffbyrnes@gmail.com'
 license          'Apache-2.0'
 description      'Installs/Configures zookeeper'
 version          '12.0.1'

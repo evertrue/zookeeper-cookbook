@@ -170,6 +170,7 @@ end
 
 ## Author and License
 
+Jeff Byrnes <thejeffbyrnes@gmail.com>  
 EverTrue <devops@evertrue.com>  
 Simple Finance <ops@simple.com>  
 Apache License, Version 2.0
