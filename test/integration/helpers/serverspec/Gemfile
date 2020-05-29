@@ -1,3 +1,0 @@
-source 'https://rubygems.org'
-
-gem 'zookeeper', '~> 1.4'

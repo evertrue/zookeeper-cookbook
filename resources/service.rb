@@ -18,15 +18,15 @@
 
 property :service_style,
          String,
-         default: 'runit',
+         default: 'systemd',
          callbacks: {
            'Must be a valid service style' =>
-             -> (service_style) { %w(runit upstart systemd exhibitor).include? service_style },
+             -> (service_style) { %w(systemd exhibitor).include? service_style },
          }
 property :install_dir,         String, default: '/opt/zookeeper'
 property :conf_dir,            String, default: '/opt/zookeeper/conf'
 property :username,            String, default: 'zookeeper'
-property :service_actions,     Array, default: [:enable, :start]
+property :service_actions,     Array, default: %i(enable start)
 property :template_cookbook,   String, default: 'zookeeper'
 property :restart_on_reconfig, [true, false], default: false
 
@@ -35,45 +35,26 @@ action :create do
   env_path = "#{new_resource.conf_dir}/zookeeper-env.sh"
 
   case new_resource.service_style
-  when 'runit'
-    # runit_service does not install runit itself
-    include_recipe 'runit'
-
-    runit_service 'zookeeper' do
-      default_logger true
-      owner          new_resource.username
-      group          new_resource.username
-      options(
-        zk_env: env_path,
-        exec: executable_path,
-        username: new_resource.username
-      )
-      cookbook       new_resource.template_cookbook
-      action         new_resource.service_actions
-    end
   when 'systemd'
-    template '/etc/systemd/system/zookeeper.service' do
-      source 'zookeeper.systemd.erb'
-      mode   '0644'
-      variables(
-        zk_env: env_path,
-        exec: executable_path,
-        username: new_resource.username
-      )
-      cookbook new_resource.template_cookbook
-      notifies :run, 'execute[systemctl daemon-reload]'
-    end
-
-    execute 'systemctl daemon-reload' do
-      action :nothing
-      command '/bin/systemctl daemon-reload'
-      notifies :restart, 'service[zookeeper]' if new_resource.restart_on_reconfig
-    end
-
-    service 'zookeeper' do
-      provider Chef::Provider::Service::Systemd
-      supports status: true, restart: true, nothing: true
-      action   new_resource.service_actions
+    systemd_unit 'zookeeper.service' do
+      content({
+        Unit: {
+          Description: 'ZooKeeper coordination service',
+          After: 'network.target',
+        },
+        Service: {
+          User: new_resource.username,
+          Group: new_resource.username,
+          SyslogIdentifier: 'zookeeper',
+          Restart: 'on-failure',
+          ExecStart: "/bin/bash -a -c 'source #{env_path} && #{executable_path} start-foreground'",
+          LimitNOFILE: 8192,
+        },
+        Install: {
+          WantedBy: 'multi-user.target',
+        },
+      })
+      action %i(create) + new_resource.service_actions
     end
   when 'exhibitor'
     Chef::Log.info 'Assuming Exhibitor will start up Zookeeper.'

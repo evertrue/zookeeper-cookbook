@@ -16,6 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# The original filename supplied with ZK is called 'zoo.cfg'
 property :conf_file,         String, name_property: true
 property :conf_dir,          String, default: '/opt/zookeeper/conf'
 property :config,            Hash, default: { 'clientPort' => 2181,
@@ -24,11 +25,12 @@ property :config,            Hash, default: { 'clientPort' => 2181,
                                               'initLimit' => 5,
                                               'syncLimit' => 2 }
 property :log_dir,           String, default: '/var/log/zookeeper'
+# See zookeeper config files (conf/zkEnv.sh, etc.) for more options
 property :env_vars,          Hash, default: {}
 property :user,              String, default: 'zookeeper'
-property :java_opts,         String
+property :java_opts,         String, default: "-Xmx#{(node['memory']['total'].to_i * 0.8).floor / 1024}m"
 
-action :render do
+action :create do
   directory new_resource.conf_dir do
     owner     new_resource.user
     group     new_resource.user

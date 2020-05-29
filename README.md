@@ -1,9 +1,9 @@
 # zookeeper cookbook
 
-[![Build Status](https://travis-ci.org/evertrue/zookeeper-cookbook.svg?branch=master)](https://travis-ci.org/evertrue/zookeeper-cookbook)
+![ci](https://github.com/evertrue/zookeeper-cookbook/workflows/ci/badge.svg)
 [![Cookbook Version](https://img.shields.io/cookbook/v/zookeeper.svg)](https://supermarket.chef.io/cookbooks/zookeeper)
 
-**Table of Contents**
+## Table of Contents
 
 * [Zookeeper](#zookeeper)
     - [Usage](#usage)
@@ -25,22 +25,6 @@ This cookbook focuses on deploying ZooKeeper via Chef.
 It should be noted that ZooKeeper’s configuration and startup systems are complicated. To elaborate, the service scripts supplied by this cookbook use `bin/zkServer.sh` inside the ZooKeeper directory, which sources a variety of shell scripts as part of its initialization process.
 
 Please be mindful if you decide to install ZooKeeper to a different location that the path to the config directory should remain pointed to the one within the install directory, unless you instead to completely rewire how ZooKeeper runs in your wrapper cookbook.
-
-### Usage
-
-This cookbook is primarily a library cookbook. It implements a `zookeeper` and `zookeeper_config`
-resource to handle the installation and configuration of ZooKeeper. It ships
-with a default recipe for backwards compatibility pre-LWRP which will work
-fine, but is really just an example.
-
-Testing is handled using Test Kitchen, with the expectation that you have it installed as part of the [Chef DK](https://downloads.chef.io/chef-dk/).
-
-### Recipes
-
-* `zookeeper::default` : Installs and configures ZooKeeper. This does not start or manage the service.
-* `zookeeper::install` : Installs the ZooKeeper but does not configure it.
-* `zookeeper::config_render` : Configures ZooKeeper but does not install it.
-* `zookeeper::service` : Starts and manages the ZooKeeper service. Requires ZooKeeper to be installed/configured.
 
 ### Resources
 
@@ -75,23 +59,25 @@ end
 
 This resource renders a ZooKeeper configuration file.
 
-Actions: `:render`, `:delete`
+Actions: `:create`, `:delete`
 
 Parameters:
 
 * `conf_file` (name attribute): Base name of the config file
 * `conf_dir`: Path to write the configuration file to (defaults to `/opt/zookeeper/conf`)
 * `config`: Hash of configuration parameters to add to the file
-  - Defaults to:
-```ruby
-{
-  'clientPort' => 2181,
-  'dataDir'    => '/var/lib/zookeeper',
-  'tickTime'   => 2000,
-  'initLimit'  => 5,
-  'syncLimit'  => 2
-}
-```
+    - Defaults to:
+
+        ```ruby
+        {
+          'clientPort' => 2181,
+          'dataDir'    => '/var/lib/zookeeper',
+          'tickTime'   => 2000,
+          'initLimit'  => 5,
+          'syncLimit'  => 2
+        }
+        ```
+
 * `env_vars`: Hash of startup environment variables (defaults to `{}`)
 * `log_dir`: Log directory (defaults to `/var/log/zookeeper`)
 * `user`: The user to give ownership of the file to (default: `zookeeper`)
@@ -111,7 +97,7 @@ config_hash = {
 zookeeper_config 'zoo.cfg' do
   config config_hash
   user   'zookeeper'
-  action :render
+  action :create
 end
 ```
 
@@ -186,6 +172,8 @@ end
 
 ## Author and License
 
-EverTrue <devops@evertrue.com>  
-Simple Finance <ops@simple.com>  
+* Jeff Byrnes <thejeffbyrnes@gmail.com>
+* EverTrue <devops@evertrue.com>
+* Simple Finance <ops@simple.com>
+
 Apache License, Version 2.0

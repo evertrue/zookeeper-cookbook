@@ -2,7 +2,7 @@
 driver:
   name: dokken
   chef_version: <%= ENV['CHEF_VERSION'] || 'latest' %>
-  privileged: true # because Docker and SystemD/Upstart
+  privileged: true  # because Docker and SystemD/Upstart
 
 transport:
   name: dokken
@@ -23,6 +23,7 @@ platforms:
     attributes:
       java:
         jdk_version: '8'
+
   - name: ubuntu-18.04
     driver:
       image: dokken/ubuntu-18.04
@@ -30,6 +31,15 @@ platforms:
     attributes:
       java:
         jdk_version: '8'
+
+  - name: ubuntu-20.04
+    driver:
+      image: dokken/ubuntu-20.04
+      pid_one_command: /bin/systemd
+    attributes:
+      java:
+        jdk_version: '8'
+
   - name: centos-7
     driver:
       image: dokken/centos-7
@@ -39,23 +49,17 @@ platforms:
       java:
         jdk_version: '8'
 
+  - name: centos-8
+    driver:
+      image: dokken/centos-8
+      platform: rhel
+      pid_one_command: /usr/lib/systemd/systemd
+    attributes:
+      java:
+        jdk_version: '8'
+
+
 suites:
   - name: default
     run_list:
       - recipe[zookeeper_tester]
-
-  - name: attributes
-    run_list:
-      - recipe[zookeeper_tester::attributes]
-    attributes:
-      zookeeper:
-        conf_dir: /etc/zookeeper/conf
-        env_vars:
-          ZOO_LOG4J_PROP: 'INFO,ROLLINGFILE'
-
-  - name: systemd
-    run_list:
-      - recipe[zookeeper_tester::systemd]
-    attributes:
-      zookeeper:
-        conf_dir: /etc/zookeeper/conf
