@@ -1,0 +1,73 @@
+---
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  delivery:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@master
+      - name: Run Chef Delivery
+        uses: actionshub/chef-delivery@master
+        env:
+          CHEF_LICENSE: accept-no-persist
+
+  yamllint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@master
+      - name: Run yaml Lint
+        uses: actionshub/yamllint@master
+
+  mdl:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@master
+      - name: Run Markdown Lint
+        uses: actionshub/markdownlint@master
+        with:
+          path: --rules ~MD004,~MD007,~MD013,~MD024 ./
+
+  dokken:
+    needs:
+      - yamllint
+      - delivery
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os:
+          - centos-7
+          - centos-8
+          - ubuntu-1604
+          - ubuntu-1804
+          - ubuntu-2004
+        suite:
+          - default
+          - systemd
+        chef_version:
+          - 14
+          - 15
+          - 16
+      fail-fast: false
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@master
+      - name: Install Chef
+        uses: actionshub/chef-install@master
+      - name: Dokken
+        uses: actionshub/kitchen-dokken@master
+        env:
+          CHEF_LICENSE: accept-no-persist
+          CHEF_VERSION: ${{ matrix.chef_version }}
+        with:
+          suite: ${{ matrix.suite }}
+          os: ${{ matrix.os }}
