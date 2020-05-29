@@ -11,7 +11,6 @@
             * [zookeeper](#zookeeper)
             * [zookeeper_config](#zookeeper_config)
             * [zookeeper_service](#zookeeper_service)
-            * [zookeeper_node](#zookeeper_node)
     - [Errata](#errata)
     - [Author and License](#author-and-license)
 
@@ -37,7 +36,7 @@ Actions: `:install`, `:uninstall`
 
 Parameters:
 
-* `version`: Version of ZooKeeper to install (name attribute)
+* `version`: Version of ZooKeeper to install
 * `username`: The user who will eventually run Zookeeper (default: `'zookeeper'`)
 * `user_home`: Path to the home folder for the Zookeeper user (default: `/home/zookeeper`)
 * `mirror`: The mirror to obtain ZooKeeper from (required)
@@ -47,7 +46,8 @@ Parameters:
 Example:
 
 ``` ruby
-zookeeper '3.4.8' do
+zookeeper 'zookeeper' do
+  version  '3.4.8'
   username 'zookeeper'
   mirror   'http://www.poolsaboveground.com/apache/zookeeper'
   checksum 'f10a0b51f45c4f64c1fe69ef713abf9eb9571bc7385a82da892e83bb6c965e90'
@@ -129,40 +129,6 @@ zookeeper_service 'zookeeper' do
   service_style 'systemd'
   install_dir   '/opt/zookeeper'
   username      'zookeeper'
-end
-```
-
-#### `zookeeper_node`
-
-This resource can create nodes in a running instance of ZooKeeper.
-
-Actions: `:create`, `:create_if_missing`, `:delete`
-
-Parameters:
-
-* `path`: The ZooKeeper node path (default: The name of the resource)
-* `connect_str`: The ZooKeeper connection string (required)
-* `data`: The data to write to the node
-* `auth_scheme`: The authentication scheme (default: digest)
-* `auth_cert`: The authentication password or data
-* `acl_digest`: Hash of acl permissions per 'digest' id
-* `acl_ip`: Hash of acl permissions per 'ip'
-* `acl_sasl`: Hash of acl permissions per 'sasl' id (SASLAuthentication provider must be enabled)
-* `acl_world`: Acl permissions for anyone (default: `Zk::PERM_ALL`)
-
-Example:
-
-``` ruby
-zookeeper_node '/data/myNode' do
-  action       :create
-  connect_str  "localhost:2181"
-  data         "my data"
-  auth_scheme  "digest"
-  auth_cert    "user1:pwd1"
-  acl_digest   "user1:a9l5yfb9zl8WCXjVmi5/XOC0Ep4=" => Zk::PERM_ALL
-  acl_ip       "127.0.0.1" => Zk::PERM_READ | Zk::PERM_WRITE
-  acl_sasl     "user@CHEF.IO" => Zk::PERM_ADMIN
-  acl_world    Zk::PERM_NONE
 end
 ```
 
