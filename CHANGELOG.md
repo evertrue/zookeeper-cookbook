@@ -2,6 +2,18 @@
 
 This file is used to list changes made in each version of zookeeper.
 
+## 13.0.0
+
+* Install ZooKeeper 3.6.1 by default
+* Drop Chef 13 support b/c it has been EOL for 2 years
+    - Pin `java < 7.0.0` to maintain Chef 14 support
+* Add testing on Ubuntu 20.04 & CentOS 8
+    - Remove the `zookeeper_node` resource, b/c it depends on the zookeeper gem, which has not had a new release since 2015
+* Follow through on long-standing deprecation notice & remove all recipes, making this a resource-only cookbook
+    - Rewrite unit tests to do the most basic testing of the `zookeeper` resource
+* Drop support for runit & upstart in favor of SystemD
+* Use the `systemd_unit` resource available since Chef 12.11
+
 ## 12.0.1
 
 * Duplicate `acl_#{scheme}` for Chef 14+ compatibility (#222 h/t @kamaradclimber)
