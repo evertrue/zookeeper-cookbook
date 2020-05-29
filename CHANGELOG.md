@@ -367,13 +367,13 @@ This file is used to list changes made in each version of zookeeper.
 * Zookeeper recipe rewritten as LWRP
 * Documentation updated slightly
 * Tested and verified and (hopefully) as backwards-compatible as possible
-  - Being a full version bump, there are no backwards-compatibility promises
+    - Being a full version bump, there are no backwards-compatibility promises
 * TODO
-  - Better documentation
-  - `zookeeper_service` resource
-  - `zookeeper_config` resource
-  - Better tests
-  - Swap out "community" Java
+    - Better documentation
+    - `zookeeper_service` resource
+    - `zookeeper_config` resource
+    - Better tests
+    - Swap out "community" Java
 
 ## v1.7.4
 
@@ -442,6 +442,6 @@ This file is used to list changes made in each version of zookeeper.
 
 * fix for backwards compatibility with ruby 1.8.7
 
-## v0.1.0:
+## v0.1.0
 
 * Initial release of zookeeper

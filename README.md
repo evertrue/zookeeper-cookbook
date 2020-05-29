@@ -3,7 +3,7 @@
 ![ci](https://github.com/evertrue/zookeeper-cookbook/workflows/ci/badge.svg)
 [![Cookbook Version](https://img.shields.io/cookbook/v/zookeeper.svg)](https://supermarket.chef.io/cookbooks/zookeeper)
 
-**Table of Contents**
+## Table of Contents
 
 * [Zookeeper](#zookeeper)
     - [Usage](#usage)
@@ -66,16 +66,18 @@ Parameters:
 * `conf_file` (name attribute): Base name of the config file
 * `conf_dir`: Path to write the configuration file to (defaults to `/opt/zookeeper/conf`)
 * `config`: Hash of configuration parameters to add to the file
-  - Defaults to:
-```ruby
-{
-  'clientPort' => 2181,
-  'dataDir'    => '/var/lib/zookeeper',
-  'tickTime'   => 2000,
-  'initLimit'  => 5,
-  'syncLimit'  => 2
-}
-```
+    - Defaults to:
+
+        ```ruby
+        {
+          'clientPort' => 2181,
+          'dataDir'    => '/var/lib/zookeeper',
+          'tickTime'   => 2000,
+          'initLimit'  => 5,
+          'syncLimit'  => 2
+        }
+        ```
+
 * `env_vars`: Hash of startup environment variables (defaults to `{}`)
 * `log_dir`: Log directory (defaults to `/var/log/zookeeper`)
 * `user`: The user to give ownership of the file to (default: `zookeeper`)
@@ -170,7 +172,8 @@ end
 
 ## Author and License
 
-Jeff Byrnes <thejeffbyrnes@gmail.com>  
-EverTrue <devops@evertrue.com>  
-Simple Finance <ops@simple.com>  
+* Jeff Byrnes <thejeffbyrnes@gmail.com>
+* EverTrue <devops@evertrue.com>
+* Simple Finance <ops@simple.com>
+
 Apache License, Version 2.0
