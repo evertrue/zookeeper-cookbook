@@ -63,10 +63,3 @@ suites:
   - name: default
     run_list:
       - recipe[zookeeper_tester]
-
-  - name: systemd
-    run_list:
-      - recipe[zookeeper_tester::systemd]
-    attributes:
-      zookeeper:
-        conf_dir: /etc/zookeeper/conf

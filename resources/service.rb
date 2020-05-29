@@ -18,10 +18,10 @@
 
 property :service_style,
          String,
-         default: 'runit',
+         default: 'systemd',
          callbacks: {
            'Must be a valid service style' =>
-             -> (service_style) { %w(runit systemd exhibitor).include? service_style },
+             -> (service_style) { %w(systemd exhibitor).include? service_style },
          }
 property :install_dir,         String, default: '/opt/zookeeper'
 property :conf_dir,            String, default: '/opt/zookeeper/conf'
@@ -35,22 +35,6 @@ action :create do
   env_path = "#{new_resource.conf_dir}/zookeeper-env.sh"
 
   case new_resource.service_style
-  when 'runit'
-    # runit_service does not install runit itself
-    include_recipe 'runit'
-
-    runit_service 'zookeeper' do
-      default_logger true
-      owner          new_resource.username
-      group          new_resource.username
-      options(
-        zk_env: env_path,
-        exec: executable_path,
-        username: new_resource.username
-      )
-      cookbook       new_resource.template_cookbook
-      action         new_resource.service_actions
-    end
   when 'systemd'
     template '/etc/systemd/system/zookeeper.service' do
       source 'zookeeper.systemd.erb'

@@ -51,7 +51,6 @@ jobs:
           - ubuntu-2004
         suite:
           - default
-          - systemd
         chef_version:
           - 14
           - 15

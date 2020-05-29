@@ -15,6 +15,5 @@ supports         'redhat', '>= 7.0'
 
 chef_version     '>= 14.0'
 depends          'java', '< 7.0.0'
-depends          'runit', '~> 5.1'
 depends          'magic', '>= 1.1'
 depends          'ark', '~> 5.0'
