@@ -17,9 +17,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-property :version,             String, default: '3.4.14'
-property :mirror,              String, default: 'http://apache.mirrors.tds.net/zookeeper/'
-property :checksum,            String, default: 'b14f7a0fece8bd34c7fffa46039e563ac5367607c612517aa7bd37306afbd1cd'
+property :version,             String, default: '3.6.1'
+property :mirror,              String, default: 'http://archive.apache.org/dist/zookeeper/'
+property :checksum,            String
 property :username,            String, default: 'zookeeper'
 property :user_home,           String, default: '/home/zookeeper'
 property :install_dir,         String, default: '/opt'
@@ -60,7 +60,7 @@ action :install do
   end
 
   ark 'zookeeper' do
-    url         "#{new_resource.mirror}/zookeeper-#{new_resource.version}/zookeeper-#{new_resource.version}.tar.gz"
+    url         "#{new_resource.mirror}/zookeeper-#{new_resource.version}/apache-zookeeper-#{new_resource.version}-bin.tar.gz"
     version     new_resource.version
     prefix_root new_resource.install_dir
     prefix_home new_resource.install_dir
