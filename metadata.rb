@@ -14,8 +14,6 @@ supports         'oracle', '~> 7.0'
 supports         'redhat', '~> 7.0'
 
 chef_version     '>= 13.0'
-
-depends          'build-essential', '>= 5.0'
 depends          'java', '>= 1.39'
 depends          'runit', '>= 1.7'
 depends          'magic', '>= 1.1'

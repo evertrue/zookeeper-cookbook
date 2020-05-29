@@ -26,22 +26,6 @@ It should be noted that ZooKeeper’s configuration and startup systems are comp
 
 Please be mindful if you decide to install ZooKeeper to a different location that the path to the config directory should remain pointed to the one within the install directory, unless you instead to completely rewire how ZooKeeper runs in your wrapper cookbook.
 
-### Usage
-
-This cookbook is primarily a library cookbook. It implements a `zookeeper` and `zookeeper_config`
-resource to handle the installation and configuration of ZooKeeper. It ships
-with a default recipe for backwards compatibility pre-LWRP which will work
-fine, but is really just an example.
-
-Testing is handled using Test Kitchen, with the expectation that you have it installed as part of the [Chef DK](https://downloads.chef.io/chef-dk/).
-
-### Recipes
-
-* `zookeeper::default` : Installs and configures ZooKeeper. This does not start or manage the service.
-* `zookeeper::install` : Installs the ZooKeeper but does not configure it.
-* `zookeeper::config_render` : Configures ZooKeeper but does not install it.
-* `zookeeper::service` : Starts and manages the ZooKeeper service. Requires ZooKeeper to be installed/configured.
-
 ### Resources
 
 #### `zookeeper`
@@ -75,7 +59,7 @@ end
 
 This resource renders a ZooKeeper configuration file.
 
-Actions: `:render`, `:delete`
+Actions: `:create`, `:delete`
 
 Parameters:
 
@@ -111,7 +95,7 @@ config_hash = {
 zookeeper_config 'zoo.cfg' do
   config config_hash
   user   'zookeeper'
-  action :render
+  action :create
 end
 ```
 

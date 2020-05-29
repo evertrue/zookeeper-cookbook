@@ -17,9 +17,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-property :version,             String, name_property: true
+property :version,             String, default: '3.4.14'
 property :mirror,              String, default: 'http://apache.mirrors.tds.net/zookeeper/'
-property :checksum,            String
+property :checksum,            String, default: 'b14f7a0fece8bd34c7fffa46039e563ac5367607c612517aa7bd37306afbd1cd'
 property :username,            String, default: 'zookeeper'
 property :user_home,           String, default: '/home/zookeeper'
 property :install_dir,         String, default: '/opt'
@@ -30,8 +30,8 @@ property :use_java_cookbook,   [true, false], default: true
 # Install Zookeeper
 action :install do
   apt_update 'zookeeper' do
-    action :nothing
-  end.run_action :periodic if node['platform_family'] == 'debian'
+    only_if { platform_family? 'debian' }
+  end
 
   if new_resource.use_java_cookbook
     include_recipe 'java::default'
@@ -40,9 +40,7 @@ action :install do
   end
 
   # build-essential is required to build the zookeeper gem
-  build_essential 'install compilation tools' do
-    compile_time true
-  end
+  build_essential 'install compilation tools'
 
   chef_gem 'zookeeper' do
     compile_time false

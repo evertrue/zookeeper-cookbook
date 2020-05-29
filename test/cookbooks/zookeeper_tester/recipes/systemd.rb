@@ -1,4 +1,4 @@
-zookeeper node['zookeeper']['version']
+zookeeper 'zookeeper'
 zookeeper_config 'zoo.cfg'
 zookeeper_service 'zookeeper' do
   service_style 'systemd'

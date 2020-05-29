@@ -21,8 +21,8 @@ property :node_path,   String, name_property: true
 property :connect_str, String, required: true, desired_state: false
 property :data,        String
 
-property :auth_cert,   [String, nil], default: nil,      desired_state: false
-property :auth_scheme,                default: 'digest', desired_state: false
+property :auth_cert,   [String, nil], desired_state: false
+property :auth_scheme, default: 'digest', desired_state: false
 
 property :acl_digest,  Hash,   default: {}
 property :acl_ip,      Hash,   default: {}
