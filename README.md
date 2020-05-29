@@ -111,9 +111,7 @@ Actions: `:create`
 
 Properties:
 
-* `service_style`: The type of service provider you wish to use. Defaults to `runit`, and only allows one of the following:
-    - `runit`
-    - `upstart`
+* `service_style`: The type of service provider you wish to use. Defaults to `systemd`, and only allows one of the following:
     - `systemd`
     - `exhibitor`
 * `install_dir`: Where you’ve installed ZooKeeper (defaults to `/opt/zookeeper`)
