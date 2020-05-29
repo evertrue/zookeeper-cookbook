@@ -17,137 +17,44 @@ before_script:
 env:
   global:
     - CHEF_LICENSE='accept'
+  matrix:
+    - CHEF_VERSION=14
+    - CHEF_VERSION=15
+    - CHEF_VERSION=16
 jobs:
   include:
     - stage: Verify
       script: delivery local verify
-      env:
-        - CHEF_VERSION=13
-    - stage: Verify
-      script: delivery local verify
-      env:
-        - CHEF_VERSION=14
-    - stage: Verify
-      script: delivery local verify
-      env:
-        - CHEF_VERSION=15
 
-    - stage: 'Acceptance: default-ubuntu-1604'
+    - stage: Acceptance
       script: kitchen test default-ubuntu-1604
-      env:
-        - CHEF_VERSION=13
-    - stage: 'Acceptance: default-ubuntu-1604'
-      script: kitchen test default-ubuntu-1604
-      env:
-        - CHEF_VERSION=14
-    - stage: 'Acceptance: default-ubuntu-1604'
-      script: kitchen test default-ubuntu-1604
-      env:
-        - CHEF_VERSION=15
 
-    - stage: 'Acceptance: default-ubuntu-1804'
-      script: kitchen test default-ubuntu-1804
-      env:
-        - CHEF_VERSION=13
-    - stage: 'Acceptance: default-ubuntu-1804'
-      script: kitchen test default-ubuntu-1804
-      env:
-        - CHEF_VERSION=14
-    - stage: 'Acceptance: default-ubuntu-1804'
-      script: kitchen test default-ubuntu-1804
-      env:
-        - CHEF_VERSION=15
+    - script: kitchen test default-ubuntu-1804
+      name: default-ubuntu-1804
 
-    - stage: 'Acceptance: default-centos-7'
-      script: kitchen test default-centos-7
-      env:
-        - CHEF_VERSION=13
-    - stage: 'Acceptance: default-centos-7'
-      script: kitchen test default-centos-7
-      env:
-        - CHEF_VERSION=14
-    - stage: 'Acceptance: default-centos-7'
-      script: kitchen test default-centos-7
-      env:
-        - CHEF_VERSION=15
+    - script: kitchen test default-ubuntu-2004
+      name: default-ubuntu-2004
 
-    - stage: 'Acceptance: attributes-ubuntu-1604'
-      script: kitchen test attributes-ubuntu-1604
-      env:
-        - CHEF_VERSION=13
-    - stage: 'Acceptance: attributes-ubuntu-1604'
-      script: kitchen test attributes-ubuntu-1604
-      env:
-        - CHEF_VERSION=14
-    - stage: 'Acceptance: attributes-ubuntu-1604'
-      script: kitchen test attributes-ubuntu-1604
-      env:
-        - CHEF_VERSION=15
+    - script: kitchen test default-centos-7
+      name: default-centos-7
 
-    - stage: 'Acceptance: attributes-ubuntu-1804'
-      script: kitchen test attributes-ubuntu-1804
-      env:
-        - CHEF_VERSION=13
-    - stage: 'Acceptance: attributes-ubuntu-1804'
-      script: kitchen test attributes-ubuntu-1804
-      env:
-        - CHEF_VERSION=14
-    - stage: 'Acceptance: attributes-ubuntu-1804'
-      script: kitchen test attributes-ubuntu-1804
-      env:
-        - CHEF_VERSION=15
+    - script: kitchen test default-centos-7
+      name: default-centos-8
 
-    - stage: 'Acceptance: attributes-centos-7'
-      script: kitchen test attributes-centos-7
-      env:
-        - CHEF_VERSION=13
-    - stage: 'Acceptance: attributes-centos-7'
-      script: kitchen test attributes-centos-7
-      env:
-        - CHEF_VERSION=14
-    - stage: 'Acceptance: attributes-centos-7'
-      script: kitchen test attributes-centos-7
-      env:
-        - CHEF_VERSION=15
+    - script: kitchen test systemd-ubuntu-1604
+      name: systemd-ubuntu-1604
 
-    - stage: 'Acceptance: systemd-ubuntu-1604'
-      script: kitchen test systemd-ubuntu-1604
-      env:
-        - CHEF_VERSION=13
-    - stage: 'Acceptance: systemd-ubuntu-1604'
-      script: kitchen test systemd-ubuntu-1604
-      env:
-        - CHEF_VERSION=14
-    - stage: 'Acceptance: systemd-ubuntu-1604'
-      script: kitchen test systemd-ubuntu-1604
-      env:
-        - CHEF_VERSION=15
+    - script: kitchen test systemd-ubuntu-1804
+      name: systemd-ubuntu-1804
 
-    - stage: 'Acceptance: systemd-ubuntu-1804'
-      script: kitchen test systemd-ubuntu-1804
-      env:
-        - CHEF_VERSION=13
-    - stage: 'Acceptance: systemd-ubuntu-1804'
-      script: kitchen test systemd-ubuntu-1804
-      env:
-        - CHEF_VERSION=14
-    - stage: 'Acceptance: systemd-ubuntu-1804'
-      script: kitchen test systemd-ubuntu-1804
-      env:
-        - CHEF_VERSION=15
+    - script: kitchen test systemd-ubuntu-2004
+      name: systemd-ubuntu-2004
 
-    - stage: 'Acceptance: systemd-centos-7'
-      script: kitchen test systemd-centos-7
-      env:
-        - CHEF_VERSION=13
-    - stage: 'Acceptance: systemd-centos-7'
-      script: kitchen test systemd-centos-7
-      env:
-        - CHEF_VERSION=14
-    - stage: 'Acceptance: systemd-centos-7'
-      script: kitchen test systemd-centos-7
-      env:
-        - CHEF_VERSION=15
+    - script: kitchen test systemd-centos-7
+      name: systemd-centos-7
+
+    - script: kitchen test systemd-centos-7
+      name: systemd-centos-8
 
 notifications:
   slack:
