@@ -27,19 +27,19 @@ property :config,            Hash, default: { 'clientPort' => 2181,
 property :log_dir,           String, default: '/var/log/zookeeper'
 # See zookeeper config files (conf/zkEnv.sh, etc.) for more options
 property :env_vars,          Hash, default: {}
-property :user,              String, default: 'zookeeper'
+property :username,          String, default: 'zookeeper'
 property :java_opts,         String, default: "-Xmx#{(node['memory']['total'].to_i * 0.8).floor / 1024}m"
 
 action :create do
   directory new_resource.conf_dir do
-    owner     new_resource.user
-    group     new_resource.user
+    owner     new_resource.username
+    group     new_resource.username
     recursive true
   end
 
   file "#{new_resource.conf_dir}/#{new_resource.conf_file}" do
-    owner   new_resource.user
-    group   new_resource.user
+    owner   new_resource.username
+    group   new_resource.username
     content properties_config(new_resource.config)
   end
 
@@ -52,8 +52,8 @@ action :create do
   env_vars_hash['JVMFLAGS']    = new_resource.java_opts if new_resource.java_opts
 
   file "#{new_resource.conf_dir}/zookeeper-env.sh" do
-    owner   new_resource.user
-    group   new_resource.user
+    owner   new_resource.username
+    group   new_resource.username
     content exports_config(env_vars_hash) + "\n"
   end
 end
