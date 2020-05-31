@@ -42,6 +42,8 @@ Parameters:
 * `mirror`: The mirror to obtain ZooKeeper from (required)
 * `checksum`: Checksum for the ZooKeeper download file
 * `install_dir`: Which directory to install Zookeeper to (default: `'/opt/zookeeper'`)
+* `java_version`: The version of OpenJDK to install.
+    - Alternatively, set `use_java_cookbook false`, and manage your Java installation yourself
 
 Example:
 

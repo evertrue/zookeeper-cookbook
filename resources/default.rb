@@ -26,6 +26,7 @@ property :install_dir,         String, default: '/opt'
 property :log_dir,             String, default: '/var/log/zookeeper'
 property :data_dir,            String, default: '/var/lib/zookeeper'
 property :use_java_cookbook,   [true, false], default: true
+property :java_version,        String, default: '11'
 
 # Install Zookeeper
 action :install do
@@ -34,7 +35,7 @@ action :install do
   end
 
   if new_resource.use_java_cookbook
-    include_recipe 'java::default'
+    openjdk_install new_resource.java_version
   else
     Chef::Log.info "Assuming you've provided your own Java"
   end
