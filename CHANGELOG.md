@@ -2,6 +2,14 @@
 
 This file is used to list changes made in each version of zookeeper.
 
+## 14.0.0
+
+* Drop Chef 13 support; it is EOL as of April 2020
+* Make `username` property consistent across resources (#226)
+* Upgrade to `java` cookbook v8.x
+    - Necessitates upgrade to Java 11 by default
+* Drop `port` test b/c it is inconsistent in its results
+
 ## 13.0.0
 
 * Install ZooKeeper 3.6.1 by default

@@ -3,7 +3,7 @@ maintainer       'Jeff Byrnes'
 maintainer_email 'thejeffbyrnes@gmail.com'
 license          'Apache-2.0'
 description      'Installs/Configures zookeeper'
-version          '13.0.0'
+version          '14.0.0'
 
 issues_url 'https://github.com/evertrue/zookeeper-cookbook/issues'
 source_url 'https://github.com/evertrue/zookeeper-cookbook/'
