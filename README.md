@@ -82,7 +82,7 @@ Parameters:
 
 * `env_vars`: Hash of startup environment variables (defaults to `{}`)
 * `log_dir`: Log directory (defaults to `/var/log/zookeeper`)
-* `user`: The user to give ownership of the file to (default: `zookeeper`)
+* `username`: The user to give ownership of the file to (default: `zookeeper`)
 
 Example:
 
@@ -98,7 +98,7 @@ config_hash = {
 
 zookeeper_config 'zoo.cfg' do
   config config_hash
-  user   'zookeeper'
+  username 'zookeeper'
   action :create
 end
 ```
