@@ -53,8 +53,17 @@ action :install do
     recursive true
   end
 
+  versionRegExp = /(\d+)\.(\d+)(\.\d+)?/
+
+  match = new_resource.version.match(versionRegExp)
+  if match.captures[0].to_i == 3 && match.captures[1].to_i < 5
+    url = "#{new_resource.mirror}/zookeeper-#{new_resource.version}/zookeeper-#{new_resource.version}.tar.gz"
+  else
+    url = "#{new_resource.mirror}/zookeeper-#{new_resource.version}/apache-zookeeper-#{new_resource.version}-bin.tar.gz"
+  end
+  
   ark 'zookeeper' do
-    url         "#{new_resource.mirror}/zookeeper-#{new_resource.version}/apache-zookeeper-#{new_resource.version}-bin.tar.gz"
+    url         url
     version     new_resource.version
     prefix_root new_resource.install_dir
     prefix_home new_resource.install_dir
