@@ -1,71 +1,46 @@
 ---
 name: ci
 
-on:
+"on":
   pull_request:
   push:
     branches:
-      - master
+      - main
 
 jobs:
-  delivery:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@master
-      - name: Run Chef Delivery
-        uses: actionshub/chef-delivery@master
-        env:
-          CHEF_LICENSE: accept-no-persist
+  lint-unit:
+    uses: sous-chefs/.github/.github/workflows/lint-unit.yml@0.0.3
 
-  yamllint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@master
-      - name: Run yaml Lint
-        uses: actionshub/yamllint@master
-
-  mdl:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@master
-      - name: Run Markdown Lint
-        uses: actionshub/markdownlint@master
-        with:
-          path: --rules ~MD004,~MD007,~MD013,~MD024 ./
-
-  dokken:
-    needs:
-      - yamllint
-      - delivery
+  integration:
+    needs: lint-unit
     runs-on: ubuntu-latest
     strategy:
       matrix:
         os:
           - centos-7
-          - centos-8
-          - ubuntu-1604
+          - centos-stream-8
           - ubuntu-1804
           - ubuntu-2004
+          - ubuntu-2204
         suite:
           - default
         chef_version:
           - 15
           - 16
+          - 17
+          - 18
       fail-fast: false
 
     steps:
       - name: Check out code
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
       - name: Install Chef
-        uses: actionshub/chef-install@master
+        uses: actionshub/chef-install@main
       - name: Dokken
-        uses: actionshub/kitchen-dokken@master
+        uses: actionshub/test-kitchen@main
         env:
           CHEF_LICENSE: accept-no-persist
-          CHEF_VERSION: ${{ matrix.chef_version }}
+          KITCHEN_LOCAL_YAML: kitchen.dokken.yml
         with:
           suite: ${{ matrix.suite }}
           os: ${{ matrix.os }}

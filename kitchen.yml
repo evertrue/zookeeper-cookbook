@@ -2,7 +2,7 @@
 driver:
   name: dokken
   chef_version: <%= ENV['CHEF_VERSION'] || 'latest' %>
-  privileged: true  # because Docker and SystemD/Upstart
+  privileged: true # because Docker and SystemD/Upstart
 
 transport:
   name: dokken
@@ -16,11 +16,6 @@ verifier:
   chef_license: accept
 
 platforms:
-  - name: ubuntu-16.04
-    driver:
-      image: dokken/ubuntu-16.04
-      pid_one_command: /bin/systemd
-
   - name: ubuntu-18.04
     driver:
       image: dokken/ubuntu-18.04
@@ -31,18 +26,22 @@ platforms:
       image: dokken/ubuntu-20.04
       pid_one_command: /bin/systemd
 
+  - name: ubuntu-22.04
+    driver:
+      image: dokken/ubuntu-22.04
+      pid_one_command: /bin/systemd
+
   - name: centos-7
     driver:
       image: dokken/centos-7
       platform: rhel
       pid_one_command: /usr/lib/systemd/systemd
 
-  - name: centos-8
+  - name: centos-stream-8
     driver:
-      image: dokken/centos-8
+      image: dokken/centos-stream-8
       platform: rhel
       pid_one_command: /usr/lib/systemd/systemd
-
 
 suites:
   - name: default
