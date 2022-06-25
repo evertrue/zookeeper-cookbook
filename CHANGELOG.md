@@ -7,18 +7,18 @@ This file is used to list changes made in each version of zookeeper.
 * Drop Chef 13 support; it is EOL as of April 2020
 * Make `username` property consistent across resources (#226)
 * Upgrade to `java` cookbook v8.x
-    - Necessitates upgrade to Java 11 by default
+  * Necessitates upgrade to Java 11 by default
 * Drop `port` test b/c it is inconsistent in its results
 
 ## 13.0.0
 
 * Install ZooKeeper 3.6.1 by default
 * Drop Chef 13 support b/c it has been EOL for 2 years
-    - Pin `java < 7.0.0` to maintain Chef 14 support
+  * Pin `java < 7.0.0` to maintain Chef 14 support
 * Add testing on Ubuntu 20.04 & CentOS 8
-    - Remove the `zookeeper_node` resource, b/c it depends on the zookeeper gem, which has not had a new release since 2015
+  * Remove the `zookeeper_node` resource, b/c it depends on the zookeeper gem, which has not had a new release since 2015
 * Follow through on long-standing deprecation notice & remove all recipes, making this a resource-only cookbook
-    - Rewrite unit tests to do the most basic testing of the `zookeeper` resource
+  * Rewrite unit tests to do the most basic testing of the `zookeeper` resource
 * Drop support for runit & upstart in favor of SystemD
 * Use the `systemd_unit` resource available since Chef 12.11
 
@@ -43,39 +43,27 @@ This file is used to list changes made in each version of zookeeper.
 
 ## v11.0.0
 
-### Potentially Breaking
-
 * Set default version to ZooKeeper 3.4.12 (#216)
-    - This may upgrade you if you are using `zookeeper::default` and have not set `node['zookeeper']['version']` in your wrapper cookbook
+  * This may upgrade you if you are using `zookeeper::default` and have not set `node['zookeeper']['version']` in your wrapper cookbook
 
 ## v10.0.1
-
-### Fixes
 
 * Update README to reflect lack of SysV support (#214)
 
 ## v10.0.0
 
-### Potentially Breaking
-
 * Set default version to ZooKeeper 3.4.11 (#208)
-    - This may upgrade you if you are using `zookeeper::default` and have not set `node['zookeeper']['version']` in your wrapper cookbook
+  * This may upgrade you if you are using `zookeeper::default` and have not set `node['zookeeper']['version']` in your wrapper cookbook
 * Drop support for:
-    - Ubuntu 12.04
-    - CentOS 6
-    - SysV as a service provider
+  * Ubuntu 12.04
+  * CentOS 6
+  * SysV as a service provider
 * Source `zookeeper-env.sh` when running ZooKeeper (#210)
-    - This allows for placing all of the configs somewhere other than the default
-
-### Fixes
-
+  * This allows for placing all of the configs somewhere other than the default
 * Duplicate an immutable property in Chef 13 (#207)
 * Fix file ownership (#209)
 * Ensure config directory exists (for cases where using non-default)
 * Make resources Chef 13 compatible
-
-### Changes
-
 * Refactor Test Kitchen setup to use `kitchen-dokken` for simpler, more consistent testing across local & CI
 * Switch to testing on Chef 13
 * Clean up unit tests & metadata
@@ -87,45 +75,31 @@ This file is used to list changes made in each version of zookeeper.
 
 ## v9.0.0
 
-### Changes
-
 * Bump to major-level, owing to possibility of someone managing multiple ZooKeepers with this cookbook, and thus depending on the connection-per-`zookeeper_node`-resource that was the behavior previous to v8.3.0
-    - h/t to @GolubevV for [mentioning this](https://github.com/evertrue/zookeeper-cookbook/pull/205#issuecomment-338639001)
+  * h/t to @GolubevV for [mentioning this](https://github.com/evertrue/zookeeper-cookbook/pull/205#issuecomment-338639001)
 
 ## v8.3.1
-
-### Fixes
 
 * Roll back v8.3.0 to avoid potentially breaking changes
 
 ## v8.3.0
 
-### Fixes
-
 * Use class variable to avoid creating new connection for each resource (#205 h/t @GolubevV)
 
 ## v8.2.0
-
-### Changes
 
 * Add new property to `zookeeper_service` to restart on changes to its config (h/t @jaybocc2 #200)
 
 ## v8.1.3
 
-### Fixes
-
 * Fix misnamed attribute
-    - Lost in the shuffle long ago!
+  * Lost in the shuffle long ago!
 
 ## v8.1.2
-
-### Fixes
 
 * Ensure the /opt/zookeeper-$version directory is owned by zookeeper:zookeeper (#196)
 
 ## v8.1.1
-
-### Fixes
 
 * Update checksum to match that of version 3.4.9 (fixes #194)
 * Actually test sending checksum in attributes to `zookeeper` resource when setting up test instance (Relates to #194)
@@ -133,87 +107,61 @@ This file is used to list changes made in each version of zookeeper.
 
 ## v8.1.0
 
-### Changes
-
 * **NOTICE** Install zookeeper 3.4.9
-
-### Fixes
 
 * Make sure java_opts is actually rendered in the ZK env config
 
 ## v8.0.1
 
-### Fixes
-
 * Correct missed change of `user` to `username` in SysV script template (#189 h/t @d601)
 
 ## v8.0.0
-
-### Potentially Breaking
 
 * Loosen dependencies’ pins to all be `>=`, (#187 #188 h/t @Stromweld)
 
 ## v7.1.1
 
-### Fixes
-
 * Fix order of operations re: `link[/opt/zookeeper]` (a sub-unit of the `ark[zookeeper]` resource) (#183, @Stromweld)
 
 ## v7.1.0
 
-### Changes
-
 * Add SystemD support
 
 ## v7.0.0
-
-### Potentially Breaking
 
 * Completely refactor existing LWRPs into Chef 12.5 Custom Resources
 * Refactor `zookeeper::service` into a Custom Resource (#86)
 * Drop `apt` cookbook in favor of built-in resources in Chef >= 12.11
 * Migrate all logic inside resources
 * Use `ark` to download & install ZooKeeper, rather than handling every resource directly
-    - This is almost _certainly_ a breaking change, as it moves where ZooKeeper is installed by default
-    - Advantage: a symlink is created at `/#{install_dir}/zookeeper`, pointing to `/#{install_dir}/zookeeper-#{version}`, so handling paths to the current install is far easier
-    - Caution: `/#{install_dir}/zookeeper` has been, until now, a container directory for any installations of ZooKeeper (e.g., `/#{install_dir}/zookeeper/zookeeper-#{version}`)
+  * This is almost _certainly_ a breaking change, as it moves where ZooKeeper is installed by default
+  * Advantage: a symlink is created at `/#{install_dir}/zookeeper`, pointing to `/#{install_dir}/zookeeper-#{version}`, so handling paths to the current install is far easier
+  * Caution: `/#{install_dir}/zookeeper` has been, until now, a container directory for any installations of ZooKeeper (e.g., `/#{install_dir}/zookeeper/zookeeper-#{version}`)
 * Refactor recipes to wrap resources
-    - An attempt at backwards compatibility has been made, using the previous attribute-driven style
-    - These attributes & recipes will be dropped in future, as per a deprecation notice added to `zookeeper::default`
-
-### Changes
+  * An attempt at backwards compatibility has been made, using the previous attribute-driven style
+  * These attributes & recipes will be dropped in future, as per a deprecation notice added to `zookeeper::default`
 
 * Add more tests in an attempt at being comprehensive of various ways this cookbook can be used
 
 ## v6.0.0
 
-### Potentially Breaking
-
 * Drop separate `environment-defaults` file for Upstart/SysV in favor of using same env vars as Runit
-    - Consistency is key
+  * Consistency is key
 * Use `zkServer.sh` for all service scripts
 * Drop pinning for `build-essential`
 * Rewire how env vars are used to correctly set the config & log locations
-    - Default values added to set the config & log paths properly
-
-### Fixes
+  * Default values added to set the config & log paths properly
 
 * Set Upstart & SysV services to `action: [:enable, :start]` to match the Runit service
-
-### Changes
 
 * Pass values into Upstart & SysV init scripts, rather than directly using attributes
 * Drop any Minitest unit tests in favor of ChefSpec
 
 ## v5.0.2
 
-### Fixes
-
 * Update to working Apache mirror (#170 #178)
 
 ## v5.0.1
-
-### Fixes
 
 * Drop pinning of apt cookbook to avoid transitive depsolving pain
 
@@ -223,11 +171,9 @@ This file is used to list changes made in each version of zookeeper.
 
 * Use java-cookbook-installed version of Java by way of the `$JAVA_HOME` env var
 
-### Fixes
-
 * Ensure `zookeeper-env.sh` gets the correct values:
-    - Properly set `node[zookeeper][config_dir]` with lazy interpolation of the `node[zookeeper][version]` attribute
-    - Use lazy evaluation for `exports_config`
+  * Properly set `node[zookeeper][config_dir]` with lazy interpolation of the `node[zookeeper][version]` attribute
+  * Use lazy evaluation for `exports_config`
 * Export some env vars for subshelled SysV-run services
 
 ### Other changes
@@ -269,18 +215,18 @@ This file is used to list changes made in each version of zookeeper.
 * Run apt-get update at compile time
 * Use lazy evaluation for `config_dir` (#153, h/t to @Maniacal)
 * Update to testing using Chef 12.x
-    - Works around the fact that Serverspec requires a version of net-ssh that needs Ruby >= 2.0
+  * Works around the fact that Serverspec requires a version of net-ssh that needs Ruby >= 2.0
 
 ## v3.0.0
 
 * Fix setting of `CLASSPATH` to have version dynamically set
 * Upgrade to ZooKeeper 3.4.7, due to the disappearance of ZK 3.4.6 at the chosen mirror
-    - Upgrading ZK is potentially breaking
+  * Upgrading ZK is potentially breaking
 
 ## v2.13.1
 
 * Switch to using `value_for_platform_family()` to determine the SysV service script provider to use
-    - Makes the cookbook less restrictive w/r/t using it on a RHEL-based OS
+  * Makes the cookbook less restrictive w/r/t using it on a RHEL-based OS
 
 ## v2.13.0
 
@@ -288,15 +234,15 @@ This file is used to list changes made in each version of zookeeper.
 * Create ZooKeeper log dir on installation (#147)
 * Add SysV support for CentOS systems not using Upstart/Runit/Exhibitor
 * Fix testing by dropping usage of Chef Zero
-    - Not sure why Chef Zero won’t work, but it’d be nice to get it going again
-    - Seems to complain about not being able to find something w/r/t the tester cookbook
+  * Not sure why Chef Zero won’t work, but it’d be nice to get it going again
+  * Seems to complain about not being able to find something w/r/t the tester cookbook
 
 ## v2.12.0
 
 * Add ability to configure znode ACL via node LWRP (#145 thanks @Annih)
 * Create zookeeper user as system user (#142 thanks @petere)
 * Update to prelease `runit` cookbook b/c of a bug in that cookbook
-    - Soon as the next release of it is cut, we can revert e371719
+  * Soon as the next release of it is cut, we can revert e371719
 * Switch to chef-zero for the Test Kitchen provisioner
 
 ## v2.11.0
@@ -387,13 +333,13 @@ This file is used to list changes made in each version of zookeeper.
 * Zookeeper recipe rewritten as LWRP
 * Documentation updated slightly
 * Tested and verified and (hopefully) as backwards-compatible as possible
-    - Being a full version bump, there are no backwards-compatibility promises
+  * Being a full version bump, there are no backwards-compatibility promises
 * TODO
-    - Better documentation
-    - `zookeeper_service` resource
-    - `zookeeper_config` resource
-    - Better tests
-    - Swap out "community" Java
+  * Better documentation
+  * `zookeeper_service` resource
+  * `zookeeper_config` resource
+  * Better tests
+  * Swap out "community" Java
 
 ## v1.7.4
 

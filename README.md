@@ -5,14 +5,15 @@
 
 ## Table of Contents
 
-* [Zookeeper](#zookeeper)
-    - [Usage](#usage)
-        + [Resources](#resources)
-            * [zookeeper](#zookeeper)
-            * [zookeeper_config](#zookeeper_config)
-            * [zookeeper_service](#zookeeper_service)
-    - [Errata](#errata)
-    - [Author and License](#author-and-license)
+* [zookeeper cookbook](#zookeeper-cookbook)
+  * [Table of Contents](#table-of-contents)
+  * [Apache ZooKeeper](#apache-zookeeper)
+    * [Resources](#resources)
+      * [`zookeeper`](#zookeeper)
+      * [`zookeeper_config`](#zookeeper_config)
+      * [`zookeeper_service`](#zookeeper_service)
+  * [Errata](#errata)
+  * [Author and License](#author-and-license)
 
 ## Apache ZooKeeper
 
@@ -43,7 +44,7 @@ Parameters:
 * `checksum`: Checksum for the ZooKeeper download file
 * `install_dir`: Which directory to install Zookeeper to (default: `'/opt/zookeeper'`)
 * `java_version`: The version of OpenJDK to install.
-    - Alternatively, set `use_java_cookbook false`, and manage your Java installation yourself
+  * Alternatively, set `use_java_cookbook false`, and manage your Java installation yourself
 
 Example:
 
@@ -68,17 +69,17 @@ Parameters:
 * `conf_file` (name attribute): Base name of the config file
 * `conf_dir`: Path to write the configuration file to (defaults to `/opt/zookeeper/conf`)
 * `config`: Hash of configuration parameters to add to the file
-    - Defaults to:
+  * Defaults to:
 
-        ```ruby
-        {
-          'clientPort' => 2181,
-          'dataDir'    => '/var/lib/zookeeper',
-          'tickTime'   => 2000,
-          'initLimit'  => 5,
-          'syncLimit'  => 2
-        }
-        ```
+      ```ruby
+      {
+        'clientPort' => 2181,
+        'dataDir'    => '/var/lib/zookeeper',
+        'tickTime'   => 2000,
+        'initLimit'  => 5,
+        'syncLimit'  => 2
+      }
+      ```
 
 * `env_vars`: Hash of startup environment variables (defaults to `{}`)
 * `log_dir`: Log directory (defaults to `/var/log/zookeeper`)
@@ -114,8 +115,8 @@ Actions: `:create`
 Properties:
 
 * `service_style`: The type of service provider you wish to use. Defaults to `systemd`, and only allows one of the following:
-    - `systemd`
-    - `exhibitor`
+  * `systemd`
+  * `exhibitor`
 * `install_dir`: Where you’ve installed ZooKeeper (defaults to `/opt/zookeeper`)
 * `username`: The user to run ZooKeeper under (defaults to `zookeeper`)
 * `service_actions`: The actions to pass in to the service resource within this custom resource (defaults to `[:enable, :start]`)
