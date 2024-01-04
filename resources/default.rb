@@ -25,19 +25,12 @@ property :user_home,           String, default: '/home/zookeeper'
 property :install_dir,         String, default: '/opt'
 property :log_dir,             String, default: '/var/log/zookeeper'
 property :data_dir,            String, default: '/var/lib/zookeeper'
-property :use_java_cookbook,   [true, false], default: true
 
 # Install Zookeeper
 action :install do
   apt_update 'zookeeper' do
     action :nothing
   end.run_action :periodic if node['platform_family'] == 'debian'
-
-  if new_resource.use_java_cookbook
-    include_recipe 'java::default'
-  else
-    Chef::Log.info "Assuming you've provided your own Java"
-  end
 
   # build-essential is required to build the zookeeper gem
   build_essential 'install compilation tools' do

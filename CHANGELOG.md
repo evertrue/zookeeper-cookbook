@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of zookeeper.
 
+## 12.1.0
+
+* Get rid of dependency on java cookbook
+
 ## 12.0.1
 
 * Duplicate `acl_#{scheme}` for Chef 14+ compatibility (#222 h/t @kamaradclimber)

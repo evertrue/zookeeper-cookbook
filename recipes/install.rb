@@ -25,6 +25,5 @@ zookeeper node['zookeeper']['version'] do
     checksum
     install_dir
     log_dir
-    use_java_cookbook
   ).each { |key| send(key, node['zookeeper'][key]) }
 end
